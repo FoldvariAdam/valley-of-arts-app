@@ -1,0 +1,85 @@
+import 'package:flutter/material.dart';
+import 'app_tokens.dart';
+import 'app_theme.dart';
+
+class AppThemeFactory {
+  AppThemeFactory._();
+
+  static ThemeData create() {
+    final scheme = ColorScheme(
+      brightness: Brightness.dark,
+      primary: AppTokens.primaryColor,
+      onPrimary: AppTokens.foregroundColor,
+      secondary: AppTokens.secondaryColor,
+      onSecondary: AppTokens.foregroundColor,
+      error: Colors.red,
+      onError: AppTokens.foregroundColor,
+      surface: AppTokens.cardColor,
+      onSurface: AppTokens.foregroundColor,
+      surfaceContainerHighest: AppTokens.cardColor,
+      onSurfaceVariant: AppTokens.foregroundColor.withValues(alpha: 0.75),
+      outline: AppTokens.borderColor,
+    );
+
+    final base = ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      colorScheme: scheme,
+      scaffoldBackgroundColor: AppTokens.backgroundColor,
+    );
+
+    return base.copyWith(
+      cardTheme: CardThemeData(
+        color: AppTokens.cardColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppTokens.r2xl),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppTokens.primaryColor,
+          foregroundColor: AppTokens.foregroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppTokens.r2xl),
+          ),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: AppTokens.cardColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppTokens.r2xl),
+          borderSide: BorderSide(color: AppTokens.borderColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppTokens.r2xl),
+          borderSide: BorderSide(color: AppTokens.primaryColor),
+        ),
+      ),
+      extensions: <ThemeExtension<dynamic>>[
+        AppTheme(
+          s0: AppTokens.s0,
+          s1: AppTokens.s1,
+          s2: AppTokens.s2,
+          s3: AppTokens.s3,
+          s4: AppTokens.s4,
+          r2xl: BorderRadius.circular(AppTokens.r2xl),
+          foregroundColor: AppTokens.foregroundColor,
+          backgroundColor: AppTokens.backgroundColor,
+          primaryColor: AppTokens.primaryColor,
+          secondaryColor: AppTokens.secondaryColor,
+          accentColor: AppTokens.accentColor,
+          destructiveColor: AppTokens.destructiveColor,
+          cardColor: AppTokens.cardColor,
+          borderColor: AppTokens.borderColor,
+          mutedForegroundColor: AppTokens.mutedForegroundColor,
+          mutedColor: AppTokens.mutedColor,
+        ),
+      ],
+    );
+  }
+}
+
+extension AppStyleX on BuildContext {
+  AppTheme get appTheme => Theme.of(this).extension<AppTheme>()!;
+}
