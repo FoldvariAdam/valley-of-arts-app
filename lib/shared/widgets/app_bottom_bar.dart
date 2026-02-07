@@ -1,53 +1,61 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:valley_of_arts/core/navigation/navigation.dart';
 import 'package:valley_of_arts/core/themes/app_theme_factory.dart';
+import 'package:valley_of_arts/generated/locale_keys.g.dart';
 
-class BottomBarItem {
-  final String route;
+class AppBottomBarItem {
+  final NavigationRoute route;
   final IconData icon;
   final String label;
 
-  const BottomBarItem({
+  const AppBottomBarItem({
     required this.route,
     required this.icon,
     required this.label,
   });
 }
 
-class BottomBar extends StatelessWidget {
-  final String currentRoute;
-  final ValueChanged<String> onNavigate;
+class AppBottomBar extends StatefulWidget {
+  const AppBottomBar({super.key});
 
-  const BottomBar({
-    super.key,
-    required this.currentRoute,
-    required this.onNavigate,
-  });
+  @override
+  State<AppBottomBar> createState() => _AppBottomBarState();
+}
+
+class _AppBottomBarState extends State<AppBottomBar> {
+  NavigationRoute _currentRoute = NavigationRoute.home;
 
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+    final navigationService = NavigationService.of(context);
 
-    final items = <BottomBarItem>[
-      const BottomBarItem(
-        route: '/',
+    final items = <AppBottomBarItem>[
+      AppBottomBarItem(
+        route: NavigationRoute.home,
         icon: Icons.home_filled,
-        label: 'Kezdőlap',
+        label: LocaleKeys.AppBottomBar_Home.tr(),
       ),
-      const BottomBarItem(
-        route: '/events',
+      AppBottomBarItem(
+        route: NavigationRoute.events,
         icon: Icons.event,
-        label: 'Események',
+        label: LocaleKeys.AppBottomBar_Events.tr(),
       ),
-      const BottomBarItem(route: '/map', icon: Icons.map, label: 'Térkép'),
-      const BottomBarItem(
-        route: '/csigabusz',
+      AppBottomBarItem(
+        route: NavigationRoute.map,
+        icon: Icons.map,
+        label: LocaleKeys.AppBottomBar_Map.tr(),
+      ),
+      AppBottomBarItem(
+        route: NavigationRoute.schedule,
         icon: Icons.directions_bus,
-        label: 'Csigabusz',
+        label: LocaleKeys.AppBottomBar_Schedule.tr(),
       ),
-      const BottomBarItem(
-        route: '/settings',
+      AppBottomBarItem(
+        route: NavigationRoute.settings,
         icon: Icons.settings,
-        label: 'Beállítások',
+        label: LocaleKeys.AppBottomBar_Settings.tr(),
       ),
     ];
 
@@ -63,12 +71,17 @@ class BottomBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: items.map((item) {
-              final isActive = currentRoute == item.route;
+              final isActive = _currentRoute == item.route;
 
               return _BottomNavButton(
                 item: item,
                 isActive: isActive,
-                onTap: () => onNavigate(item.route),
+                onTap: () {
+                  setState(() {
+                    _currentRoute = item.route;
+                  });
+                  navigationService.goToPageWithRouteParam(route: item.route);
+                },
               );
             }).toList(),
           ),
@@ -79,7 +92,7 @@ class BottomBar extends StatelessWidget {
 }
 
 class _BottomNavButton extends StatefulWidget {
-  final BottomBarItem item;
+  final AppBottomBarItem item;
   final bool isActive;
   final VoidCallback onTap;
 
@@ -113,10 +126,9 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              /// Active background (layoutId feeling)
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 200),
-                opacity: widget.isActive ? 1 : 0,
+                opacity: widget.isActive ? 0.2 : 0,
                 child: Container(
                   width: 56,
                   height: 48,
@@ -127,7 +139,6 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                 ),
               ),
 
-              /// Icon + label
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -138,7 +149,7 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                         ? appTheme.accentColor
                         : appTheme.mutedForegroundColor,
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: appTheme.s0),
                   Text(
                     widget.item.label,
                     style: TextStyle(

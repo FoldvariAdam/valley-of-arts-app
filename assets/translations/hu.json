@@ -1,0 +1,11 @@
+{
+  "Hello": "Szia",
+  "Welcome": "Üdvözöllek",
+  "AppBottomBar": {
+    "Events": "Események",
+    "Home": "Kezdőlap",
+    "Map": "Térkép",
+    "Schedule": "Menetrend",
+    "Settings": "Beállítások"
+  }
+}

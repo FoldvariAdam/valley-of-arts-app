@@ -31,6 +31,17 @@ class NavigationService {
   void goBack<T extends Object?>([T? result]) =>
       GoRouter.of(context).pop(result);
 
+  void goToPageWithRouteParam({
+    bool withoutStacking = true,
+    required NavigationRoute route,
+  }) {
+    _goToPageImpl(
+      context: context,
+      route: route,
+      withoutStacking: withoutStacking,
+    );
+  }
+
   void goToEventsPage() {
     _goToPageImpl(
       context: context,

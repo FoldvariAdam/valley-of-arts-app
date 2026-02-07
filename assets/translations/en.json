@@ -1,0 +1,11 @@
+{
+  "Hello": "Hello",
+  "Welcome": "Welcome",
+  "AppBottomBar": {
+    "Events": "Events",
+    "Home": "Home",
+    "Map": "Map",
+    "Schedule": "Schedule",
+    "Settings": "Settings"
+  }
+}
