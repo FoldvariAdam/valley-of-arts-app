@@ -37,7 +37,7 @@ class AnimatedBrushStroke extends CustomPainter {
       ..strokeWidth = w
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round
-      ..color = color.withOpacity(t);
+      ..color = color.withValues(alpha: t);
 
     canvas.drawPath(partial, paint);
   }

@@ -11,7 +11,7 @@ class AppShell extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(child: child),
-      bottomNavigationBar: AppBottomBar(),
+      bottomNavigationBar: const AppBottomBar(),
     );
   }
 }

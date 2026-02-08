@@ -17,7 +17,7 @@ class SectionTitle extends StatelessWidget {
         SizedBox(width: appTheme.s1),
         Text(
           title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
         ),
       ],
     );

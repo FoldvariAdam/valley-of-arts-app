@@ -6,6 +6,7 @@ class FadeSlideIn extends StatelessWidget {
   final double fromY;
 
   const FadeSlideIn({
+    super.key,
     required this.anim,
     required this.child,
     required this.fromY,
@@ -15,7 +16,7 @@ class FadeSlideIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: anim,
-      builder: (_, __) {
+      builder: (_, _) {
         final t = anim.value;
         return Opacity(
           opacity: t,

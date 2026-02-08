@@ -8,6 +8,7 @@ class AnimatedCircle extends StatelessWidget {
   final double? left, right, top, bottom;
 
   const AnimatedCircle({
+    super.key,
     required this.anim,
     required this.size,
     required this.color,

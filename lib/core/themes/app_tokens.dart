@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
 class AppTokens {
   // --- Colors ---
   static const Color foregroundColor = Color(0xFFFFFFFF);

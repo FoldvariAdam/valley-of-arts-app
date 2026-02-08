@@ -49,7 +49,7 @@ class _EntranceState extends State<Entrance> with SingleTickerProviderStateMixin
 
     return AnimatedBuilder(
       animation: anim,
-      builder: (_, __) {
+      builder: (_, _) {
         final t = anim.value;
         return Opacity(
           opacity: t,

@@ -1,11 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:valley_of_arts/core/core.dart';
-
-import 'core/themes/app_theme_factory.dart';
-import 'generated/locale_keys.g.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,9 +9,9 @@ Future<void> main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: [Locale('en'), Locale('hu')],
+      supportedLocales: [const Locale('en'), const Locale('hu')],
       path: 'assets/translations',
-      fallbackLocale: Locale('hu'),
+      fallbackLocale: const Locale('hu'),
       child: MyApp(),
     ),
   );

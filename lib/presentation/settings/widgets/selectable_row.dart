@@ -17,8 +17,8 @@ class SelectableRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
     Color selectedColor = Color.lerp(
-      Color(0xFF2A6E6A),
-      Color(0xFFF2C23C),
+      const Color(0xFF2A6E6A),
+      const Color(0xFFF2C23C),
       0.3,
     )!;
 
@@ -50,7 +50,7 @@ class SelectableRow extends StatelessWidget {
             child: Container(
               width: 24,
               height: 24,
-              decoration: BoxDecoration(shape: BoxShape.circle),
+              decoration: const BoxDecoration(shape: BoxShape.circle),
               child: Icon(Icons.check, size: 24, color: appTheme.accentColor),
             ),
           ),

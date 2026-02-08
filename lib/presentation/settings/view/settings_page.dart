@@ -2,9 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/generated/locale_keys.g.dart';
-
-import 'package:valley_of_arts/shared/shared.dart';
 import 'package:valley_of_arts/presentation/settings/widgets/widgets.dart';
+import 'package:valley_of_arts/shared/shared.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -115,7 +114,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           value: positionEnabled,
                           onChanged: (v) => setState(() => positionEnabled = v),
                         ),
-                        AppDivider(),
+                        const AppDivider(),
                         LabeledSwitch(
                           title: LocaleKeys
                               .Settings_General_Notifications_Title.tr(),
@@ -159,7 +158,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               setState(() => snailBusTracking = v),
                         ),
 
-                        AppDivider(),
+                        const AppDivider(),
 
                         Padding(
                           padding: EdgeInsets.all(appTheme.s2),
@@ -175,7 +174,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         Text(
                                           LocaleKeys
                                               .Settings_SnailBus_Refresh_Title.tr(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
@@ -185,7 +184,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         Text(
                                           LocaleKeys
                                               .Settings_SnailBus_Refresh_SubTitle.tr(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -203,7 +202,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                     child: Text(
                                       '${snailBusRefreshMin.round()} ${LocaleKeys.Settings_SnailBus_Minute.tr()}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w800,
                                         fontSize: 12,
                                       ),
@@ -229,14 +228,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                 children: [
                                   Text(
                                     '1 ${LocaleKeys.Settings_SnailBus_Minute.tr()}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                   Text(
                                     '60 ${LocaleKeys.Settings_SnailBus_Minute.tr()}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -274,12 +273,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           title: LocaleKeys.Settings_Information_Rules.tr(),
                           onTap: () {},
                         ),
-                        AppDivider(),
+                        const AppDivider(),
                         ChevronRow(
                           title: LocaleKeys.Settings_Information_FAQ.tr(),
                           onTap: () {},
                         ),
-                        AppDivider(),
+                        const AppDivider(),
                         ChevronRow(
                           title: LocaleKeys.Settings_Information_Contact.tr(),
                           onTap: () {},
@@ -291,7 +290,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 const SizedBox(height: 18),
 
-                Center(
+                const Center(
                   child: Text(
                     'Művészetek Völgye App v1.0.0',
                     style: TextStyle(

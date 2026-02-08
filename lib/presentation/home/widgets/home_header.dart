@@ -148,7 +148,7 @@ class _HomeHeaderState extends State<HomeHeader>
                             fromY: 20,
                             child: Text(
                               LocaleKeys.Home_Title.tr(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 40,
                                 height: 1.05,
@@ -163,7 +163,7 @@ class _HomeHeaderState extends State<HomeHeader>
                             child: Text(
                               LocaleKeys.Home_SubTitle.tr(),
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.62),
+                                color: Colors.white.withValues(alpha: 0.62),
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -187,7 +187,7 @@ class _HomeHeaderState extends State<HomeHeader>
                                     BoxShadow(
                                       color: const Color(
                                         0xFFE64A5E,
-                                      ).withOpacity(0.35),
+                                      ).withValues(alpha: 0.35),
                                       blurRadius: 22,
                                       offset: const Offset(0, 12),
                                     ),
@@ -195,7 +195,7 @@ class _HomeHeaderState extends State<HomeHeader>
                                 ),
                                 child: Text(
                                   LocaleKeys.Home_Purchase.tr(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w800,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'app_tokens.dart';
-import 'app_theme.dart';
+import 'package:valley_of_arts/core/themes/app_theme.dart';
+import 'package:valley_of_arts/core/themes/app_tokens.dart';
 
 class AppThemeFactory {
   AppThemeFactory._();
@@ -50,11 +50,11 @@ class AppThemeFactory {
         fillColor: AppTokens.cardBackgroundColor,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppTokens.r2xl),
-          borderSide: BorderSide(color: AppTokens.borderColor),
+          borderSide: const BorderSide(color: AppTokens.borderColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppTokens.r2xl),
-          borderSide: BorderSide(color: AppTokens.primaryColor),
+          borderSide: const BorderSide(color: AppTokens.primaryColor),
         ),
       ),
       extensions: <ThemeExtension<dynamic>>[

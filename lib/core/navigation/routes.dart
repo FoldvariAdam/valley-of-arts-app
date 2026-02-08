@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:valley_of_arts/core/navigation/navigation_service.dart';
 import 'package:valley_of_arts/core/navigation/shells/shells.dart';
 import 'package:valley_of_arts/presentation/presentation.dart';
-
-import 'navigation_service.dart';
 
 GoRouter? _router;
 final _appShellNavigatorKey = GlobalKey<NavigatorState>(
@@ -21,7 +20,7 @@ GoRouter createRouterConfig({required String initialLocation}) {
           GoRoute(
             name: NavigationRoute.events.path,
             path: NavigationRoute.events.fullPath,
-            builder: (context, state) => EventsPage(),
+            builder: (context, state) => const EventsPage(),
           ),
           GoRoute(
             name: NavigationRoute.eventDetails.path,
