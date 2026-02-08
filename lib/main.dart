@@ -7,6 +7,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
+  configureDependencies();
+
   runApp(
     EasyLocalization(
       supportedLocales: [const Locale('en'), const Locale('hu')],

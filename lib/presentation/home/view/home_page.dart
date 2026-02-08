@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:valley_of_arts/core/core.dart';
+import 'package:valley_of_arts/presentation/home/blocs/home_bloc.dart';
 import 'package:valley_of_arts/presentation/home/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,22 +17,25 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: HomeHeader(
-                  background: appTheme.backgroundColor,
-                  onTicketTap: () {},
+    return BlocProvider(
+      lazy: false,
+      create: (context) => GetIt.instance.get<HomeBloc>()..add(HomeGetPinnedEventsEvent()),
+      child: Scaffold(
+        body: Stack(
+          children: [
+            CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: HomeHeader(
+                    background: appTheme.backgroundColor,
+                    onTicketTap: () {},
+                  ),
                 ),
-              ),
 
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+                const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
-              // Blokk belépő (fade + slide up)
-              /*SSliverToBoxAdapter(
+                // Blokk belépő (fade + slide up)
+                /*SSliverToBoxAdapter(
                 child: PopularEventsCarousel(),
               ),
 
@@ -46,10 +52,11 @@ class _HomePageState extends State<HomePage> {
                 child: OngoingEvents(),
               ),*/
 
-              const SliverToBoxAdapter(child: SizedBox(height: 120)),
-            ],
-          ),
-        ],
+                const SliverToBoxAdapter(child: SizedBox(height: 120)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
