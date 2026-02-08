@@ -12,6 +12,8 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:valley_of_arts/core/controllers/nav_bar_controller.dart'
+    as _i407;
 import 'package:valley_of_arts/core/di/network_module.dart' as _i54;
 import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley_api_client.dart'
     as _i900;
@@ -29,6 +31,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final networkModule = _$NetworkModule();
+    gh.lazySingleton<_i407.NavBarController>(() => _i407.NavBarController());
     gh.lazySingleton<_i361.Dio>(() => networkModule.dio());
     gh.lazySingleton<_i900.ValleyApiClient>(
       () => networkModule.valleyApiClient(gh<_i361.Dio>()),

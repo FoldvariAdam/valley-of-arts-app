@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:valley_of_arts/core/widgets/app_bottom_bar_scroll_notification_listener.dart';
 import 'package:valley_of_arts/shared/shared.dart';
 
 class AppShell extends StatelessWidget {
@@ -10,7 +11,7 @@ class AppShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(child: child),
+      body: BottomNavbarScrollNotificationListener(child: SafeArea(child: child)),
       bottomNavigationBar: const AppBottomBar(),
     );
   }

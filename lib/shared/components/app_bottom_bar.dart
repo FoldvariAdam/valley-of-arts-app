@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:valley_of_arts/core/navigation/navigation.dart';
-import 'package:valley_of_arts/core/themes/app_theme_factory.dart';
+import 'package:get_it/get_it.dart';
+
 import 'package:valley_of_arts/generated/locale_keys.g.dart';
+import 'package:valley_of_arts/core/core.dart';
 
 class AppBottomBarItem {
   final NavigationRoute route;
@@ -24,13 +25,45 @@ class AppBottomBar extends StatefulWidget {
 }
 
 class _AppBottomBarState extends State<AppBottomBar> {
+  final NavBarController _navBarController = GetIt.instance.get<NavBarController>();
   NavigationRoute _currentRoute = NavigationRoute.home;
+
+  static const double _barHeight = 64;
 
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
     final navigationService = NavigationService.of(context);
 
+    return AnimatedBuilder(
+      animation: _navBarController,
+      builder: (context, child) {
+        return AnimatedSize(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+            height: _navBarController.isOpen ? 64 : 0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: appTheme.cardBackgroundColor,
+                border: Border(top: BorderSide(color: appTheme.borderColor)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: _buildItems(navigationService, appTheme),
+              ),
+            ),
+          ),
+        );
+      }
+    );
+  }
+
+  List<Widget> _buildItems(
+    NavigationService navigationService,
+    AppTheme appTheme,
+  ) {
     final items = <AppBottomBarItem>[
       AppBottomBarItem(
         route: NavigationRoute.home,
@@ -59,35 +92,17 @@ class _AppBottomBarState extends State<AppBottomBar> {
       ),
     ];
 
-    return SafeArea(
-      top: false,
-      child: Container(
-        decoration: BoxDecoration(
-          color: appTheme.cardBackgroundColor,
-          border: Border(top: BorderSide(color: appTheme.borderColor)),
-        ),
-        child: SizedBox(
-          height: 64,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: items.map((item) {
-              final isActive = _currentRoute == item.route;
-
-              return _BottomNavButton(
-                item: item,
-                isActive: isActive,
-                onTap: () {
-                  setState(() {
-                    _currentRoute = item.route;
-                  });
-                  navigationService.goToPageWithRouteParam(route: item.route);
-                },
-              );
-            }).toList(),
-          ),
-        ),
-      ),
-    );
+    return items.map((item) {
+      final isActive = _currentRoute == item.route;
+      return _BottomNavButton(
+        item: item,
+        isActive: isActive,
+        onTap: () {
+          setState(() => _currentRoute = item.route);
+          navigationService.goToPageWithRouteParam(route: item.route);
+        },
+      );
+    }).toList();
   }
 }
 
