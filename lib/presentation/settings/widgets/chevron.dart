@@ -22,16 +22,13 @@ class ChevronRow extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: TextStyle(
-                      color: appTheme.foregroundColor,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: appTheme.bodyText,
                   ),
                 ),
                 Icon(
                   Icons.chevron_right,
                   size: 22,
-                  color: appTheme.mutedForegroundColor,
+                  color: appTheme.foregroundColor,
                 ),
               ],
             ),

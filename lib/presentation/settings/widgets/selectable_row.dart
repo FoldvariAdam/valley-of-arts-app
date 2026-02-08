@@ -16,31 +16,23 @@ class SelectableRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
-    Color selectedColor = Color.lerp(
-      const Color(0xFF2A6E6A),
-      const Color(0xFFF2C23C),
-      0.3,
-    )!;
 
-    final bg = isSelected ? selectedColor : Colors.transparent;
+    final bg = isSelected ? appTheme.selectedColor : Colors.transparent;
 
     return Container(
       color: bg,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(appTheme.s2),
       child: Row(
         children: [
-          if (leading != null) ...[leading!, const SizedBox(width: 12)],
+          if (leading != null) ...[leading!, SizedBox(width: appTheme.s1)],
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    color: appTheme.foregroundColor,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                  style: appTheme.bodyText
+                )
               ],
             ),
           ),

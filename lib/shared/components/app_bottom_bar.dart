@@ -25,10 +25,9 @@ class AppBottomBar extends StatefulWidget {
 }
 
 class _AppBottomBarState extends State<AppBottomBar> {
-  final NavBarController _navBarController = GetIt.instance.get<NavBarController>();
+  final NavBarController _navBarController = GetIt.instance
+      .get<NavBarController>();
   NavigationRoute _currentRoute = NavigationRoute.home;
-
-  static const double _barHeight = 64;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +55,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
             ),
           ),
         );
-      }
+      },
     );
   }
 
@@ -167,9 +166,7 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                   SizedBox(height: appTheme.s0),
                   Text(
                     widget.item.label,
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
+                    style: appTheme.descriptionText.copyWith(
                       color: widget.isActive
                           ? appTheme.accentColor
                           : appTheme.mutedForegroundColor,

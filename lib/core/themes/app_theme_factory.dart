@@ -75,6 +75,13 @@ class AppThemeFactory {
           borderColor: AppTokens.borderColor,
           mutedForegroundColor: AppTokens.mutedForegroundColor,
           mutedColor: AppTokens.mutedColor,
+          selectedColor: AppTokens.selectedColor,
+          bigHeadLine: AppTokens.bigHeadLine,
+          mediumHeadLine: AppTokens.mediumHeadLine,
+          smallHeadLine: AppTokens.smallHeadLine,
+          subTitle: AppTokens.subTitle,
+          bodyText: AppTokens.bodyText,
+          descriptionText: AppTokens.descriptionText,
         ),
       ],
     );

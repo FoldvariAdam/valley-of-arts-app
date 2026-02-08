@@ -50,19 +50,12 @@ class _TitleSubtitle extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(
-            color: appTheme.foregroundColor,
-            fontWeight: FontWeight.w700,
-          ),
+          style: appTheme.bodyText
         ),
         const SizedBox(height: 2),
         Text(
           subtitle,
-          style: TextStyle(
-            color: appTheme.mutedForegroundColor,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-          ),
+          style: appTheme.descriptionText
         ),
       ],
     );

@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -25,6 +24,17 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color cardBackgroundColor;
   final Color borderColor;
 
+  final Color selectedColor;
+
+  // --- Text styles ---
+  final TextStyle bigHeadLine;
+  final TextStyle mediumHeadLine;
+  final TextStyle smallHeadLine;
+
+  final TextStyle subTitle;
+  final TextStyle bodyText;
+  final TextStyle descriptionText;
+
   const AppTheme({
     required this.s0,
     required this.s1,
@@ -42,68 +52,18 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.borderColor,
     required this.mutedColor,
     required this.mutedForegroundColor,
+    required this.selectedColor,
+    required this.bigHeadLine,
+    required this.mediumHeadLine,
+    required this.smallHeadLine,
+    required this.subTitle,
+    required this.bodyText,
+    required this.descriptionText,
   });
 
   @override
-  AppTheme copyWith({
-    double? s0,
-    double? s1,
-    double? s2,
-    double? s3,
-    double? s4,
-    BorderRadius? r2xl,
-    Color? foregroundColor,
-    Color? backgroundColor,
-    Color? primaryColor,
-    Color? secondaryColor,
-    Color? accentColor,
-    Color? destructiveColor,
-    Color? cardBackgroundColor,
-    Color? borderColor,
-    Color? mutedColor,
-    Color? mutedForegroundColor,
-  }) {
-    return AppTheme(
-      s0: s0 ?? this.s0,
-      s1: s1 ?? this.s1,
-      s2: s2 ?? this.s2,
-      s3: s3 ?? this.s3,
-      s4: s4 ?? this.s4,
-      r2xl: r2xl ?? this.r2xl,
-      foregroundColor: foregroundColor ?? this.foregroundColor,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      primaryColor: primaryColor ?? this.primaryColor,
-      secondaryColor: secondaryColor ?? this.secondaryColor,
-      accentColor: accentColor ?? this.accentColor,
-      destructiveColor: destructiveColor ?? this.destructiveColor,
-      cardBackgroundColor: cardBackgroundColor ?? this.cardBackgroundColor,
-      borderColor: borderColor ?? this.borderColor,
-      mutedColor: mutedColor ?? this.mutedColor,
-      mutedForegroundColor: mutedForegroundColor ?? this.mutedForegroundColor,
-    );
-  }
+  AppTheme copyWith() => this;
 
   @override
-  AppTheme lerp(ThemeExtension<AppTheme>? other, double t) {
-    if (other is! AppTheme) return this;
-
-    return AppTheme(
-      s0: lerpDouble(s0, other.s0, t) ?? s0,
-      s1: lerpDouble(s1, other.s1, t) ?? s1,
-      s2: lerpDouble(s2, other.s2, t) ?? s2,
-      s3: lerpDouble(s3, other.s3, t) ?? s3,
-      s4: lerpDouble(s4, other.s4, t) ?? s4,
-      r2xl: BorderRadius.lerp(r2xl, other.r2xl, t) ?? r2xl,
-      foregroundColor: Color.lerp(foregroundColor, other.foregroundColor, t) ?? foregroundColor,
-      backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t) ?? backgroundColor,
-      primaryColor: Color.lerp(primaryColor, other.primaryColor, t) ?? primaryColor,
-      secondaryColor: Color.lerp(secondaryColor, other.secondaryColor, t) ?? secondaryColor,
-      accentColor: Color.lerp(accentColor, other.accentColor, t) ?? accentColor,
-      destructiveColor: Color.lerp(destructiveColor, other.destructiveColor, t) ?? destructiveColor,
-      cardBackgroundColor: Color.lerp(cardBackgroundColor, other.cardBackgroundColor, t) ?? cardBackgroundColor,
-      borderColor: Color.lerp(borderColor, other.borderColor, t) ?? borderColor,
-      mutedColor: Color.lerp(mutedColor, other.mutedColor, t) ?? mutedColor,
-      mutedForegroundColor: Color.lerp(mutedForegroundColor, other.mutedForegroundColor, t) ?? mutedForegroundColor,
-    );
-  }
+  AppTheme lerp(ThemeExtension<AppTheme>? other, double t) => this;
 }

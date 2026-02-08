@@ -132,13 +132,9 @@ class _HomeHeaderState extends State<HomeHeader>
                                 color: const Color(0xFFE64A5E),
                                 borderRadius: BorderRadius.circular(999),
                               ),
-                              child: const Text(
+                              child: Text(
                                 '07.24 - 08.02',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 14,
-                                ),
+                                style: appTheme.smallHeadLine
                               ),
                             ),
                           ),
@@ -148,12 +144,7 @@ class _HomeHeaderState extends State<HomeHeader>
                             fromY: 20,
                             child: Text(
                               LocaleKeys.Home_Title.tr(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 40,
-                                height: 1.05,
-                                fontWeight: FontWeight.w900,
-                              ),
+                              style: appTheme.bigHeadLine,
                             ),
                           ),
                           SizedBox(height: appTheme.s2),
@@ -162,14 +153,10 @@ class _HomeHeaderState extends State<HomeHeader>
                             fromY: 18,
                             child: Text(
                               LocaleKeys.Home_SubTitle.tr(),
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.62),
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: appTheme.subTitle,
                             ),
                           ),
-                          SizedBox(height: appTheme.s3),
+                          SizedBox(height: appTheme.s2),
                           FadeSlideIn(
                             anim: ctaIn,
                             fromY: 18,
@@ -195,11 +182,7 @@ class _HomeHeaderState extends State<HomeHeader>
                                 ),
                                 child: Text(
                                   LocaleKeys.Home_Purchase.tr(),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                                  style: appTheme.smallHeadLine
                                 ),
                               ),
                             ),

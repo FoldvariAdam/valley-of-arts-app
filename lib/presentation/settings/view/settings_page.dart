@@ -63,18 +63,18 @@ class _SettingsPageState extends State<SettingsPage> {
                         switch (val) {
                           case 'hu':
                             return SelectableRow(
-                              leading: const Text(
+                              leading: Text(
                                 '🇭🇺',
-                                style: TextStyle(fontSize: 22),
+                                style: appTheme.mediumHeadLine,
                               ),
                               title: LocaleKeys.Settings_Language_Hu.tr(),
                               isSelected: isSelected,
                             );
                           case 'en':
                             return SelectableRow(
-                              leading: const Text(
+                              leading: Text(
                                 '🇬🇧',
-                                style: TextStyle(fontSize: 22),
+                                style: appTheme.mediumHeadLine,
                               ),
                               title: LocaleKeys.Settings_Language_En.tr(),
                               isSelected: isSelected,
@@ -174,9 +174,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         Text(
                                           LocaleKeys
                                               .Settings_SnailBus_Refresh_Title.tr(),
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          style: appTheme.bodyText,
                                         ),
 
                                         SizedBox(height: appTheme.s0),
@@ -184,10 +182,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         Text(
                                           LocaleKeys
                                               .Settings_SnailBus_Refresh_SubTitle.tr(),
-                                          style: const TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                          style: appTheme.descriptionText,
                                         ),
                                       ],
                                     ),
@@ -202,10 +197,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                     child: Text(
                                       '${snailBusRefreshMin.round()} ${LocaleKeys.Settings_SnailBus_Minute.tr()}',
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 12,
-                                      ),
+                                      style: appTheme.bodyText,
                                     ),
                                   ),
                                 ],
@@ -228,17 +220,11 @@ class _SettingsPageState extends State<SettingsPage> {
                                 children: [
                                   Text(
                                     '1 ${LocaleKeys.Settings_SnailBus_Minute.tr()}',
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    style: appTheme.bodyText,
                                   ),
                                   Text(
                                     '60 ${LocaleKeys.Settings_SnailBus_Minute.tr()}',
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    style: appTheme.bodyText,
                                   ),
                                 ],
                               ),
@@ -290,14 +276,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 const SizedBox(height: 18),
 
-                const Center(
+                Center(
                   child: Text(
                     'Művészetek Völgye App v1.0.0',
-                    style: TextStyle(
-                      //color: AppConfig.mutedForegroundColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: appTheme.bodyText,
                   ),
                 ),
               ],

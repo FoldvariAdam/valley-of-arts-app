@@ -26,21 +26,13 @@ class PageHeader extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
-                color: appTheme.foregroundColor,
-                fontSize: 24,
-                fontWeight: FontWeight.w900,
-              ),
+              style: appTheme.mediumHeadLine,
             ),
             if (subtitle != null) ...[
-              const SizedBox(height: 6),
+              SizedBox(height: appTheme.s0),
               Text(
                 subtitle!,
-                style: TextStyle(
-                  color: appTheme.mutedForegroundColor,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: appTheme.subTitle,
               ),
             ]
           ],
