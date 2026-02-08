@@ -1,11 +1,52 @@
 {
-  "Hello": "Hello",
-  "Welcome": "Welcome",
   "AppBottomBar": {
     "Events": "Events",
     "Home": "Home",
     "Map": "Map",
     "Schedule": "Schedule",
     "Settings": "Settings"
+  },
+  "Home": {
+    "Title": "Arts of\nValley",
+    "SubTitle": "The country's largest festival",
+    "Purchase": "Buy Ticket"
+  },
+  "Settings": {
+    "Title": "Settings",
+    "SubTitle": "Customization and Notifications",
+    "Language": {
+      "Title": "Language",
+      "Hu": "Hungarian",
+      "En": "English"
+    },
+    "General": {
+      "Title": "General",
+      "Position": {
+        "Title": "Location",
+        "Subtitle": "Enable location services"
+      },
+      "Notifications": {
+        "Title": "Notifications",
+        "Subtitle": "Enable push notifications"
+      }
+    },
+    "SnailBus": {
+      "Title": "SnailBus",
+      "Tracking": {
+        "Title": "SnailBus Tracking",
+        "SubTitle": "Track SnailBus position on the map"
+      },
+      "Refresh": {
+        "Title": "SnailBus Map Refresh",
+        "SubTitle": "SnailBus position refresh frequency"
+      },
+      "Minute": "minutes"
+    },
+    "Information": {
+      "Title": "Information",
+      "Rules": "Festival Rules",
+      "FAQ": "FAQ",
+      "Contact": "Contact"
+    }
   }
 }

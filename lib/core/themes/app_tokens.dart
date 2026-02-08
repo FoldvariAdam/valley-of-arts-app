@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 class AppTokens {
   // --- Colors ---
   static const Color foregroundColor = Color(0xFFFFFFFF);
-  static const Color backgroundColor = Color(0xFF2F6B66);
+  //static const Color backgroundColor = Color(0xFF2F6B66);
+  static const Color backgroundColor = Color(0xFF317E79);
+
+  static const Color cardForegroundColor = Color(0xFFFFFFFF);
+  static const Color cardBackgroundColor = Color(0xFF2A6E6A);
 
   static const Color primaryColor = Color(0xFFE24A6B);
   static const Color secondaryColor = Color(0xFFB52F63);
 
-  static const Color cardColor = Color(0xFF255E5A);
   static const Color borderColor = Color(0xFF5C8F8A);
 
   static const Color accentColor = Color(0xFFF2C23C);

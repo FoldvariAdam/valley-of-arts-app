@@ -22,7 +22,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color mutedForegroundColor;
 
   // --- Surface colors ---
-  final Color cardColor;
+  final Color cardBackgroundColor;
   final Color borderColor;
 
   const AppTheme({
@@ -38,7 +38,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.secondaryColor,
     required this.accentColor,
     required this.destructiveColor,
-    required this.cardColor,
+    required this.cardBackgroundColor,
     required this.borderColor,
     required this.mutedColor,
     required this.mutedForegroundColor,
@@ -58,7 +58,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? secondaryColor,
     Color? accentColor,
     Color? destructiveColor,
-    Color? cardColor,
+    Color? cardBackgroundColor,
     Color? borderColor,
     Color? mutedColor,
     Color? mutedForegroundColor,
@@ -76,7 +76,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       secondaryColor: secondaryColor ?? this.secondaryColor,
       accentColor: accentColor ?? this.accentColor,
       destructiveColor: destructiveColor ?? this.destructiveColor,
-      cardColor: cardColor ?? this.cardColor,
+      cardBackgroundColor: cardBackgroundColor ?? this.cardBackgroundColor,
       borderColor: borderColor ?? this.borderColor,
       mutedColor: mutedColor ?? this.mutedColor,
       mutedForegroundColor: mutedForegroundColor ?? this.mutedForegroundColor,
@@ -100,7 +100,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       secondaryColor: Color.lerp(secondaryColor, other.secondaryColor, t) ?? secondaryColor,
       accentColor: Color.lerp(accentColor, other.accentColor, t) ?? accentColor,
       destructiveColor: Color.lerp(destructiveColor, other.destructiveColor, t) ?? destructiveColor,
-      cardColor: Color.lerp(cardColor, other.cardColor, t) ?? cardColor,
+      cardBackgroundColor: Color.lerp(cardBackgroundColor, other.cardBackgroundColor, t) ?? cardBackgroundColor,
       borderColor: Color.lerp(borderColor, other.borderColor, t) ?? borderColor,
       mutedColor: Color.lerp(mutedColor, other.mutedColor, t) ?? mutedColor,
       mutedForegroundColor: Color.lerp(mutedForegroundColor, other.mutedForegroundColor, t) ?? mutedForegroundColor,

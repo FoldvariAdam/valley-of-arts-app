@@ -1,11 +1,52 @@
 {
-  "Hello": "Szia",
-  "Welcome": "Üdvözöllek",
   "AppBottomBar": {
     "Events": "Események",
     "Home": "Kezdőlap",
     "Map": "Térkép",
     "Schedule": "Menetrend",
     "Settings": "Beállítások"
+  },
+  "Home": {
+    "Title": "Művészetek\nVölgye",
+    "SubTitle": "Az ország legnagyobb fesztiválja",
+    "Purchase": "Jegyvásárlás"
+  },
+  "Settings": {
+    "Title": "Beállítások",
+    "SubTitle": "Testreszabás és értesítések",
+    "Language": {
+      "Title": "Nyelv",
+      "Hu": "Magyar",
+      "En": "English"
+    },
+    "General": {
+      "Title": "Általános",
+      "Position": {
+        "Title": "Pozíció",
+        "Subtitle": "Helymeghatározás engdélyezése"
+      },
+      "Notifications": {
+        "Title": "Értesítések",
+        "Subtitle": "Push értesítések engedélyezése"
+      }
+    },
+    "SnailBus": {
+      "Title": "Csigabusz",
+      "Tracking": {
+        "Title": "Csigabusz követés",
+        "SubTitle": "Csigabusz pozíció követése a térképen"
+      },
+      "Refresh": {
+        "Title": "Csigabusz térkép frissítés",
+        "SubTitle": "Csigabusz pozíció frissítési gyakoriság"
+      },
+      "Minute": "perc"
+    },
+    "Information": {
+      "Title": "Információ",
+      "Rules": "Fesztivál szabályzat",
+      "FAQ": "GYIK",
+      "Contact": "Kapcsolat"
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
+import 'package:valley_of_arts/presentation/home/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,16 +12,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    //final appTheme = Theme.of(context).extension<AppTheme>()!;
+    final appTheme = context.appTheme;
 
     return Scaffold(
-      //backgroundColor: appTheme.backgroundColor,
       body: Stack(
         children: [
           CustomScrollView(
             slivers: [
-              /*SliverToBoxAdapter(
-                child: HeroHeader(
+              SliverToBoxAdapter(
+                child: HomeHeader(
                   background: appTheme.backgroundColor,
                   onTicketTap: () {},
                 ),
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
               // Blokk belépő (fade + slide up)
-              SliverToBoxAdapter(
+              /*SSliverToBoxAdapter(
                 child: PopularEventsCarousel(),
               ),
 

@@ -6,17 +6,18 @@ class AppThemeFactory {
   AppThemeFactory._();
 
   static ThemeData create() {
+    /// TODO: test all the colors
     final scheme = ColorScheme(
       brightness: Brightness.dark,
-      primary: AppTokens.primaryColor,
+      primary: AppTokens.accentColor,
       onPrimary: AppTokens.foregroundColor,
       secondary: AppTokens.secondaryColor,
       onSecondary: AppTokens.foregroundColor,
       error: Colors.red,
       onError: AppTokens.foregroundColor,
-      surface: AppTokens.cardColor,
+      surface: AppTokens.cardBackgroundColor,
       onSurface: AppTokens.foregroundColor,
-      surfaceContainerHighest: AppTokens.cardColor,
+      surfaceContainerHighest: AppTokens.cardBackgroundColor,
       onSurfaceVariant: AppTokens.foregroundColor.withValues(alpha: 0.75),
       outline: AppTokens.borderColor,
     );
@@ -30,7 +31,7 @@ class AppThemeFactory {
 
     return base.copyWith(
       cardTheme: CardThemeData(
-        color: AppTokens.cardColor,
+        color: AppTokens.cardBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppTokens.r2xl),
         ),
@@ -46,7 +47,7 @@ class AppThemeFactory {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppTokens.cardColor,
+        fillColor: AppTokens.cardBackgroundColor,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppTokens.r2xl),
           borderSide: BorderSide(color: AppTokens.borderColor),
@@ -70,7 +71,7 @@ class AppThemeFactory {
           secondaryColor: AppTokens.secondaryColor,
           accentColor: AppTokens.accentColor,
           destructiveColor: AppTokens.destructiveColor,
-          cardColor: AppTokens.cardColor,
+          cardBackgroundColor: AppTokens.cardBackgroundColor,
           borderColor: AppTokens.borderColor,
           mutedForegroundColor: AppTokens.mutedForegroundColor,
           mutedColor: AppTokens.mutedColor,

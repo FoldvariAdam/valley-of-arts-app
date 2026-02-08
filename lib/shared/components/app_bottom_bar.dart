@@ -63,7 +63,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       top: false,
       child: Container(
         decoration: BoxDecoration(
-          color: appTheme.cardColor,
+          color: appTheme.cardBackgroundColor,
           border: Border(top: BorderSide(color: appTheme.borderColor)),
         ),
         child: SizedBox(
@@ -130,8 +130,8 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                 duration: const Duration(milliseconds: 200),
                 opacity: widget.isActive ? 0.2 : 0,
                 child: Container(
-                  width: 56,
-                  height: 48,
+                  width: 72,
+                  height: 50,
                   decoration: BoxDecoration(
                     color: appTheme.accentColor,
                     borderRadius: BorderRadius.circular(16),
