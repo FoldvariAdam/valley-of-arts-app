@@ -28,6 +28,11 @@ GoRouter createRouterConfig({required String initialLocation}) {
             builder: (context, state) => Container(),
           ),
           GoRoute(
+            name: NavigationRoute.favorites.path,
+            path: NavigationRoute.favorites.fullPath,
+            builder: (context, state) => Container(),
+          ),
+          GoRoute(
             name: NavigationRoute.home.path,
             path: NavigationRoute.home.fullPath,
             builder: (context, state) => const HomePage(),

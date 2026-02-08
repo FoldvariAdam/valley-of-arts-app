@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 enum NavigationRoute {
   events(),
   eventDetails(),
+  favorites(),
   home(),
   map(),
   schedule(),
