@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
 
+import 'package:flutter/material.dart';
+import 'package:valley_of_arts/core/core.dart';
+
 class SingleSelectList<T> extends StatefulWidget {
   final List<T> items;
   final T selected;
-  final Widget Function(T item, bool isSelected) itemBuilder;
+  final Widget Function(T item, bool isSelected, int index, int length)
+  itemBuilder;
   final ValueChanged<T> onSelected;
 
   const SingleSelectList({
@@ -38,16 +42,18 @@ class _SingleSelectListState<T> extends State<SingleSelectList<T>> {
     final appTheme = context.appTheme;
     final children = <Widget>[];
 
-    for (var i = 0; i < widget.items.length; i++) {
+    final length = widget.items.length;
+
+    for (var i = 0; i < length; i++) {
       final item = widget.items[i];
       final isSelected = item == selectedItem;
 
       children.add(GestureDetector(
         onTap: () => _onTap(item),
-        child: widget.itemBuilder(item, isSelected),
+        child: widget.itemBuilder(item, isSelected, i, length),
       ));
 
-      if (i != widget.items.length - 1) {
+      if (i != length - 1) {
         children.add(Divider(
           height: 1,
           thickness: 1,

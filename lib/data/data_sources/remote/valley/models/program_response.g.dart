@@ -28,6 +28,9 @@ ProgramResponse _$ProgramResponseFromJson(Map<String, dynamic> json) =>
       pinned: (json['pinned'] as num?)?.toInt(),
       isChanged: json['is_changed'] as bool?,
       onStage: json['on_stage'] as bool?,
+      artists: (json['artists'] as List<dynamic>?)
+          ?.map((e) => ArtistResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
       location: json['location'] == null
           ? null
           : LocationResponse.fromJson(json['location'] as Map<String, dynamic>),
@@ -61,6 +64,7 @@ Map<String, dynamic> _$ProgramResponseToJson(ProgramResponse instance) =>
       'pinned': instance.pinned,
       'is_changed': instance.isChanged,
       'on_stage': instance.onStage,
+      'artists': instance.artists?.map((e) => e.toJson()).toList(),
       'location': instance.location?.toJson(),
       'program_categories': instance.programCategories
           ?.map((e) => e.toJson())

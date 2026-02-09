@@ -55,6 +55,13 @@ class NavigationService {
     _goToPageImpl(context: context, route: NavigationRoute.eventDetails);
   }
 
+  void goToFavoritesPage() {
+    _goToPageImpl(
+      context: context,
+      route: NavigationRoute.favorites,
+    );
+  }
+
   void goToHomePage() {
     _goToPageImpl(
       context: context,

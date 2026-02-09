@@ -2,9 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/generated/locale_keys.g.dart';
-import 'package:valley_of_arts/shared/animations/animations.dart';
-
-import 'package:valley_of_arts/shared/decor/decor.dart';
+import 'package:valley_of_arts/presentation/shared/shared.dart';
 
 class HomeHeader extends StatefulWidget {
   final Color background;
@@ -62,7 +60,7 @@ class _HomeHeaderState extends State<HomeHeader>
     final circle1 = _interval(0.18, 0.55, curve: Curves.elasticOut);
     final circle2 = _interval(0.24, 0.60, curve: Curves.elasticOut);
     final circle3 = _interval(0.30, 0.66, curve: Curves.elasticOut);
-    //final circle4 = _interval(0.36, 0.72, curve: Curves.elasticOut);
+    final circle4 = _interval(0.36, 0.72, curve: Curves.elasticOut);
 
     final stroke1 = _interval(0.12, 0.80, curve: Curves.easeInOut);
     final stroke2 = _interval(0.30, 0.92, curve: Curves.easeInOut);
@@ -97,14 +95,14 @@ class _HomeHeaderState extends State<HomeHeader>
             color: const Color(0xFFF0C24B),
             opacity: 0.9,
           ),
-          /*AnimatedCircle(
+          AnimatedCircle(
             anim: circle4,
             right: 16,
             bottom: 92,
             size: 42,
             color: const Color(0xFF2EDAD3),
             opacity: 0.65,
-          ),*/
+          ),
 
           Positioned.fill(
             child: Padding(
@@ -134,7 +132,7 @@ class _HomeHeaderState extends State<HomeHeader>
                               ),
                               child: Text(
                                 '07.24 - 08.02',
-                                style: appTheme.smallHeadLine
+                                style: appTheme.smallHeadLine,
                               ),
                             ),
                           ),
@@ -182,7 +180,7 @@ class _HomeHeaderState extends State<HomeHeader>
                                 ),
                                 child: Text(
                                   LocaleKeys.Home_Purchase.tr(),
-                                  style: appTheme.smallHeadLine
+                                  style: appTheme.smallHeadLine,
                                 ),
                               ),
                             ),

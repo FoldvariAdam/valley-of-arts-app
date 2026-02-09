@@ -1,5 +1,7 @@
+import 'package:valley_of_arts/domain/programs/models/models.dart';
+
 abstract class ProgramsRepository {
-  Future<void> getPrograms({
+  Future<List<Program>> getPrograms({
     List<int>? categoryIds,
     String? date,
     int? locationId,
@@ -8,4 +10,6 @@ abstract class ProgramsRepository {
     int? page,
     int? perPage,
   });
+
+  Future<int> getFavoritesLength();
 }

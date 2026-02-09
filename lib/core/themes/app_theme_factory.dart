@@ -64,6 +64,7 @@ class AppThemeFactory {
           s2: AppTokens.s2,
           s3: AppTokens.s3,
           s4: AppTokens.s4,
+          s5: AppTokens.s5,
           r2xl: BorderRadius.circular(AppTokens.r2xl),
           foregroundColor: AppTokens.foregroundColor,
           backgroundColor: AppTokens.backgroundColor,

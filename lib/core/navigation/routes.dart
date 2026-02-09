@@ -25,12 +25,12 @@ GoRouter createRouterConfig({required String initialLocation}) {
           GoRoute(
             name: NavigationRoute.eventDetails.path,
             path: NavigationRoute.eventDetails.fullPath,
-            builder: (context, state) => Container(),
+            builder: (context, state) => const EventDetailsPage(),
           ),
           GoRoute(
             name: NavigationRoute.favorites.path,
             path: NavigationRoute.favorites.fullPath,
-            builder: (context, state) => Container(),
+            builder: (context, state) => const FavoritesPage(),
           ),
           GoRoute(
             name: NavigationRoute.home.path,

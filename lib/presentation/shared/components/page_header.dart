@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
-import 'package:valley_of_arts/shared/animations/animations.dart';
+import 'package:valley_of_arts/presentation/shared/animations/animations.dart';
 
 class PageHeader extends StatelessWidget {
   final String title;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/generated/locale_keys.g.dart';
 import 'package:valley_of_arts/presentation/settings/widgets/widgets.dart';
-import 'package:valley_of_arts/shared/shared.dart';
+import 'package:valley_of_arts/presentation/shared/shared.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -53,13 +53,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 Entrance(
                   fromY: 20,
                   delayMs: 0,
-                  child: _Card(
+                  child: AppCard(
                     child: SingleSelectList<String>(
                       items: ['hu', 'en'],
                       selected: selectedLanguage,
                       onSelected: (val) =>
                           setState(() => selectedLanguage = val),
-                      itemBuilder: (val, isSelected) {
+                      itemBuilder: (val, isSelected, index, length) {
                         switch (val) {
                           case 'hu':
                             return SelectableRow(
@@ -69,6 +69,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                               title: LocaleKeys.Settings_Language_Hu.tr(),
                               isSelected: isSelected,
+                              index: index,
+                              length: length,
                             );
                           case 'en':
                             return SelectableRow(
@@ -78,6 +80,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                               title: LocaleKeys.Settings_Language_En.tr(),
                               isSelected: isSelected,
+                              index: index,
+                              length: length,
                             );
                           default:
                             return const SizedBox.shrink();
@@ -103,7 +107,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Entrance(
                   fromY: 20,
                   delayMs: 200,
-                  child: _Card(
+                  child: AppCard(
                     child: Column(
                       children: [
                         LabeledSwitch(
@@ -145,7 +149,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Entrance(
                   fromY: 20,
                   delayMs: 400,
-                  child: _Card(
+                  child: AppCard(
                     child: Column(
                       children: [
                         LabeledSwitch(
@@ -252,29 +256,33 @@ class _SettingsPageState extends State<SettingsPage> {
                 Entrance(
                   fromY: 20,
                   delayMs: 600,
-                  child: _Card(
-                    child: Column(
-                      children: [
-                        ChevronRow(
+                  child: Column(
+                    children: [
+                      AppCard(
+                        onTap: () {},
+                        child: ChevronRow(
                           title: LocaleKeys.Settings_Information_Rules.tr(),
-                          onTap: () {},
                         ),
-                        const AppDivider(),
-                        ChevronRow(
+                      ),
+                      SizedBox(height: appTheme.s2),
+                      AppCard(
+                        onTap: () {},
+                        child: ChevronRow(
                           title: LocaleKeys.Settings_Information_FAQ.tr(),
-                          onTap: () {},
                         ),
-                        const AppDivider(),
-                        ChevronRow(
+                      ),
+                      SizedBox(height: appTheme.s2),
+                      AppCard(
+                        onTap: () {},
+                        child: ChevronRow(
                           title: LocaleKeys.Settings_Information_Contact.tr(),
-                          onTap: () {},
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
 
-                const SizedBox(height: 18),
+                SizedBox(height: appTheme.s4),
 
                 Center(
                   child: Text(
@@ -287,27 +295,6 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _Card extends StatelessWidget {
-  final Widget child;
-
-  const _Card({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final appTheme = context.appTheme;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: appTheme.cardBackgroundColor,
-        borderRadius: appTheme.r2xl,
-        border: Border.all(color: appTheme.borderColor, width: 1),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: child,
     );
   }
 }

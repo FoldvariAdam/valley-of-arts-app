@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 @immutable
 class AppTheme extends ThemeExtension<AppTheme> {
   // --- Spacing ---
-  final double s0, s1, s2, s3, s4;
+  final double s0, s1, s2, s3, s4, s5;
 
   // --- Radius ---
   final BorderRadius r2xl;
@@ -41,6 +41,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.s2,
     required this.s3,
     required this.s4,
+    required this.s5,
     required this.r2xl,
     required this.foregroundColor,
     required this.backgroundColor,

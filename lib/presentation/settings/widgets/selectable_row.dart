@@ -5,22 +5,42 @@ class SelectableRow extends StatelessWidget {
   final Widget? leading;
   final String title;
   final bool isSelected;
+  final int index;
+  final int length;
 
   const SelectableRow({
     super.key,
     required this.leading,
     required this.title,
     required this.isSelected,
+    required this.index,
+    required this.length,
   });
 
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
-    final bg = isSelected ? appTheme.selectedColor : Colors.transparent;
+    BorderRadius borderRadius;
+    if (length == 1) {
+      borderRadius = appTheme.r2xl;
+    } else if (index == 0) {
+      borderRadius = BorderRadius.vertical(
+        top: Radius.circular(appTheme.r2xl.topLeft.x),
+      );
+    } else if (index == length - 1) {
+      borderRadius = BorderRadius.vertical(
+        bottom: Radius.circular(appTheme.r2xl.bottomLeft.x),
+      );
+    } else {
+      borderRadius = BorderRadius.zero;
+    }
 
     return Container(
-      color: bg,
+      decoration: BoxDecoration(
+        color: isSelected ? appTheme.selectedColor : Colors.transparent,
+        borderRadius: borderRadius,
+      ),
       padding: EdgeInsets.all(appTheme.s2),
       child: Row(
         children: [
@@ -31,8 +51,8 @@ class SelectableRow extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: appTheme.bodyText
-                )
+                  style: appTheme.bodyText,
+                ),
               ],
             ),
           ),
@@ -43,7 +63,7 @@ class SelectableRow extends StatelessWidget {
               width: 24,
               height: 24,
               decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: Icon(Icons.check, size: 24, color: appTheme.accentColor),
+              child: Icon(Icons.check, size: 20, color: appTheme.accentColor),
             ),
           ),
         ],

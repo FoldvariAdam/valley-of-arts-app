@@ -9,7 +9,11 @@
   "Home": {
     "Title": "Művészetek\nVölgye",
     "SubTitle": "Az ország legnagyobb fesztiválja",
-    "Purchase": "Jegyvásárlás"
+    "Purchase": "Jegyvásárlás",
+    "Popular": "Népszerű programok",
+    "Favorites": "Kedvenc eseményeim",
+    "FavoritesDescription": "Ne hagyd ki kedvenceidet – {} esemény vár rád",
+    "Upcoming": "Közelgő események"
   },
   "Settings": {
     "Title": "Beállítások",

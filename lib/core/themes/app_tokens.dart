@@ -29,6 +29,7 @@ class AppTokens {
   static const double s2 = 15;
   static const double s3 = 20;
   static const double s4 = 25;
+  static const double s5 = 30;
 
   // --- Radius ---
   static const double r2xl = 24;

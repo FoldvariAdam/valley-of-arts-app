@@ -9,7 +9,11 @@
   "Home": {
     "Title": "Arts of\nValley",
     "SubTitle": "The country's largest festival",
-    "Purchase": "Buy Ticket"
+    "Purchase": "Buy Ticket",
+    "Popular": "Popular programs",
+    "Favorites": "My Favorite Events",
+    "FavoritesDescription": "Don't miss your favorites – {} events are waiting for you",
+    "Upcoming": "Upcoming Events"
   },
   "Settings": {
     "Title": "Settings",

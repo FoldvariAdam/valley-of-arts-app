@@ -12,6 +12,10 @@ abstract class  LocaleKeys {
   static const Home_Title = 'Home.Title';
   static const Home_SubTitle = 'Home.SubTitle';
   static const Home_Purchase = 'Home.Purchase';
+  static const Home_Popular = 'Home.Popular';
+  static const Home_Favorites = 'Home.Favorites';
+  static const Home_FavoritesDescription = 'Home.FavoritesDescription';
+  static const Home_Upcoming = 'Home.Upcoming';
   static const Home = 'Home';
   static const Settings_Title = 'Settings.Title';
   static const Settings_SubTitle = 'Settings.SubTitle';
