@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../controllers/nav_bar_controller.dart';
+import 'package:valley_of_arts/core/controllers/nav_bar_controller.dart';
 
 class NoDisappearBottomNavbarKey extends UniqueKey {}
 
 class BottomNavbarScrollNotificationListener extends StatelessWidget {
   final Widget child;
 
-  BottomNavbarScrollNotificationListener({
-    super.key,
-    required this.child,
-  });
+  BottomNavbarScrollNotificationListener({super.key, required this.child});
 
-  final NavBarController _navBarController = GetIt.instance.get<NavBarController>();
+  final NavBarController _navBarController = GetIt.instance
+      .get<NavBarController>();
 
   // 120 is the least minimum threshold
   final double _minimumScrollThreshold = 120;
@@ -25,13 +23,15 @@ class BottomNavbarScrollNotificationListener extends StatelessWidget {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification notification) {
         // Do nothing on horizontal scrolls
-        if (notification.metrics.axis == Axis.horizontal || notification is! ScrollUpdateNotification) {
+        if (notification.metrics.axis == Axis.horizontal ||
+            notification is! ScrollUpdateNotification) {
           return true;
         }
 
         final element = notification.context as Element;
 
-        final Widget? widget = element.findAncestorWidgetOfExactType<SingleChildScrollView>() ??
+        final Widget? widget =
+            element.findAncestorWidgetOfExactType<SingleChildScrollView>() ??
             element.findAncestorWidgetOfExactType<ListView>() ??
             element.findAncestorWidgetOfExactType<CustomScrollView>() ??
             element.findAncestorWidgetOfExactType<GridView>();

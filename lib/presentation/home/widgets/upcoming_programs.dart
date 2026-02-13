@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/domain/programs/models/models.dart';
 import 'package:valley_of_arts/generated/locale_keys.g.dart';
-import 'package:valley_of_arts/presentation/shared/animations/animations.dart';
 import 'package:valley_of_arts/presentation/shared/components/components.dart';
 
 class UpcomingPrograms extends StatelessWidget {
@@ -23,32 +22,26 @@ class UpcomingPrograms extends StatelessWidget {
               child: _LiveIcon(),
             ),
             SizedBox(width: appTheme.s1),
-            Text(
-              LocaleKeys.Home_Upcoming.tr(),
-              style: appTheme.smallHeadLine,
-            ),
+            Text(LocaleKeys.Home_Upcoming.tr(), style: appTheme.smallHeadLine),
           ],
         ),
 
         SizedBox(height: appTheme.s2),
 
-        Column(
-          children: [
-            for (int i = 0; i < programs.length; i++) ...[
-              Entrance(
-                delayMs: i * 10,
-                fromX: -20,
-                fromY: 0,
-                child: ProgramCard(
-                  program: programs[i],
-                  onToggleFavorite: (_) {},
-                  onTap: NavigationService.of(context).goToEventDetailsPage,
-                  compact: true,
-                ),
-              ),
-              SizedBox(height: appTheme.s1),
-            ],
-          ],
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: appTheme.s2),
+          child: AnimatedListView<Program>(
+            items: programs,
+            spacing: appTheme.s1,
+            itemBuilder: (context, program, index) {
+              return ProgramCard(
+                program: program,
+                onToggleFavorite: (_) {},
+                onTap: NavigationService.of(context).goToProgramDetailsPage,
+                compact: true,
+              );
+            },
+          ),
         ),
       ],
     );

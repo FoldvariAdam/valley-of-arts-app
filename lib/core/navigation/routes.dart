@@ -18,14 +18,14 @@ GoRouter createRouterConfig({required String initialLocation}) {
         builder: (context, state, widget) => AppShell(child: widget),
         routes: [
           GoRoute(
-            name: NavigationRoute.events.path,
-            path: NavigationRoute.events.fullPath,
-            builder: (context, state) => const EventsPage(),
+            name: NavigationRoute.programs.path,
+            path: NavigationRoute.programs.fullPath,
+            builder: (context, state) => const ProgramsPage(),
           ),
           GoRoute(
-            name: NavigationRoute.eventDetails.path,
-            path: NavigationRoute.eventDetails.fullPath,
-            builder: (context, state) => const EventDetailsPage(),
+            name: NavigationRoute.programDetails.path,
+            path: NavigationRoute.programDetails.fullPath,
+            builder: (context, state) => const ProgramDetailsPage(),
           ),
           GoRoute(
             name: NavigationRoute.favorites.path,

@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:valley_of_arts/data/repositories/programs/programs_repository.dart';
 import 'package:valley_of_arts/domain/programs/models/models.dart';
 
@@ -17,7 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({required ProgramsRepository programRepository})
     : _programRepository = programRepository,
       super(const HomeState()) {
-    on<HomeStart>((event, emit) async {
+    on<HomeStarted>((event, emit) async {
       emit(
         state.copyWith(
           loadingPopular: true,
@@ -33,7 +34,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ]);
     });
 
-    on<HomeGetCurrentProgramsEvent>((event, emit) async {
+    on<HomeLoadMoreCurrentProgramsRequested>((event, emit) async {
       emit(state.copyWith(loadingCurrent: true));
       await _loadCurrent(emit);
     }, transformer: droppable());

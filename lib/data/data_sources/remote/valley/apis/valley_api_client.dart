@@ -23,7 +23,7 @@ abstract class ValleyApiClient {
   });
 
   @GET("/locations")
-  Future<LocationResponse> getLocations();
+  Future<List<LocationResponse>> getLocations();
 
   @GET("/map")
   Future<MapResponse> getMap();

@@ -27,9 +27,10 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
       duration: const Duration(milliseconds: 150),
     );
 
-    _scale = Tween(begin: 1.0, end: 0.96).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
+    _scale = Tween(
+      begin: 1.0,
+      end: 0.96,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
   }
 
   @override
@@ -69,10 +70,13 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
       decoration: BoxDecoration(
         color: _isInteractive ? bg : appTheme.cardBackgroundColor,
         borderRadius: appTheme.r2xl,
-        border: Border.all(color: _isInteractive ? border : appTheme.borderColor, width: 1.2),
+        border: Border.all(
+          color: _isInteractive ? border : appTheme.borderColor,
+          width: 1.2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(_pressed ? 0.18 : 0.10),
+            color: Colors.black.withValues(alpha: _pressed ? 0.18 : 0.10),
             blurRadius: _pressed ? 22 : 16,
             offset: const Offset(0, 10),
           ),
@@ -87,16 +91,10 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
         onTapUp: _onTapUp,
         onTapCancel: _onTapCancel,
         onTap: widget.onTap,
-        child: ScaleTransition(
-          scale: _scale,
-          child: cardContent,
-        ),
+        child: ScaleTransition(scale: _scale, child: cardContent),
       );
     }
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: appTheme.s3),
-      child: cardContent,
-    );
+    return cardContent;
   }
 }

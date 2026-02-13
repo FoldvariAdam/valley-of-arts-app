@@ -1,9 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
-import 'package:valley_of_arts/generated/locale_keys.g.dart';
 import 'package:valley_of_arts/core/core.dart';
+import 'package:valley_of_arts/generated/locale_keys.g.dart';
 
 class AppBottomBarItem {
   final NavigationRoute route;
@@ -70,7 +69,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         label: LocaleKeys.AppBottomBar_Home.tr(),
       ),
       AppBottomBarItem(
-        route: NavigationRoute.events,
+        route: NavigationRoute.programs,
         icon: Icons.event,
         label: LocaleKeys.AppBottomBar_Events.tr(),
       ),

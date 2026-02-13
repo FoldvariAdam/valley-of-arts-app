@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 enum NavigationRoute {
-  events(),
-  eventDetails(),
   favorites(),
   home(),
   map(),
+  programs(),
+  programDetails(),
   schedule(),
   settings();
 
@@ -43,18 +43,6 @@ class NavigationService {
     );
   }
 
-  void goToEventsPage() {
-    _goToPageImpl(
-      context: context,
-      route: NavigationRoute.events,
-      withoutStacking: true,
-    );
-  }
-
-  void goToEventDetailsPage() {
-    _goToPageImpl(context: context, route: NavigationRoute.eventDetails);
-  }
-
   void goToFavoritesPage() {
     _goToPageImpl(
       context: context,
@@ -68,6 +56,18 @@ class NavigationService {
       route: NavigationRoute.home,
       withoutStacking: true,
     );
+  }
+
+  void goToProgramsPage() {
+    _goToPageImpl(
+      context: context,
+      route: NavigationRoute.programs,
+      withoutStacking: true,
+    );
+  }
+
+  void goToProgramDetailsPage() {
+    _goToPageImpl(context: context, route: NavigationRoute.programDetails);
   }
 
   void goToMapPage() {

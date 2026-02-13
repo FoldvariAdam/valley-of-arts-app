@@ -9,7 +9,7 @@ class AppThemeFactory {
     /// TODO: test all the colors
     final scheme = ColorScheme(
       brightness: Brightness.dark,
-      primary: AppTokens.accentColor,
+      primary: AppTokens.primaryColor,
       onPrimary: AppTokens.foregroundColor,
       secondary: AppTokens.secondaryColor,
       onSecondary: AppTokens.foregroundColor,

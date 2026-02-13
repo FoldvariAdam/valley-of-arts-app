@@ -12,7 +12,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.instance.get<HomeBloc>()..add(HomeStart()),
+      create: (context) =>
+          GetIt.instance.get<HomeBloc>()..add(const HomeStarted()),
       child: const _HomePageInner(),
     );
   }
@@ -45,7 +46,9 @@ class _HomePageInnerState extends State<_HomePageInner> {
 
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 50) {
-        context.read<HomeBloc>().add(HomeGetCurrentProgramsEvent());
+        context.read<HomeBloc>().add(
+          const HomeLoadMoreCurrentProgramsRequested(),
+        );
       }
     });
   }
@@ -60,90 +63,91 @@ class _HomePageInnerState extends State<_HomePageInner> {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverToBoxAdapter(
-                child: HomeHeader(
-                  background: appTheme.backgroundColor,
-                  onTicketTap: () {},
-                ),
-              ),
-
-              SliverToBoxAdapter(child: SizedBox(height: appTheme.s2)),
-
-              BlocBuilder<HomeBloc, HomeState>(
-                buildWhen: (prev, curr) =>
-                    prev.popularPrograms != curr.popularPrograms ||
-                    prev.loadingPopular != curr.loadingPopular,
-                builder: (context, state) {
-                  final popularPrograms = state.popularPrograms;
-                  if (state.loadingPopular) {
-                    return const SliverToBoxAdapter(
-                      child: SizedBox(height: 250, child: AppCircularProgressIndicator()),
-                    );
-                  }
-
-                  if (popularPrograms != null && popularPrograms.isNotEmpty) {
-                    return SliverToBoxAdapter(
-                      child: PopularEventsCarousel(programs: popularPrograms),
-                    );
-                  }
-
-                  return SliverToBoxAdapter(child: Container());
-                },
-              ),
-
-              SliverToBoxAdapter(child: SizedBox(height: appTheme.s5)),
-
-              BlocBuilder<HomeBloc, HomeState>(
-                buildWhen: (prev, curr) =>
-                    prev.favoritesLength != curr.favoritesLength ||
-                    prev.loadingFavorites != curr.loadingFavorites,
-                builder: (context, state) {
-                  return const SliverToBoxAdapter(child: FavoritesCard());
-                },
-              ),
-
-              SliverToBoxAdapter(child: SizedBox(height: appTheme.s5)),
-
-              BlocBuilder<HomeBloc, HomeState>(
-                buildWhen: (prev, curr) =>
-                    prev.currentPrograms != curr.currentPrograms ||
-                    prev.loadingCurrent != curr.loadingCurrent,
-                builder: (context, state) {
-                  return SliverToBoxAdapter(
-                    child: UpcomingPrograms(
-                      programs: state.currentPrograms ?? [],
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 12,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: ScrollToTopButton(
-                visible: _showScrollToTop,
-                onPressed: () {
-                  _scrollController.animateTo(
-                    0,
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.easeOutCubic,
-                  );
-                },
+    return Stack(
+      children: [
+        CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            SliverToBoxAdapter(
+              child: HomeHeader(
+                background: appTheme.backgroundColor,
+                onTicketTap: () {},
               ),
             ),
+
+            SliverToBoxAdapter(child: SizedBox(height: appTheme.s2)),
+
+            BlocBuilder<HomeBloc, HomeState>(
+              buildWhen: (prev, curr) =>
+                  prev.popularPrograms != curr.popularPrograms ||
+                  prev.loadingPopular != curr.loadingPopular,
+              builder: (context, state) {
+                final popularPrograms = state.popularPrograms;
+                if (state.loadingPopular) {
+                  return const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 250,
+                      child: AppCircularProgressIndicator(),
+                    ),
+                  );
+                }
+
+                if (popularPrograms != null && popularPrograms.isNotEmpty) {
+                  return SliverToBoxAdapter(
+                    child: PopularEventsCarousel(programs: popularPrograms),
+                  );
+                }
+
+                return SliverToBoxAdapter(child: Container());
+              },
+            ),
+
+            SliverToBoxAdapter(child: SizedBox(height: appTheme.s5)),
+
+            BlocBuilder<HomeBloc, HomeState>(
+              buildWhen: (prev, curr) =>
+                  prev.favoritesLength != curr.favoritesLength ||
+                  prev.loadingFavorites != curr.loadingFavorites,
+              builder: (context, state) {
+                return const SliverToBoxAdapter(child: FavoritesCard());
+              },
+            ),
+
+            SliverToBoxAdapter(child: SizedBox(height: appTheme.s5)),
+
+            BlocBuilder<HomeBloc, HomeState>(
+              buildWhen: (prev, curr) =>
+                  prev.currentPrograms != curr.currentPrograms ||
+                  prev.loadingCurrent != curr.loadingCurrent,
+              builder: (context, state) {
+                return SliverToBoxAdapter(
+                  child: UpcomingPrograms(
+                    programs: state.currentPrograms ?? [],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+
+        Positioned(
+          top: MediaQuery.of(context).padding.top + 12,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: ScrollToTopButton(
+              visible: _showScrollToTop,
+              onPressed: () {
+                _scrollController.animateTo(
+                  0,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeOutCubic,
+                );
+              },
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

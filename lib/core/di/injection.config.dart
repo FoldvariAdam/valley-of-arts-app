@@ -21,7 +21,17 @@ import 'package:valley_of_arts/data/repositories/programs/programs_repository.da
     as _i930;
 import 'package:valley_of_arts/data/repositories/programs/programs_repository_impl.dart'
     as _i629;
+import 'package:valley_of_arts/data/repositories/programs_filter/programs_filters_repository.dart'
+    as _i476;
+import 'package:valley_of_arts/data/repositories/programs_filter/programs_filters_repository_impl.dart'
+    as _i576;
+import 'package:valley_of_arts/data/repositories/repositories.dart' as _i809;
+import 'package:valley_of_arts/domain/domain.dart' as _i439;
+import 'package:valley_of_arts/domain/programs_filter/use_cases/get_locations_grouped_by_city_use_case.dart'
+    as _i838;
 import 'package:valley_of_arts/presentation/home/blocs/home_bloc.dart' as _i59;
+import 'package:valley_of_arts/presentation/programs/blocs/programs_bloc.dart'
+    as _i791;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -36,6 +46,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i900.ValleyApiClient>(
       () => networkModule.valleyApiClient(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i476.ProgramsFiltersRepository>(
+      () => _i576.ProgramsFilterRepositoryImpl(
+        valleyApiClient: gh<_i900.ValleyApiClient>(),
+      ),
+    );
     gh.lazySingleton<_i930.ProgramsRepository>(
       () => _i629.ProgramsRepositoryImpl(
         valleyApiClient: gh<_i900.ValleyApiClient>(),
@@ -43,6 +58,19 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i59.HomeBloc>(
       () => _i59.HomeBloc(programRepository: gh<_i930.ProgramsRepository>()),
+    );
+    gh.factory<_i838.GetLocationsGroupedByCityUseCase>(
+      () => _i838.GetLocationsGroupedByCityUseCase(
+        gh<_i476.ProgramsFiltersRepository>(),
+      ),
+    );
+    gh.factory<_i791.ProgramsBloc>(
+      () => _i791.ProgramsBloc(
+        programRepository: gh<_i809.ProgramsRepository>(),
+        programsFiltersRepository: gh<_i809.ProgramsFiltersRepository>(),
+        getLocationsGroupedByCityUseCase:
+            gh<_i439.GetLocationsGroupedByCityUseCase>(),
+      ),
     );
     return this;
   }

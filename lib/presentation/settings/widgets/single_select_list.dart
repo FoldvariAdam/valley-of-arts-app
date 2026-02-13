@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
 
-import 'package:flutter/material.dart';
-import 'package:valley_of_arts/core/core.dart';
-
 class SingleSelectList<T> extends StatefulWidget {
   final List<T> items;
   final T selected;

@@ -148,8 +148,8 @@ class _PopularCard extends StatelessWidget {
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [
-                        Colors.black.withOpacity(0.80),
-                        Colors.black.withOpacity(0.30),
+                        Colors.black.withValues(alpha: 0.80),
+                        Colors.black.withValues(alpha: 0.30),
                         Colors.transparent,
                       ],
                     ),

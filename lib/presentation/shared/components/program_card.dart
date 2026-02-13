@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/domain/programs/models/models.dart';
-import 'package:valley_of_arts/presentation/presentation.dart';
+import 'package:valley_of_arts/presentation/shared/components/components.dart';
 
 class ProgramCard extends StatelessWidget {
   final Program program;
@@ -75,7 +75,7 @@ class ProgramCard extends StatelessWidget {
                     const Icon(Icons.access_time, size: 14),
                     const SizedBox(width: 4),
                     Text(
-                      program.startTime.toCustomString(),
+                      program.startTime.toFullDateTimeString(),
                       style: const TextStyle(fontSize: 12),
                     ),
                     const SizedBox(width: 12),

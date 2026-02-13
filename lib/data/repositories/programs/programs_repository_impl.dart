@@ -1,14 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:valley_of_arts/core/exceptions/exceptions.dart';
 import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley_api_client.dart';
 import 'package:valley_of_arts/data/repositories/programs/programs_repository.dart';
 import 'package:valley_of_arts/domain/programs/programs.dart';
 
 @LazySingleton(as: ProgramsRepository)
 class ProgramsRepositoryImpl implements ProgramsRepository {
+  final ValleyApiClient _valleyApiClient;
+
   ProgramsRepositoryImpl({required ValleyApiClient valleyApiClient})
     : _valleyApiClient = valleyApiClient;
-
-  final ValleyApiClient _valleyApiClient;
 
   @override
   Future<List<Program>> getPrograms({
@@ -33,10 +35,15 @@ class ProgramsRepositoryImpl implements ProgramsRepository {
       );
 
       return programs.toDomainModel();
-    } catch (e, s) {
-      print(e);
-      print(s);
-      rethrow;
+    } catch (e) {
+      if (e is DioException) {
+        if (e.type == DioExceptionType.connectionError) {
+          throw NetworkException();
+        }
+        throw ServerException(e.message ?? '');
+      }
+
+      throw UnknownException();
     }
   }
 
