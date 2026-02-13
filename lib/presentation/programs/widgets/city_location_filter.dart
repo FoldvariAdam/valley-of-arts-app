@@ -4,6 +4,7 @@ import 'package:valley_of_arts/domain/programs_filter/models/models.dart';
 import 'package:valley_of_arts/presentation/shared/components/components.dart';
 
 class CityLocationFilter extends StatefulWidget {
+  final int? selectedLocation;
   final List<CityWithLocations> cities;
   final ValueChanged<int?> onLocationChanged;
 
@@ -11,6 +12,7 @@ class CityLocationFilter extends StatefulWidget {
     super.key,
     required this.cities,
     required this.onLocationChanged,
+    this.selectedLocation,
   });
 
   @override
@@ -33,6 +35,14 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    final asd = null.toString();
+    _selectedCityId = _getCityByLocationId();
+    _selectedLocationId = widget.selectedLocation;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
@@ -49,6 +59,11 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
         SizedBox(height: appTheme.s1),
 
         AppFilterChipGroup<CityWithLocations>(
+          selectedIds: [
+            _selectedCityId.toString() == 'null'
+                ? null
+                : _selectedCityId.toString(),
+          ],
           items: widget.cities,
           idOf: (c) => c.cityId.toString(),
           labelOf: (c) => c.cityName,
@@ -98,5 +113,19 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
         ),
       ],
     );
+  }
+
+  int? _getCityByLocationId() {
+    if (widget.selectedLocation == null) return null;
+
+    try {
+      final city = widget.cities.firstWhere(
+        (city) => city.locations.any((l) => l.id == widget.selectedLocation),
+      );
+
+      return city.cityId;
+    } catch (_) {
+      return null;
+    }
   }
 }

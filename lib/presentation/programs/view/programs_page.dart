@@ -28,7 +28,8 @@ class _ProgramsPageInner extends StatefulWidget {
 class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
   String? _selectedDate;
   List<int>? _selectedCategories;
-  int? _location;
+  int? _selectedLocation;
+  bool _filtersExpanded = true;
 
   @override
   Widget build(BuildContext context) {
@@ -44,94 +45,120 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
             subtitle: 'Szűrj hely, időpont és kategória alapján',
           ),
 
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton.icon(
+                onPressed: () {
+                  setState(() {
+                    _filtersExpanded = !_filtersExpanded;
+                  });
+                },
+                icon: Icon(
+                  _filtersExpanded ? Icons.expand_less : Icons.expand_more,
+                ),
+                label: Text(
+                  _filtersExpanded ? 'Szűrők bezárása' : 'Szűrők megnyitása',
+                ),
+              ),
+            ],
+          ),
+
           SizedBox(height: appTheme.s2),
 
           BlocBuilder<ProgramsBloc, ProgramsState>(
             buildWhen: (prev, curr) => curr is ProgramsFiltersLoaded,
             builder: (context, state) {
-              if (state is ProgramsFiltersLoaded) {
-                final schedule = state.schedule;
-                final categories = state.categories;
-                final locations = state.locations;
-
-                return Column(
-                  children: [
-                    const SectionTitle(
-                      icon: Icons.calendar_today,
-                      title: 'Dátum',
-                    ),
-
-                    SizedBox(height: appTheme.s1),
-
-                    AppFilterChipGroup<DateTime>(
-                      items: schedule.dates,
-                      idOf: (s) => s.toBackendDateQuery(),
-                      labelOf: (s) => s.toShortMonthString(),
-                      onChanged: (ids) {
-                        _selectedDate = ids.first;
-                        _filterPrograms(context: context);
-                      },
-                    ),
-
-                    SizedBox(height: appTheme.s2),
-
-                    const SectionTitle(
-                      icon: Icons.filter_alt,
-                      title: 'Kategória',
-                    ),
-
-                    SizedBox(height: appTheme.s1),
-
-                    AppFilterChipGroup<Category>(
-                      items: categories,
-                      multi: true,
-                      idOf: (c) => c.id.toString(),
-                      labelOf: (c) => c.name,
-                      onChanged: (ids) {
-                        _selectedCategories = ids.first == null
-                            ? []
-                            : ids.map((e) => int.parse(e!)).toList();
-
-                        _filterPrograms(context: context);
-                      },
-                    ),
-
-                    SizedBox(height: appTheme.s2),
-
-                    const SectionTitle(
-                      icon: Icons.location_city,
-                      title: 'Helyszín',
-                    ),
-
-                    SizedBox(height: appTheme.s1),
-
-                    Row(
-                      children: [
-                        SizedBox(width: appTheme.s1),
-                        Expanded(
-                          child: Text(
-                            'A város szűrő csak a helyszínlistát szűkíti – a programok a kiválasztott helyszín alapján frissülnek.',
-                            style: appTheme.descriptionText,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: appTheme.s2
-                    ),
-
-                    CityLocationFilter(
-                      cities: locations,
-                      onLocationChanged: (location) {
-                        _location = location;
-                        _filterPrograms(context: context);
-                      },
-                    ),
-                  ],
-                );
-              } else {
+              if (state is! ProgramsFiltersLoaded) {
                 return const AppCircularProgressIndicator();
               }
+
+              final schedule = state.schedule;
+              final categories = state.categories;
+              final locations = state.locations;
+
+              return AnimatedSize(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                child: _filtersExpanded
+                    ? Column(
+                        children: [
+                          const SectionTitle(
+                            icon: Icons.calendar_today,
+                            title: 'Dátum',
+                          ),
+                          SizedBox(height: appTheme.s1),
+                          AppFilterChipGroup<DateTime>(
+                            selectedIds: [_selectedDate],
+                            items: schedule.dates,
+                            idOf: (s) => s.toBackendDateQuery(),
+                            labelOf: (s) => s.toShortMonthString(),
+                            onChanged: (ids) {
+                              _selectedDate = ids.first;
+                              _filterPrograms(context: context);
+                            },
+                          ),
+
+                          SizedBox(height: appTheme.s2),
+
+                          const SectionTitle(
+                            icon: Icons.filter_alt,
+                            title: 'Kategória',
+                          ),
+                          SizedBox(height: appTheme.s1),
+                          AppFilterChipGroup<Category>(
+                            selectedIds:
+                                _selectedCategories
+                                    ?.map((category) => category.toString())
+                                    .toList() ??
+                                [],
+                            items: categories,
+                            multi: true,
+                            idOf: (c) => c.id.toString(),
+                            labelOf: (c) => c.name,
+                            onChanged: (ids) {
+                              _selectedCategories = ids.first == null
+                                  ? []
+                                  : ids.map((e) => int.parse(e!)).toList();
+
+                              _filterPrograms(context: context);
+                            },
+                          ),
+
+                          SizedBox(height: appTheme.s2),
+
+                          const SectionTitle(
+                            icon: Icons.location_city,
+                            title: 'Helyszín',
+                          ),
+                          SizedBox(height: appTheme.s1),
+
+                          Row(
+                            children: [
+                              SizedBox(width: appTheme.s1),
+                              Expanded(
+                                child: Text(
+                                  'A város szűrő csak a helyszínlistát szűkíti – a programok a kiválasztott helyszín alapján frissülnek.',
+                                  style: appTheme.descriptionText,
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(height: appTheme.s2),
+
+                          CityLocationFilter(
+                            selectedLocation: _selectedLocation,
+                            cities: locations,
+                            onLocationChanged: (location) {
+                              _selectedLocation = location;
+                              _filterPrograms(context: context);
+                            },
+                          ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
+              );
             },
           ),
 
@@ -147,7 +174,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                 final programs = state.programs;
 
                 if (programs.isEmpty) {
-                  _EmptyState();
+                  return _EmptyState();
                 }
 
                 return Column(
@@ -157,9 +184,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                       '${programs.length} program',
                       style: appTheme.bodyText,
                     ),
-
                     SizedBox(height: appTheme.s3),
-
                     AnimatedListView<Program>(
                       items: programs,
                       spacing: appTheme.s1,
@@ -178,7 +203,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                 );
               }
 
-              return Container();
+              return const SizedBox.shrink();
             },
           ),
         ],
@@ -191,7 +216,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
         ProgramsFilterChanged(
           date: _selectedDate,
           categories: _selectedCategories,
-          location: _location,
+          location: _selectedLocation,
         ),
       );
 }
@@ -201,42 +226,44 @@ class _EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32),
-      child: Column(
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: appTheme.mutedColor,
-              shape: BoxShape.circle,
-              border: Border.all(color: appTheme.borderColor),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 32),
+        child: Column(
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: appTheme.mutedColor,
+                shape: BoxShape.circle,
+                border: Border.all(color: appTheme.borderColor),
+              ),
+              child: Icon(
+                Icons.filter_alt,
+                size: 36,
+                color: appTheme.mutedForegroundColor,
+              ),
             ),
-            child: Icon(
-              Icons.filter_alt,
-              size: 36,
-              color: appTheme.mutedForegroundColor,
+            const SizedBox(height: 14),
+            Text(
+              'Nincs találat',
+              style: TextStyle(
+                color: appTheme.foregroundColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+              ),
             ),
-          ),
-          const SizedBox(height: 14),
-          Text(
-            'Nincs találat',
-            style: TextStyle(
-              color: appTheme.foregroundColor,
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
+            const SizedBox(height: 8),
+            Text(
+              'Próbálj más szűrőbeállításokat',
+              style: TextStyle(
+                color: appTheme.mutedForegroundColor,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Próbálj más szűrőbeállításokat',
-            style: TextStyle(
-              color: appTheme.mutedForegroundColor,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
