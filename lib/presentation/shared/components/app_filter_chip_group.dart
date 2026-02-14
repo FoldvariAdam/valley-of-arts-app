@@ -27,7 +27,7 @@ class AppFilterChipGroup<T> extends StatefulWidget {
 class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
   late List<String?> _selectedIds;
   late final ScrollController _controller;
-  
+
   final Map<String, GlobalKey> _chipKeys = {};
 
   @override
@@ -152,7 +152,7 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: appTheme.s1),
         itemCount: widget.items.length + 1,
-        separatorBuilder: (_, __) => SizedBox(width: appTheme.s1),
+        separatorBuilder: (_, _) => SizedBox(width: appTheme.s1),
         itemBuilder: (context, index) {
           String id;
           Widget chip;

@@ -19,7 +19,7 @@ class FavoritesCard extends StatelessWidget {
         child: AppCard(
           onTap: NavigationService.of(context).goToFavoritesPage,
           child: ChevronRow(
-            leadingIcon: Icon(Icons.favorite, color: appTheme.accentColor),
+            leadingIcon: Icon(Icons.favorite, color: appTheme.primaryColor),
             title: LocaleKeys.Home_Favorites.tr(),
             subtitle: LocaleKeys.Home_FavoritesDescription.tr(args: ['4']),
           ),

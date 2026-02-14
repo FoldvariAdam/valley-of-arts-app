@@ -240,7 +240,7 @@ class _EmptyState extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: appTheme.mutedColor,
+                color: appTheme.componentBackgroundColor,
                 shape: BoxShape.circle,
                 border: Border.all(color: appTheme.borderColor),
               ),

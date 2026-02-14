@@ -134,7 +134,7 @@ class _PopularCard extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [appTheme.accentColor, appTheme.foregroundColor],
+                      colors: [appTheme.primaryColor, appTheme.foregroundColor],
                     ),
                   ),
                 ),
@@ -232,7 +232,7 @@ class _Dots extends StatelessWidget {
             width: active ? 24 : 8,
             decoration: BoxDecoration(
               color: active
-                  ? appTheme.accentColor
+                  ? appTheme.primaryColor
                   : appTheme.mutedForegroundColor,
               borderRadius: BorderRadius.circular(99),
             ),

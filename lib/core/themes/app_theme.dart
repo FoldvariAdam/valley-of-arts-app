@@ -15,13 +15,10 @@ class AppTheme extends ThemeExtension<AppTheme> {
   // --- Semantic colors ---
   final Color primaryColor;
   final Color secondaryColor;
-  final Color accentColor;
-  final Color destructiveColor;
-  final Color mutedColor;
   final Color mutedForegroundColor;
 
   // --- Surface colors ---
-  final Color cardBackgroundColor;
+  final Color componentBackgroundColor;
   final Color borderColor;
 
   final Color selectedColor;
@@ -47,11 +44,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.backgroundColor,
     required this.primaryColor,
     required this.secondaryColor,
-    required this.accentColor,
-    required this.destructiveColor,
-    required this.cardBackgroundColor,
+    required this.componentBackgroundColor,
     required this.borderColor,
-    required this.mutedColor,
     required this.mutedForegroundColor,
     required this.selectedColor,
     required this.bigHeadLine,

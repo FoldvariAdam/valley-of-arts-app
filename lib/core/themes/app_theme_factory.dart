@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
-import 'package:valley_of_arts/core/themes/app_theme.dart';
-import 'package:valley_of_arts/core/themes/app_tokens.dart';
 
 class AppThemeFactory {
   AppThemeFactory._();
@@ -16,9 +14,9 @@ class AppThemeFactory {
       onSecondary: AppTokens.foregroundColor,
       error: Colors.red,
       onError: AppTokens.foregroundColor,
-      surface: AppTokens.cardBackgroundColor,
+      surface: AppTokens.componentBackgroundColor,
       onSurface: AppTokens.foregroundColor,
-      surfaceContainerHighest: AppTokens.cardBackgroundColor,
+      surfaceContainerHighest: AppTokens.componentBackgroundColor,
       onSurfaceVariant: AppTokens.foregroundColor.withValues(alpha: 0.75),
       outline: AppTokens.borderColor,
     );
@@ -32,7 +30,7 @@ class AppThemeFactory {
 
     return base.copyWith(
       cardTheme: CardThemeData(
-        color: AppTokens.cardBackgroundColor,
+        color: AppTokens.componentBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppTokens.r2xl),
         ),
@@ -48,7 +46,7 @@ class AppThemeFactory {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppTokens.cardBackgroundColor,
+        fillColor: AppTokens.componentBackgroundColor,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppTokens.r2xl),
           borderSide: const BorderSide(color: AppTokens.borderColor),
@@ -71,12 +69,9 @@ class AppThemeFactory {
           backgroundColor: AppTokens.backgroundColor,
           primaryColor: AppTokens.primaryColor,
           secondaryColor: AppTokens.secondaryColor,
-          accentColor: AppTokens.accentColor,
-          destructiveColor: AppTokens.destructiveColor,
-          cardBackgroundColor: AppTokens.cardBackgroundColor,
+          componentBackgroundColor: AppTokens.componentBackgroundColor,
           borderColor: AppTokens.borderColor,
           mutedForegroundColor: AppTokens.mutedForegroundColor,
-          mutedColor: AppTokens.mutedColor,
           selectedColor: AppTokens.selectedColor,
           bigHeadLine: AppTokens.bigHeadLine,
           mediumHeadLine: AppTokens.mediumHeadLine,
@@ -86,10 +81,10 @@ class AppThemeFactory {
           descriptionText: AppTokens.descriptionText,
         ),
         AppCardTheme(
-          backgroundColor: AppTokens.cardBackgroundColor,
-          pressedBackgroundColor: AppTokens.accentColor,
+          backgroundColor: AppTokens.componentBackgroundColor,
+          pressedBackgroundColor: AppTokens.primaryColor,
           borderColor: AppTokens.borderColor,
-          pressedBorderColor: AppTokens.accentColor,
+          pressedBorderColor: AppTokens.primaryColor,
           shadowColor: Colors.black,
           borderWidth: 1.2,
           borderRadius: BorderRadius.circular(AppTokens.r2xl),
@@ -101,7 +96,7 @@ class AppThemeFactory {
           curve: Curves.easeOut,
         ),
         AppFilterChipTheme(
-          backgroundColor: AppTokens.cardBackgroundColor,
+          backgroundColor: AppTokens.componentBackgroundColor,
           activeBackgroundColor: AppTokens.primaryColor,
           foregroundColor: AppTokens.foregroundColor,
           activeForegroundColor: AppTokens.foregroundColor,
@@ -139,7 +134,7 @@ class AppThemeFactory {
             minimumSize: const Size(64, 56),
           ),
           ghost: ElevatedButton.styleFrom(
-            backgroundColor: Colors.transparent,
+            backgroundColor: AppTokens.componentBackgroundColor,
             foregroundColor: AppTokens.primaryColor,
             elevation: 0,
             padding: const EdgeInsets.symmetric(horizontal: 28),

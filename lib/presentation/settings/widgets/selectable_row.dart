@@ -63,7 +63,7 @@ class SelectableRow extends StatelessWidget {
               width: 24,
               height: 24,
               decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: Icon(Icons.check, size: 20, color: appTheme.accentColor),
+              child: Icon(Icons.check, size: 20, color: appTheme.primaryColor),
             ),
           ),
         ],

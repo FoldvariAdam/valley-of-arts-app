@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:valley_of_arts/data/repositories/repositories.dart';
 import 'package:valley_of_arts/domain/domain.dart';
-import 'package:valley_of_arts/domain/programs/models/models.dart';
-import 'package:valley_of_arts/domain/programs_filter/models/models.dart';
 
 part 'programs_event.dart';
 

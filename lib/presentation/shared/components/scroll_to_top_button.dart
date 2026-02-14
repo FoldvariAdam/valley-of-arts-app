@@ -28,7 +28,7 @@ class ScrollToTopButton extends StatelessWidget {
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: appTheme.cardBackgroundColor,
+                color: appTheme.componentBackgroundColor,
                 shape: BoxShape.circle,
                 boxShadow: [
                   const BoxShadow(

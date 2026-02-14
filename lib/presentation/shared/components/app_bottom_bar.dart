@@ -44,7 +44,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
             height: _navBarController.isOpen ? 64 : 0,
             child: Container(
               decoration: BoxDecoration(
-                color: appTheme.cardBackgroundColor,
+                color: appTheme.componentBackgroundColor,
                 border: Border(top: BorderSide(color: appTheme.borderColor)),
               ),
               child: Row(
@@ -146,7 +146,7 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                   width: 72,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: appTheme.accentColor,
+                    color: appTheme.primaryColor,
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
@@ -159,7 +159,7 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                     widget.item.icon,
                     size: 20,
                     color: widget.isActive
-                        ? appTheme.accentColor
+                        ? appTheme.primaryColor
                         : appTheme.mutedForegroundColor,
                   ),
                   SizedBox(height: appTheme.s0),
@@ -167,7 +167,7 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                     widget.item.label,
                     style: appTheme.descriptionText.copyWith(
                       color: widget.isActive
-                          ? appTheme.accentColor
+                          ? appTheme.primaryColor
                           : appTheme.mutedForegroundColor,
                     ),
                   ),
