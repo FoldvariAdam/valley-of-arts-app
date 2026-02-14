@@ -5,14 +5,22 @@ import 'package:valley_of_arts/presentation/shared/components/components.dart';
 
 class CityLocationFilter extends StatefulWidget {
   final int? selectedLocation;
+  final bool isLocationsExpanded;
   final List<CityWithLocations> cities;
   final ValueChanged<int?> onLocationChanged;
+  final ValueChanged<bool> onExpandedLocationsChanged;
+  final AppFilterChipGroupController? citiesAppFilterChipGroupController;
+  final AppFilterChipGroupController? locationsAppFilterChipGroupController;
 
   const CityLocationFilter({
     super.key,
     required this.cities,
     required this.onLocationChanged,
+    required this.onExpandedLocationsChanged,
     this.selectedLocation,
+    this.isLocationsExpanded = false,
+    this.citiesAppFilterChipGroupController,
+    this.locationsAppFilterChipGroupController,
   });
 
   @override
@@ -21,10 +29,12 @@ class CityLocationFilter extends StatefulWidget {
 
 class _CityLocationFilterState extends State<CityLocationFilter> {
   final ScrollController _verticalController = ScrollController();
+  final Map<String, GlobalKey> _locationKeys = {};
+  final GlobalKey _allKey = GlobalKey();
 
   int? _selectedCityId;
   int? _selectedLocationId;
-  bool _expandedLocations = false;
+  bool _isLocationsExpanded = false;
 
   List<Location> get _filteredLocations {
     if (_selectedCityId == null) {
@@ -42,12 +52,29 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
     super.initState();
     _selectedCityId = _getCityByLocationId();
     _selectedLocationId = widget.selectedLocation;
+    _isLocationsExpanded = widget.isLocationsExpanded;
+
+    if (_isLocationsExpanded) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToSelectedLocation();
+      });
+    }
   }
 
   @override
-  void dispose() {
-    _verticalController.dispose();
-    super.dispose();
+  void didUpdateWidget(covariant CityLocationFilter oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _selectedCityId = _getCityByLocationId();
+    _selectedLocationId = widget.selectedLocation;
+
+    if (_isLocationsExpanded) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_selectedLocationId == null) {
+          _scrollToAll();
+        }
+      });
+    }
   }
 
   @override
@@ -67,6 +94,7 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
         SizedBox(height: appTheme.s1),
 
         AppFilterChipGroup<CityWithLocations>(
+          appFilterChipGroupController: widget.citiesAppFilterChipGroupController,
           selectedIds: [
             _selectedCityId.toString() == 'null'
                 ? null
@@ -108,14 +136,21 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             AppButton.ghost(
-              text: _expandedLocations ? 'Egysoros nézet' : 'Rács nézet',
+              text: _isLocationsExpanded ? 'Egysoros nézet' : 'Rács nézet',
               icon: Icon(
-                _expandedLocations ? Icons.view_stream : Icons.grid_view,
+                _isLocationsExpanded ? Icons.view_stream : Icons.grid_view,
               ),
               onPressed: () {
                 setState(() {
-                  _expandedLocations = !_expandedLocations;
+                  _isLocationsExpanded = !_isLocationsExpanded;
+                  widget.onExpandedLocationsChanged(_isLocationsExpanded);
                 });
+
+                if (_isLocationsExpanded) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _scrollToSelectedLocation();
+                  });
+                }
               },
             ),
           ],
@@ -124,11 +159,18 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
     );
   }
 
+  @override
+  void dispose() {
+    _verticalController.dispose();
+    super.dispose();
+  }
+
   Widget _buildLocationChips() {
     final appTheme = context.appTheme;
 
-    if (!_expandedLocations) {
+    if (!_isLocationsExpanded) {
       return AppFilterChipGroup<Location>(
+        appFilterChipGroupController: widget.locationsAppFilterChipGroupController,
         items: _filteredLocations,
         idOf: (l) => l.id.toString(),
         labelOf: (l) => l.name,
@@ -170,6 +212,7 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
                 runSpacing: appTheme.s1,
                 children: [
                   AppFilterChip(
+                    key: _allKey,
                     label: 'Mind',
                     isActive: _selectedLocationId == null,
                     onTap: () => _onLocationChanged([null]),
@@ -177,9 +220,11 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
 
                   ..._filteredLocations.map((location) {
                     final id = location.id.toString();
+                    _locationKeys.putIfAbsent(id, () => GlobalKey());
                     final isSelected = _selectedLocationId?.toString() == id;
 
                     return AppFilterChip(
+                      key: _locationKeys[id],
                       label: location.name,
                       isActive: isSelected,
                       onTap: () => _onLocationChanged([id]),
@@ -192,6 +237,20 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
         ),
       );
     }
+  }
+
+  void _scrollToAll() {
+    if (!_verticalController.hasClients) return;
+
+    _verticalController.scrollToAll();
+  }
+
+  void _scrollToSelectedLocation() {
+    final id = _selectedLocationId.toString();
+    final key = _locationKeys[id];
+    if (key == null) return;
+
+    _verticalController.scrollToChip(key, isVertical: true);
   }
 
   void _onLocationChanged(List<String?> ids) {

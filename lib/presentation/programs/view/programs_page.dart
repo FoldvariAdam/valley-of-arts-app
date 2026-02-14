@@ -30,6 +30,12 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
   List<int>? _selectedCategories;
   int? _selectedLocation;
   bool _filtersExpanded = true;
+  bool _isLocationsExpanded = false;
+
+  final _datesChipController = AppFilterChipGroupController();
+  final _categoriesChipController = AppFilterChipGroupController();
+  final _citiesChipController = AppFilterChipGroupController();
+  final _locationsChipController = AppFilterChipGroupController();
 
   void _filterPrograms({required BuildContext context}) =>
       context.read<ProgramsBloc>().add(
@@ -104,8 +110,11 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                             icon: Icons.calendar_today,
                             title: 'Dátum',
                           ),
+
                           SizedBox(height: appTheme.s1),
+
                           AppFilterChipGroup<DateTime>(
+                            appFilterChipGroupController: _datesChipController,
                             selectedIds: [_selectedDate],
                             items: schedule.dates,
                             idOf: (s) => s.toBackendDateQuery(),
@@ -122,8 +131,11 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                             icon: Icons.filter_alt,
                             title: 'Kategória',
                           ),
+
                           SizedBox(height: appTheme.s1),
+
                           AppFilterChipGroup<Category>(
+                            appFilterChipGroupController: _categoriesChipController,
                             selectedIds: currentSelectedCategories,
                             items: categories,
                             multi: true,
@@ -137,7 +149,6 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                               _filterPrograms(context: context);
                             },
                           ),
-
                           SizedBox(height: appTheme.s2),
 
                           const SectionTitle(
@@ -162,11 +173,19 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                           SizedBox(height: appTheme.s2),
 
                           CityLocationFilter(
+                            citiesAppFilterChipGroupController:
+                                _citiesChipController,
+                            locationsAppFilterChipGroupController:
+                                _locationsChipController,
                             selectedLocation: _selectedLocation,
+                            isLocationsExpanded: _isLocationsExpanded,
                             cities: locations,
                             onLocationChanged: (location) {
                               _selectedLocation = location;
                               _filterPrograms(context: context);
+                            },
+                            onExpandedLocationsChanged: (value) {
+                              _isLocationsExpanded = value;
                             },
                           ),
                         ],
@@ -187,32 +206,62 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
               if (state is ProgramsWithDataState) {
                 final programs = state.programs;
 
-                if (programs.isEmpty) {
-                  return _EmptyState();
-                }
+                final bool hasActiveFilters =
+                    _selectedDate != null ||
+                    (_selectedCategories != null &&
+                        _selectedCategories!.isNotEmpty) ||
+                    _selectedLocation != null;
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${programs.length} program',
-                      style: appTheme.bodyText,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${programs.length} program',
+                          style: appTheme.bodyText,
+                        ),
+
+                        if (hasActiveFilters)
+                          AppButton.ghost(
+                            text: 'Szűrők törlése',
+                            onPressed: () {
+                              setState(() {
+
+                              });
+                              _selectedDate = null;
+                              _selectedCategories = [];
+                              _selectedLocation = null;
+
+                              _datesChipController.scrollToAll();
+                              _categoriesChipController.scrollToAll();
+                              _citiesChipController.scrollToAll();
+                              _locationsChipController.scrollToAll();
+
+                              _filterPrograms(context: context);
+                            },
+                          ),
+                      ],
                     ),
                     SizedBox(height: appTheme.s3),
-                    AnimatedListView<Program>(
-                      items: programs,
-                      spacing: appTheme.s1,
-                      itemBuilder: (context, program, index) {
-                        return ProgramCard(
-                          program: program,
-                          onToggleFavorite: (_) {},
-                          onTap: NavigationService.of(
-                            context,
-                          ).goToProgramDetailsPage,
-                          compact: true,
-                        );
-                      },
-                    ),
+                    if (programs.isEmpty)
+                      _EmptyState()
+                    else
+                      AnimatedListView<Program>(
+                        items: programs,
+                        spacing: appTheme.s1,
+                        itemBuilder: (context, program, index) {
+                          return ProgramCard(
+                            program: program,
+                            onToggleFavorite: (_) {},
+                            onTap: NavigationService.of(
+                              context,
+                            ).goToProgramDetailsPage,
+                            compact: true,
+                          );
+                        },
+                      ),
                   ],
                 );
               }
@@ -223,6 +272,12 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _datesChipController.dispose();
+    super.dispose();
   }
 }
 
@@ -250,7 +305,9 @@ class _EmptyState extends StatelessWidget {
                 color: appTheme.mutedForegroundColor,
               ),
             ),
-            const SizedBox(height: 14),
+
+            SizedBox(height: appTheme.s2),
+
             Text(
               'Nincs találat',
               style: TextStyle(
@@ -259,7 +316,9 @@ class _EmptyState extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
-            const SizedBox(height: 8),
+
+            SizedBox(height: appTheme.s1),
+
             Text(
               'Próbálj más szűrőbeállításokat',
               style: TextStyle(

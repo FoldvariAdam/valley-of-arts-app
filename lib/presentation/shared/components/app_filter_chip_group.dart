@@ -2,6 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/presentation/shared/components/app_filter_chip.dart';
 
+class AppFilterChipGroupController extends ChangeNotifier {
+  bool _scrollToAllRequested = false;
+
+  bool get scrollToAllRequested => _scrollToAllRequested;
+
+  void scrollToAll() {
+    _scrollToAllRequested = true;
+    notifyListeners();
+  }
+
+  void clearScrollToAllFlag() {
+    _scrollToAllRequested = false;
+  }
+}
+
 class AppFilterChipGroup<T> extends StatefulWidget {
   final List<T> items;
   final bool multi;
@@ -9,6 +24,7 @@ class AppFilterChipGroup<T> extends StatefulWidget {
   final String Function(T item) idOf;
   final String Function(T item) labelOf;
   final ValueChanged<List<String?>> onChanged;
+  final AppFilterChipGroupController? appFilterChipGroupController;
 
   const AppFilterChipGroup({
     super.key,
@@ -18,6 +34,7 @@ class AppFilterChipGroup<T> extends StatefulWidget {
     required this.onChanged,
     this.multi = false,
     this.selectedIds,
+    this.appFilterChipGroupController,
   });
 
   @override
@@ -25,8 +42,10 @@ class AppFilterChipGroup<T> extends StatefulWidget {
 }
 
 class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
+  static const String all = 'all';
+
   late List<String?> _selectedIds;
-  late final ScrollController _controller;
+  late final ScrollController _scrollController;
 
   final Map<String, GlobalKey> _chipKeys = {};
 
@@ -34,111 +53,13 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
   void initState() {
     super.initState();
     _selectedIds = widget.selectedIds ?? <String?>[null];
-    _controller = ScrollController();
+    _scrollController = ScrollController();
+
+    widget.appFilterChipGroupController?.addListener(_handleController);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToSelected();
     });
-  }
-
-  @override
-  void didUpdateWidget(covariant AppFilterChipGroup<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.selectedIds != null && widget.selectedIds != _selectedIds) {
-      _selectedIds = widget.selectedIds!;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _scrollToSelected();
-      });
-    }
-  }
-
-  void _scrollToSelected() {
-    if (_selectedIds.isEmpty || !_controller.hasClients) return;
-
-    final selectedId = _selectedIds.firstWhere((id) => id != null, orElse: () => 'mind');
-    final key = _chipKeys[selectedId];
-    if (key == null) return;
-
-    final context = key.currentContext;
-    if (context == null) return;
-
-    final box = context.findRenderObject() as RenderBox?;
-    final listBox = _controller.position.context.storageContext.findRenderObject() as RenderBox?;
-    if (box == null || listBox == null) return;
-
-    final offset = box.localToGlobal(Offset.zero, ancestor: listBox).dx;
-
-    final targetOffset = _controller.offset + offset - (_controller.position.viewportDimension / 2) + (box.size.width / 2);
-
-    _controller.animateTo(
-      targetOffset.clamp(0.0, _controller.position.maxScrollExtent),
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
-
-  void _tapMind() {
-    setState(() {
-      _selectedIds = <String?>[null];
-    });
-    widget.onChanged([null]);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToSelected());
-  }
-
-  void _tapItem(T item) {
-    final id = widget.idOf(item);
-
-    setState(() {
-      _selectedIds.removeWhere((element) => element == null);
-
-      if (widget.multi) {
-        if (_selectedIds.contains(id)) {
-          _selectedIds.remove(id);
-        } else {
-          _selectedIds.add(id);
-        }
-
-        if (_selectedIds.isEmpty) {
-          _selectedIds = <String?>[null];
-        }
-      } else {
-        _selectedIds = <String?>[id];
-      }
-    });
-
-    widget.onChanged(_selectedIds);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToChip(id);
-    });
-  }
-
-  void _scrollToChip(String id) {
-    final key = _chipKeys[id];
-    if (key == null) return;
-
-    final context = key.currentContext;
-    if (context == null) return;
-
-    final box = context.findRenderObject() as RenderBox?;
-    if (box == null) return;
-
-    final scrollBox = _controller.position.context.storageContext.findRenderObject() as RenderBox;
-    final position = box.localToGlobal(Offset.zero, ancestor: scrollBox).dx;
-
-    _controller.animateTo(
-      _controller.offset + position - 16,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -148,9 +69,10 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
     return SizedBox(
       height: 40,
       child: ListView.separated(
-        controller: _controller,
+        controller: _scrollController,
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: appTheme.s1),
+        cacheExtent: widget.items.length * 160,
         itemCount: widget.items.length + 1,
         separatorBuilder: (_, _) => SizedBox(width: appTheme.s1),
         itemBuilder: (context, index) {
@@ -158,19 +80,18 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
           Widget chip;
 
           if (index == 0) {
-            id = 'mind';
-            _chipKeys[id] = GlobalKey();
+            id = all;
+            _chipKeys.putIfAbsent(id, () => GlobalKey());
             chip = AppFilterChip(
               key: _chipKeys[id],
               label: 'Mind',
               isActive: _selectedIds.contains(null),
-              onTap: _tapMind,
+              onTap: _scrollToAll,
             );
           } else {
             final item = widget.items[index - 1];
             id = widget.idOf(item);
-            _chipKeys[id] = GlobalKey();
-
+            _chipKeys.putIfAbsent(id, () => GlobalKey());
             chip = AppFilterChip(
               key: _chipKeys[id],
               label: widget.labelOf(item),
@@ -183,5 +104,64 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    widget.appFilterChipGroupController?.removeListener(_handleController);
+    super.dispose();
+  }
+
+  void _handleController() {
+    if (widget.appFilterChipGroupController?.scrollToAllRequested == true) {
+      _scrollToAll();
+      widget.appFilterChipGroupController?.clearScrollToAllFlag();
+    }
+  }
+
+  void _scrollToAll() {
+    setState(() {
+      _selectedIds = <String?>[null];
+    });
+
+    widget.onChanged([null]);
+
+    _scrollController.scrollToAll();
+  }
+
+  void _scrollToSelected() {
+    if (_selectedIds.isEmpty || !_scrollController.hasClients) return;
+
+    final selectedId = _selectedIds.firstWhere(
+      (id) => id != null,
+      orElse: () => all,
+    );
+
+    _scrollController.scrollToChip(_chipKeys[selectedId]!);
+  }
+
+  void _tapItem(T item) {
+    final id = widget.idOf(item);
+
+    setState(() {
+      if (widget.multi) {
+        final current = _selectedIds.whereType<String>().toSet();
+
+        if (current.contains(id)) {
+          current.remove(id);
+        } else {
+          current.add(id);
+        }
+
+        _selectedIds = current.isEmpty ? <String?>[null] : current.toList();
+      } else {
+        _selectedIds = <String?>[id];
+      }
+    });
+
+    widget.onChanged(_selectedIds);
+
+    _scrollController.scrollToChip(_chipKeys[id]!);
   }
 }
