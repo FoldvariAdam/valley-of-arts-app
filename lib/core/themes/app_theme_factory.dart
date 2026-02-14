@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/core/themes/app_theme.dart';
 import 'package:valley_of_arts/core/themes/app_tokens.dart';
 
@@ -84,6 +85,71 @@ class AppThemeFactory {
           bodyText: AppTokens.bodyText,
           descriptionText: AppTokens.descriptionText,
         ),
+        AppCardTheme(
+          backgroundColor: AppTokens.cardBackgroundColor,
+          pressedBackgroundColor: AppTokens.accentColor,
+          borderColor: AppTokens.borderColor,
+          pressedBorderColor: AppTokens.accentColor,
+          shadowColor: Colors.black,
+          borderWidth: 1.2,
+          borderRadius: BorderRadius.circular(AppTokens.r2xl),
+          blurRadius: 16,
+          pressedBlurRadius: 22,
+          shadowOffset: const Offset(0, 10),
+          animationDuration: const Duration(milliseconds: 150),
+          pressedScale: 0.96,
+          curve: Curves.easeOut,
+        ),
+        AppFilterChipTheme(
+          backgroundColor: AppTokens.cardBackgroundColor,
+          activeBackgroundColor: AppTokens.primaryColor,
+          foregroundColor: AppTokens.foregroundColor,
+          activeForegroundColor: AppTokens.foregroundColor,
+          borderColor: AppTokens.borderColor,
+          activeBorderColor: AppTokens.primaryColor,
+          paddingHorizontal: AppTokens.s2,
+          paddingVertical: AppTokens.s1,
+          borderRadius: BorderRadius.circular(999),
+          borderWidth: 1.0,
+          iconSpacing: AppTokens.s0,
+          scaleDuration: const Duration(milliseconds: 120),
+          containerDuration: const Duration(milliseconds: 150),
+          pressedScale: 0.95,
+          curve: Curves.easeOut,
+          textStyle: AppTokens.bodyText,
+          activeTextStyle: AppTokens.bodyText,
+        ),
+        AppButtonTheme(
+          primary: ElevatedButton.styleFrom(
+            backgroundColor: AppTokens.primaryColor,
+            foregroundColor: AppTokens.foregroundColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppTokens.r2xl),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            minimumSize: const Size(64, 56),
+          ),
+          secondary: ElevatedButton.styleFrom(
+            backgroundColor: AppTokens.secondaryColor,
+            foregroundColor: AppTokens.foregroundColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppTokens.r2xl),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            minimumSize: const Size(64, 56),
+          ),
+          ghost: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            foregroundColor: AppTokens.primaryColor,
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            minimumSize: const Size(64, 56),
+            side: const BorderSide(
+              color: AppTokens.primaryColor,
+              width: 1.5,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -91,4 +157,18 @@ class AppThemeFactory {
 
 extension AppStyleX on BuildContext {
   AppTheme get appTheme => Theme.of(this).extension<AppTheme>()!;
+}
+
+extension AppCardStyleX on BuildContext {
+  AppCardTheme get appCardTheme => Theme.of(this).extension<AppCardTheme>()!;
+}
+
+extension AppFilterChipStyleX on BuildContext {
+  AppFilterChipTheme get appFilterChipTheme =>
+      Theme.of(this).extension<AppFilterChipTheme>()!;
+}
+
+extension AppButtonThemeStyleX on BuildContext {
+  AppButtonTheme get appButtonTheme =>
+      Theme.of(this).extension<AppButtonTheme>()!;
 }

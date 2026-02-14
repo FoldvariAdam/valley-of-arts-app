@@ -19,7 +19,7 @@ class HomeHeader extends StatefulWidget {
 }
 
 class _HomeHeaderState extends State<HomeHeader>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final AnimationController _c;
 
   @override
@@ -136,7 +136,9 @@ class _HomeHeaderState extends State<HomeHeader>
                               ),
                             ),
                           ),
+
                           SizedBox(height: appTheme.s2),
+
                           FadeSlideIn(
                             anim: titleIn,
                             fromY: 20,
@@ -145,7 +147,9 @@ class _HomeHeaderState extends State<HomeHeader>
                               style: appTheme.bigHeadLine,
                             ),
                           ),
+
                           SizedBox(height: appTheme.s2),
+
                           FadeSlideIn(
                             anim: descIn,
                             fromY: 18,
@@ -154,35 +158,15 @@ class _HomeHeaderState extends State<HomeHeader>
                               style: appTheme.subTitle,
                             ),
                           ),
+
                           SizedBox(height: appTheme.s2),
+
                           FadeSlideIn(
                             anim: ctaIn,
                             fromY: 18,
-                            child: GestureDetector(
-                              onTap: widget.onTicketTap,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 28,
-                                  vertical: 16,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFE64A5E),
-                                  borderRadius: BorderRadius.circular(999),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: const Color(
-                                        0xFFE64A5E,
-                                      ).withValues(alpha: 0.35),
-                                      blurRadius: 22,
-                                      offset: const Offset(0, 12),
-                                    ),
-                                  ],
-                                ),
-                                child: Text(
-                                  LocaleKeys.Home_Purchase.tr(),
-                                  style: appTheme.smallHeadLine,
-                                ),
-                              ),
+                            child: AppButton(
+                              text: LocaleKeys.Home_Purchase.tr(),
+                              onPressed: widget.onTicketTap,
                             ),
                           ),
                         ],

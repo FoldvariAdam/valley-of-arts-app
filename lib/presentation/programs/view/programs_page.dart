@@ -31,6 +31,15 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
   int? _selectedLocation;
   bool _filtersExpanded = true;
 
+  void _filterPrograms({required BuildContext context}) =>
+      context.read<ProgramsBloc>().add(
+        ProgramsFilterChanged(
+          date: _selectedDate,
+          categories: _selectedCategories,
+          location: _selectedLocation,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
@@ -48,18 +57,19 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TextButton.icon(
+              AppButton.ghost(
+                icon: Icon(
+                  _filtersExpanded ? Icons.expand_less : Icons.expand_more,
+                ),
+                iconPosition: AppButtonIconPosition.trailing,
+                text: _filtersExpanded
+                    ? 'Szűrők bezárása'
+                    : 'Szűrők megnyitása',
                 onPressed: () {
                   setState(() {
                     _filtersExpanded = !_filtersExpanded;
                   });
                 },
-                icon: Icon(
-                  _filtersExpanded ? Icons.expand_less : Icons.expand_more,
-                ),
-                label: Text(
-                  _filtersExpanded ? 'Szűrők bezárása' : 'Szűrők megnyitása',
-                ),
               ),
             ],
           ),
@@ -78,11 +88,11 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
               final locations = state.locations;
 
               final currentSelectedCategories =
-              (_selectedCategories == null || _selectedCategories!.isEmpty)
+                  (_selectedCategories == null || _selectedCategories!.isEmpty)
                   ? <String?>[null]
                   : _selectedCategories!
-                  .map((category) => category.toString())
-                  .toList();
+                        .map((category) => category.toString())
+                        .toList();
 
               return AnimatedSize(
                 duration: const Duration(milliseconds: 300),
@@ -213,15 +223,6 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
       ),
     );
   }
-
-  void _filterPrograms({required BuildContext context}) =>
-      context.read<ProgramsBloc>().add(
-        ProgramsFilterChanged(
-          date: _selectedDate,
-          categories: _selectedCategories,
-          location: _selectedLocation,
-        ),
-      );
 }
 
 class _EmptyState extends StatelessWidget {

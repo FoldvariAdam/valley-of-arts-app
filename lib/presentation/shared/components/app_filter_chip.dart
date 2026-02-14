@@ -6,6 +6,7 @@ class AppFilterChip extends StatefulWidget {
   final bool isActive;
   final VoidCallback onTap;
   final String? icon;
+  final AppFilterChipTheme? style;
 
   const AppFilterChip({
     super.key,
@@ -13,6 +14,7 @@ class AppFilterChip extends StatefulWidget {
     required this.isActive,
     required this.onTap,
     this.icon,
+    this.style,
   });
 
   @override
@@ -24,17 +26,24 @@ class _AppFilterChipState extends State<AppFilterChip> {
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = context.appTheme;
+    final baseTheme = context.appFilterChipTheme;
+    final appFilterChip = baseTheme.merge(widget.style);
 
     final bg = widget.isActive
-        ? appTheme.primaryColor
-        : appTheme.cardBackgroundColor;
+        ? appFilterChip.activeBackgroundColor!
+        : appFilterChip.backgroundColor!;
+
     final fg = widget.isActive
-        ? appTheme.accentColor
-        : appTheme.foregroundColor;
+        ? appFilterChip.activeForegroundColor!
+        : appFilterChip.foregroundColor!;
+
     final border = widget.isActive
-        ? appTheme.primaryColor
-        : appTheme.borderColor;
+        ? appFilterChip.activeBorderColor!
+        : appFilterChip.borderColor!;
+
+    final textStyle = widget.isActive
+        ? appFilterChip.activeTextStyle!
+        : appFilterChip.textStyle!;
 
     return GestureDetector(
       onTap: widget.onTap,
@@ -42,30 +51,32 @@ class _AppFilterChipState extends State<AppFilterChip> {
       onTapUp: (_) => setState(() => _down = false),
       onTapCancel: () => setState(() => _down = false),
       child: AnimatedScale(
-        duration: const Duration(milliseconds: 120),
-        curve: Curves.easeOut,
-        scale: _down ? 0.95 : 1.0,
+        duration: appFilterChip.scaleDuration!,
+        curve: appFilterChip.curve!,
+        scale: _down ? appFilterChip.pressedScale! : 1.0,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          curve: Curves.easeOut,
+          duration: appFilterChip.containerDuration!,
+          curve: appFilterChip.curve!,
           padding: EdgeInsets.symmetric(
-            horizontal: appTheme.s2,
-            vertical: appTheme.s1,
+            horizontal: appFilterChip.paddingHorizontal!,
+            vertical: appFilterChip.paddingVertical!,
           ),
           decoration: BoxDecoration(
             color: bg,
-            borderRadius: BorderRadius.circular(999),
-            border: Border.all(color: border),
+            borderRadius: appFilterChip.borderRadius,
+            border: Border.all(
+              color: border,
+              width: appFilterChip.borderWidth!,
+            ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               if (widget.icon != null) ...[
-                Text(widget.icon!, style: TextStyle(color: fg)),
-
-                SizedBox(width: appTheme.s0),
+                Text(widget.icon!, style: textStyle.copyWith(color: fg)),
+                SizedBox(width: appFilterChip.iconSpacing),
               ],
-              Text(widget.label, style: appTheme.bodyText),
+              Text(widget.label, style: textStyle.copyWith(color: fg)),
             ],
           ),
         ),
