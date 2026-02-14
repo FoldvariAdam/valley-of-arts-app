@@ -30,7 +30,7 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
   @override
   void initState() {
     super.initState();
-    _selectedIds = widget.selectedIds ?? [null];
+    _selectedIds = widget.selectedIds ?? <String?>[null];
   }
 
   @override
@@ -43,7 +43,7 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
 
   void _tapMind() {
     setState(() {
-      _selectedIds = [null];
+      _selectedIds = <String?>[null];
     });
     widget.onChanged([null]);
   }
@@ -62,10 +62,10 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
         }
 
         if (_selectedIds.isEmpty) {
-          _selectedIds = [null];
+          _selectedIds = <String?>[null];
         }
       } else {
-        _selectedIds = [id];
+        _selectedIds = <String?>[id];
       }
     });
 

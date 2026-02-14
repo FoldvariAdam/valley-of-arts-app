@@ -20,8 +20,11 @@ class CityLocationFilter extends StatefulWidget {
 }
 
 class _CityLocationFilterState extends State<CityLocationFilter> {
+  final ScrollController _verticalController = ScrollController();
+
   int? _selectedCityId;
   int? _selectedLocationId;
+  bool _expandedLocations = false;
 
   List<Location> get _filteredLocations {
     if (_selectedCityId == null) {
@@ -37,9 +40,14 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
   @override
   void initState() {
     super.initState();
-    final asd = null.toString();
     _selectedCityId = _getCityByLocationId();
     _selectedLocationId = widget.selectedLocation;
+  }
+
+  @override
+  void dispose() {
+    _verticalController.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,6 +80,7 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
               final cityId = ids.first;
               if (cityId == null) {
                 _selectedCityId = null;
+                widget.onLocationChanged(null);
               } else {
                 _selectedCityId = int.parse(cityId);
               }
@@ -91,29 +100,113 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
 
         SizedBox(height: appTheme.s1),
 
-        AppFilterChipGroup<Location>(
-          items: _filteredLocations,
-          idOf: (l) => l.id.toString(),
-          labelOf: (l) => l.name,
-          selectedIds: _selectedLocationId != null
-              ? [_selectedLocationId.toString()]
-              : [null],
-          onChanged: (ids) {
-            setState(() {
-              final locationId = ids.first;
-              if (locationId == null) {
-                widget.onLocationChanged(null);
-                _selectedLocationId = null;
-              } else {
-                _selectedLocationId = int.parse(ids.first!);
-                widget.onLocationChanged(_selectedLocationId);
-              }
-            });
-          },
+        _buildLocationChips(),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButton.icon(
+              onPressed: () {
+                setState(() {
+                  _expandedLocations = !_expandedLocations;
+                });
+              },
+              icon: Icon(
+                _expandedLocations
+                    ? Icons.view_stream
+                    : Icons.grid_view,
+              ),
+              label: Text(
+                _expandedLocations
+                    ? 'Egysoros nézet'
+                    : 'Rács nézet',
+              ),
+            ),
+          ],
         ),
+
       ],
     );
   }
+
+  Widget _buildLocationChips() {
+    final appTheme = context.appTheme;
+
+    if (!_expandedLocations) {
+      return AppFilterChipGroup<Location>(
+        items: _filteredLocations,
+        idOf: (l) => l.id.toString(),
+        labelOf: (l) => l.name,
+        selectedIds: _selectedLocationId != null
+            ? [_selectedLocationId.toString()]
+            : [null],
+        onChanged: (ids) {
+          setState(() {
+            final locationId = ids.first;
+            if (locationId == null) {
+              widget.onLocationChanged(null);
+              _selectedLocationId = null;
+            } else {
+              _selectedLocationId = int.parse(ids.first!);
+              widget.onLocationChanged(_selectedLocationId);
+            }
+          });
+        },
+      );
+    } else {
+      const double chipHeight = 40;
+      const int maxRows = 5;
+
+      return SizedBox(
+        height: (chipHeight + appTheme.s1) * maxRows,
+        child: Scrollbar(
+          controller: _verticalController,
+          thumbVisibility: true,
+          child: SingleChildScrollView(
+            controller: _verticalController,
+            padding: EdgeInsets.symmetric(horizontal: appTheme.s1),
+            child: Wrap(
+              spacing: appTheme.s1,
+              runSpacing: appTheme.s1,
+              children: [
+                AppFilterChip(
+                  label: 'Mind',
+                  isActive: _selectedLocationId == null,
+                  onTap: () => _onLocationChanged([null]),
+                ),
+
+                ..._filteredLocations.map((location) {
+                  final id = location.id.toString();
+                  final isSelected =
+                      _selectedLocationId?.toString() == id;
+
+                  return AppFilterChip(
+                    label: location.name,
+                    isActive: isSelected,
+                    onTap: () => _onLocationChanged([id]),
+                  );
+                }),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  void _onLocationChanged(List<String?> ids) {
+    setState(() {
+      final locationId = ids.first;
+      if (locationId == null) {
+        _selectedLocationId = null;
+        widget.onLocationChanged(null);
+      } else {
+        _selectedLocationId = int.parse(locationId);
+        widget.onLocationChanged(_selectedLocationId);
+      }
+    });
+  }
+
 
   int? _getCityByLocationId() {
     if (widget.selectedLocation == null) return null;

@@ -77,6 +77,13 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
               final categories = state.categories;
               final locations = state.locations;
 
+              final currentSelectedCategories =
+              (_selectedCategories == null || _selectedCategories!.isEmpty)
+                  ? <String?>[null]
+                  : _selectedCategories!
+                  .map((category) => category.toString())
+                  .toList();
+
               return AnimatedSize(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
@@ -107,11 +114,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                           ),
                           SizedBox(height: appTheme.s1),
                           AppFilterChipGroup<Category>(
-                            selectedIds:
-                                _selectedCategories
-                                    ?.map((category) => category.toString())
-                                    .toList() ??
-                                [],
+                            selectedIds: currentSelectedCategories,
                             items: categories,
                             multi: true,
                             idOf: (c) => c.id.toString(),
