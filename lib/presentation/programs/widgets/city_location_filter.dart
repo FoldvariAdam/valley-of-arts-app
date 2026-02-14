@@ -102,29 +102,24 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
 
         _buildLocationChips(),
 
+        SizedBox(height: appTheme.s1),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextButton.icon(
+            AppButton.ghost(
+              text: _expandedLocations ? 'Egysoros nézet' : 'Rács nézet',
+              icon: Icon(
+                _expandedLocations ? Icons.view_stream : Icons.grid_view,
+              ),
               onPressed: () {
                 setState(() {
                   _expandedLocations = !_expandedLocations;
                 });
               },
-              icon: Icon(
-                _expandedLocations
-                    ? Icons.view_stream
-                    : Icons.grid_view,
-              ),
-              label: Text(
-                _expandedLocations
-                    ? 'Egysoros nézet'
-                    : 'Rács nézet',
-              ),
             ),
           ],
         ),
-
       ],
     );
   }
@@ -159,34 +154,39 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
 
       return SizedBox(
         height: (chipHeight + appTheme.s1) * maxRows,
-        child: Scrollbar(
-          controller: _verticalController,
-          thumbVisibility: true,
-          child: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF3A9C95),
+            borderRadius: appTheme.r2xl,
+          ),
+          child: Scrollbar(
             controller: _verticalController,
-            padding: EdgeInsets.symmetric(horizontal: appTheme.s1),
-            child: Wrap(
-              spacing: appTheme.s1,
-              runSpacing: appTheme.s1,
-              children: [
-                AppFilterChip(
-                  label: 'Mind',
-                  isActive: _selectedLocationId == null,
-                  onTap: () => _onLocationChanged([null]),
-                ),
+            thumbVisibility: true,
+            child: SingleChildScrollView(
+              controller: _verticalController,
+              padding: EdgeInsets.all(appTheme.s1),
+              child: Wrap(
+                spacing: appTheme.s1,
+                runSpacing: appTheme.s1,
+                children: [
+                  AppFilterChip(
+                    label: 'Mind',
+                    isActive: _selectedLocationId == null,
+                    onTap: () => _onLocationChanged([null]),
+                  ),
 
-                ..._filteredLocations.map((location) {
-                  final id = location.id.toString();
-                  final isSelected =
-                      _selectedLocationId?.toString() == id;
+                  ..._filteredLocations.map((location) {
+                    final id = location.id.toString();
+                    final isSelected = _selectedLocationId?.toString() == id;
 
-                  return AppFilterChip(
-                    label: location.name,
-                    isActive: isSelected,
-                    onTap: () => _onLocationChanged([id]),
-                  );
-                }),
-              ],
+                    return AppFilterChip(
+                      label: location.name,
+                      isActive: isSelected,
+                      onTap: () => _onLocationChanged([id]),
+                    );
+                  }),
+                ],
+              ),
             ),
           ),
         ),
@@ -206,7 +206,6 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
       }
     });
   }
-
 
   int? _getCityByLocationId() {
     if (widget.selectedLocation == null) return null;

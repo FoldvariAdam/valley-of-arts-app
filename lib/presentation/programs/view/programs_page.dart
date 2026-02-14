@@ -144,6 +144,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                             icon: Icons.location_city,
                             title: 'Helyszín',
                           ),
+
                           SizedBox(height: appTheme.s1),
 
                           Row(

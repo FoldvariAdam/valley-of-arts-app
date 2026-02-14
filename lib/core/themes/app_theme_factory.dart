@@ -143,7 +143,7 @@ class AppThemeFactory {
             foregroundColor: AppTokens.primaryColor,
             elevation: 0,
             padding: const EdgeInsets.symmetric(horizontal: 28),
-            minimumSize: const Size(64, 56),
+            minimumSize: const Size(64, 40),
             side: const BorderSide(
               color: AppTokens.primaryColor,
               width: 1.5,

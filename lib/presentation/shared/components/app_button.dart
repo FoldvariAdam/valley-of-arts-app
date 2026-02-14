@@ -64,15 +64,16 @@ class AppButton extends StatelessWidget {
     Widget childContent = Text(text);
 
     if (icon != null) {
-      childContent = Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: iconPosition == AppButtonIconPosition.leading
-            ? [icon!, const SizedBox(width: 8), Text(text)]
-            : [Text(text), const SizedBox(width: 8), icon!],
+      childContent = FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: iconPosition == AppButtonIconPosition.leading
+              ? [icon!, const SizedBox(width: 8), Text(text)]
+              : [Text(text), const SizedBox(width: 8), icon!],
+        ),
       );
     }
-
     return SizedBox(
       width: width,
       child: ElevatedButton(
