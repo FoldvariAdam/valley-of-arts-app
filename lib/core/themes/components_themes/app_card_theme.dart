@@ -21,6 +21,9 @@ class AppCardTheme extends ThemeExtension<AppCardTheme> {
   final double? pressedScale;
   final Curve? curve;
 
+  final double? margin;
+  final double? padding;
+
   const AppCardTheme({
     this.backgroundColor,
     this.pressedBackgroundColor,
@@ -35,16 +38,16 @@ class AppCardTheme extends ThemeExtension<AppCardTheme> {
     this.animationDuration,
     this.pressedScale,
     this.curve,
+    this.margin,
+    this.padding,
   });
 
   @override
-  AppCardTheme copyWith({
-    AppCardTheme? theme,
-  }) {
+  AppCardTheme copyWith({AppCardTheme? theme}) {
     return AppCardTheme(
       backgroundColor: theme?.backgroundColor ?? backgroundColor,
       pressedBackgroundColor:
-      theme?.pressedBackgroundColor ?? pressedBackgroundColor,
+          theme?.pressedBackgroundColor ?? pressedBackgroundColor,
       borderColor: theme?.borderColor ?? borderColor,
       pressedBorderColor: theme?.pressedBorderColor ?? pressedBorderColor,
       shadowColor: theme?.shadowColor ?? shadowColor,
@@ -56,6 +59,8 @@ class AppCardTheme extends ThemeExtension<AppCardTheme> {
       animationDuration: theme?.animationDuration ?? animationDuration,
       pressedScale: theme?.pressedScale ?? pressedScale,
       curve: theme?.curve ?? curve,
+      margin: theme?.margin ?? margin,
+      padding: theme?.padding ?? padding,
     );
   }
 
@@ -89,6 +94,8 @@ class AppCardTheme extends ThemeExtension<AppCardTheme> {
       animationDuration: animationDuration,
       pressedScale: lerpDouble(pressedScale, other.pressedScale, t)!,
       curve: curve,
+      margin: margin,
+      padding: padding,
     );
   }
 
@@ -105,7 +112,8 @@ class AppCardTheme extends ThemeExtension<AppCardTheme> {
 
     return AppCardTheme(
       backgroundColor: other.backgroundColor ?? backgroundColor,
-      pressedBackgroundColor: other.pressedBackgroundColor ?? pressedBackgroundColor,
+      pressedBackgroundColor:
+          other.pressedBackgroundColor ?? pressedBackgroundColor,
       borderColor: other.borderColor ?? borderColor,
       pressedBorderColor: other.pressedBorderColor ?? pressedBorderColor,
       shadowColor: other.shadowColor ?? shadowColor,
@@ -117,6 +125,8 @@ class AppCardTheme extends ThemeExtension<AppCardTheme> {
       animationDuration: other.animationDuration ?? animationDuration,
       pressedScale: other.pressedScale ?? pressedScale,
       curve: other.curve ?? curve,
+      margin: other.margin ?? margin,
+      padding: other.padding ?? padding,
     );
   }
 }

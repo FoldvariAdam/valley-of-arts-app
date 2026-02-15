@@ -22,7 +22,6 @@ class ProgramsRepositoryImpl implements ProgramsRepository {
     int? page,
     int? perPage,
   }) async {
-    //https://backend.muveszetekvolgye.hu/api/v1/programs/259
     try {
       final programs = await _valleyApiClient.getPrograms(
         categoryIds: categoryIds,

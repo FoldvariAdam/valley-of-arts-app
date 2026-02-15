@@ -104,29 +104,36 @@ class _HomePageInnerState extends State<_HomePageInner> {
 
             SliverToBoxAdapter(child: SizedBox(height: appTheme.s5)),
 
-            BlocBuilder<HomeBloc, HomeState>(
-              buildWhen: (prev, curr) =>
-                  prev.favoritesLength != curr.favoritesLength ||
-                  prev.loadingFavorites != curr.loadingFavorites,
-              builder: (context, state) {
-                return const SliverToBoxAdapter(child: FavoritesCard());
-              },
-            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: appTheme.s2),
+                child: Column(
+                  children: [
+                    BlocBuilder<HomeBloc, HomeState>(
+                      buildWhen: (prev, curr) =>
+                      prev.favoritesLength != curr.favoritesLength ||
+                          prev.loadingFavorites != curr.loadingFavorites,
+                      builder: (context, state) {
+                        return const FavoritesCard();
+                      },
+                    ),
 
-            SliverToBoxAdapter(child: SizedBox(height: appTheme.s5)),
+                    SizedBox(height: appTheme.s5),
 
-            BlocBuilder<HomeBloc, HomeState>(
-              buildWhen: (prev, curr) =>
-                  prev.currentPrograms != curr.currentPrograms ||
-                  prev.loadingCurrent != curr.loadingCurrent,
-              builder: (context, state) {
-                return SliverToBoxAdapter(
-                  child: UpcomingPrograms(
-                    programs: state.currentPrograms ?? [],
-                  ),
-                );
-              },
-            ),
+                    BlocBuilder<HomeBloc, HomeState>(
+                      buildWhen: (prev, curr) =>
+                      prev.currentPrograms != curr.currentPrograms ||
+                          prev.loadingCurrent != curr.loadingCurrent,
+                      builder: (context, state) {
+                        return UpcomingPrograms(
+                          programs: state.currentPrograms ?? [],
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
 

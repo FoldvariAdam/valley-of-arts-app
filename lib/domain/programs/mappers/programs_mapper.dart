@@ -14,7 +14,7 @@ extension ProgramMapper on ProgramResponse {
     endTime: end != null ? DateTime.parse(end!) : DateTime.now(),
     locationName: location?.name ?? '',
     displayUrl: artists?.firstOrNull?.attachments?.firstOrNull?.displayUrl ?? '',
-    programCategory: programCategories?.firstOrNull?.name ?? '',
+    category: programCategories?.firstOrNull?.name ?? '',
   );
 }
 

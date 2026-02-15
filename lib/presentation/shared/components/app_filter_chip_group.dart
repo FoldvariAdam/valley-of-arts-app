@@ -69,9 +69,10 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
     return SizedBox(
       height: 40,
       child: ListView.separated(
+        clipBehavior: Clip.none,
+        padding: EdgeInsets.zero,
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: appTheme.s1),
         cacheExtent: widget.items.length * 160,
         itemCount: widget.items.length + 1,
         separatorBuilder: (_, _) => SizedBox(width: appTheme.s1),

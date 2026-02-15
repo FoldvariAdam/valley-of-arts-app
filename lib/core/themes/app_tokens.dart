@@ -62,4 +62,10 @@ class AppTokens {
     fontSize: 12,
     fontWeight: FontWeight.w700,
   );
+
+  static const TextStyle metaText = TextStyle(
+    color: foregroundColor,
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+  );
 }

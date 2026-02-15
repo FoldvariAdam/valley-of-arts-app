@@ -14,15 +14,12 @@ class FavoritesCard extends StatelessWidget {
     return Entrance(
       fromY: 20,
       delayMs: 0,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: appTheme.s2),
-        child: AppCard(
-          onTap: NavigationService.of(context).goToFavoritesPage,
-          child: ChevronRow(
-            leadingIcon: Icon(Icons.favorite, color: appTheme.primaryColor),
-            title: LocaleKeys.Home_Favorites.tr(),
-            subtitle: LocaleKeys.Home_FavoritesDescription.tr(args: ['4']),
-          ),
+      child: AppCard(
+        onTap: NavigationService.of(context).goToFavoritesPage,
+        child: ChevronRow(
+          leadingIcon: Icon(Icons.favorite, color: appTheme.primaryColor),
+          title: LocaleKeys.Home_Favorites.tr(),
+          subtitle: LocaleKeys.Home_FavoritesDescription.tr(args: ['4']),
         ),
       ),
     );

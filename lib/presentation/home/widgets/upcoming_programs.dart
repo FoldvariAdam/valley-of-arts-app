@@ -13,14 +13,12 @@ class UpcomingPrograms extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+
     return Column(
       children: [
         Row(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: appTheme.s2),
-              child: _LiveIcon(),
-            ),
+            _LiveIcon(),
             SizedBox(width: appTheme.s1),
             Text(LocaleKeys.Home_Upcoming.tr(), style: appTheme.smallHeadLine),
           ],
@@ -28,20 +26,19 @@ class UpcomingPrograms extends StatelessWidget {
 
         SizedBox(height: appTheme.s2),
 
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: appTheme.s2),
-          child: AnimatedListView<Program>(
-            items: programs,
-            spacing: appTheme.s1,
-            itemBuilder: (context, program, index) {
-              return ProgramCard(
-                program: program,
-                onToggleFavorite: (_) {},
-                onTap: NavigationService.of(context).goToProgramDetailsPage,
-                compact: true,
-              );
-            },
-          ),
+        AnimatedListView<Program>(
+          items: programs,
+          spacing: appTheme.s1,
+          itemBuilder: (context, program, index) {
+            return ProgramCard(
+              program: program,
+              onToggleFavorite: (_) {},
+              onTap: () => NavigationService.of(
+                context,
+              ).goToProgramDetailsPage(program: program),
+              compact: true,
+            );
+          },
         ),
       ],
     );

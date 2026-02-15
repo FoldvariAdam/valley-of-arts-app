@@ -8,6 +8,7 @@ export 'app_divider.dart';
 export 'app_filter_chip.dart';
 export 'app_filter_chip_group.dart';
 export 'chevron.dart';
+export 'glass_icon_button.dart';
 export 'page_header.dart';
 export 'program_card.dart';
 export 'scroll_to_top_button.dart';

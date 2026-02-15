@@ -35,6 +35,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final TextStyle subTitle;
   final TextStyle bodyText;
   final TextStyle descriptionText;
+  final TextStyle metaText;
 
   const AppTheme({
     required this.s0,
@@ -59,6 +60,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.subTitle,
     required this.bodyText,
     required this.descriptionText,
+    required this.metaText,
   });
 
   @override

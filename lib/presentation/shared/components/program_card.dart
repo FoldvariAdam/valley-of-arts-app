@@ -19,8 +19,11 @@ class ProgramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = context.appTheme;
+
     return AppCard(
       onTap: onTap,
+      style: const AppCardTheme(padding: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,8 +31,8 @@ class ProgramCard extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(20),
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(appTheme.s3),
                   ),
                   child: Image.network(
                     program.displayUrl,
@@ -47,7 +50,7 @@ class ProgramCard extends StatelessWidget {
               ],
             ),
           Padding(
-            padding: EdgeInsets.all(compact ? 12 : 16),
+            padding: EdgeInsets.all(appTheme.s3),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -55,36 +58,42 @@ class ProgramCard extends StatelessWidget {
                   program.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: compact ? 16 : 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: appTheme.smallHeadLine
                 ),
-                if (!compact) ...[
-                  const SizedBox(height: 6),
+
+                if (!compact && program.description.isNotEmpty) ...[
+                  SizedBox(height: appTheme.s0),
                   Text(
                     program.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: appTheme.descriptionText,
                   ),
                 ],
-                const SizedBox(height: 12),
+
+                SizedBox(height: appTheme.s1),
+
                 Row(
                   children: [
-                    const Icon(Icons.access_time, size: 14),
-                    const SizedBox(width: 4),
+                    Icon(Icons.access_time, size: appTheme.s2),
+
+                    SizedBox(width: appTheme.s0),
+
                     Text(
                       program.startTime.toFullDateTimeString(),
-                      style: const TextStyle(fontSize: 12),
+                      style: appTheme.metaText,
                     ),
-                    const SizedBox(width: 12),
-                    const Icon(Icons.place, size: 14),
-                    const SizedBox(width: 4),
+
+                    SizedBox(width: appTheme.s1),
+
+                    Icon(Icons.place, size: appTheme.s2),
+
+                    SizedBox(width: appTheme.s0),
+
                     Expanded(
                       child: Text(
                         program.locationName,
-                        style: const TextStyle(fontSize: 12),
+                        style: appTheme.metaText,
                       ),
                     ),
                   ],
@@ -97,7 +106,7 @@ class ProgramCard extends StatelessWidget {
     );
   }
 
-/*  Widget _favoriteButton() {
+  /*  Widget _favoriteButton() {
     return GestureDetector(
       onTap: () {
         setState(() => widget.program.isFavorite = !widget.program.isFavorite);

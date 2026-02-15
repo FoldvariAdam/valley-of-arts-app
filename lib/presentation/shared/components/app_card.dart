@@ -40,30 +40,6 @@ class _AppCardState extends State<AppCard> with TickerProviderStateMixin {
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _onTapDown(_) {
-    if (!_isInteractive) return;
-    _controller.forward();
-    setState(() => _pressed = true);
-  }
-
-  void _onTapUp(_) {
-    if (!_isInteractive) return;
-    _controller.reverse();
-    setState(() => _pressed = false);
-  }
-
-  void _onTapCancel() {
-    if (!_isInteractive) return;
-    _controller.reverse();
-    setState(() => _pressed = false);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final baseTheme = context.appCardTheme;
     final appCardTheme = baseTheme.merge(widget.style);
@@ -98,7 +74,10 @@ class _AppCardState extends State<AppCard> with TickerProviderStateMixin {
           ),
         ],
       ),
-      child: widget.child,
+      child: Padding(
+        padding: EdgeInsets.all(appCardTheme.padding!),
+        child: widget.child,
+      ),
     );
 
     if (_isInteractive) {
@@ -111,6 +90,35 @@ class _AppCardState extends State<AppCard> with TickerProviderStateMixin {
       );
     }
 
-    return cardContent;
+    return Padding(
+      padding: EdgeInsets.all(
+         appCardTheme.margin!,
+      ),
+      child: cardContent,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onTapDown(_) {
+    if (!_isInteractive) return;
+    _controller.forward();
+    setState(() => _pressed = true);
+  }
+
+  void _onTapUp(_) {
+    if (!_isInteractive) return;
+    _controller.reverse();
+    setState(() => _pressed = false);
+  }
+
+  void _onTapCancel() {
+    if (!_isInteractive) return;
+    _controller.reverse();
+    setState(() => _pressed = false);
   }
 }

@@ -5,7 +5,7 @@ class Program {
   final DateTime endTime;
   final String locationName;
   final String displayUrl;
-  final String programCategory;
+  final String category;
 
   Program({
     required this.name,
@@ -14,6 +14,6 @@ class Program {
     required this.endTime,
     required this.locationName,
     required this.displayUrl,
-    required this.programCategory,
+    required this.category,
   });
 }

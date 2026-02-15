@@ -17,10 +17,12 @@ class LabeledSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = context.appTheme;
+
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(appTheme.s2),
           child: Row(
             children: [
               Expanded(

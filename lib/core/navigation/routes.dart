@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:valley_of_arts/core/navigation/navigation_service.dart';
 import 'package:valley_of_arts/core/navigation/shells/shells.dart';
+import 'package:valley_of_arts/domain/programs/models/program.dart';
 import 'package:valley_of_arts/presentation/presentation.dart';
 
 GoRouter? _router;
@@ -25,12 +26,24 @@ GoRouter createRouterConfig({required String initialLocation}) {
           GoRoute(
             name: NavigationRoute.programDetails.path,
             path: NavigationRoute.programDetails.fullPath,
-            builder: (context, state) => const ProgramDetailsPage(),
+            builder: (context, state) {
+              final extras = state.extra as Map<String, Object?>;
+              final program = extras['program'] as Program;
+
+              return ProgramDetailsPage(
+                program: program,
+              );
+            },
           ),
           GoRoute(
             name: NavigationRoute.favorites.path,
             path: NavigationRoute.favorites.fullPath,
             builder: (context, state) => const FavoritesPage(),
+          ),
+          GoRoute(
+            name: NavigationRoute.locationDetails.path,
+            path: NavigationRoute.locationDetails.fullPath,
+            builder: (context, state) => const LocationDetailsPage(),
           ),
           GoRoute(
             name: NavigationRoute.home.path,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:valley_of_arts/domain/programs/models/models.dart';
 
 enum NavigationRoute {
   favorites(),
   home(),
+  locationDetails(),
   map(),
   programs(),
   programDetails(),
@@ -44,10 +46,7 @@ class NavigationService {
   }
 
   void goToFavoritesPage() {
-    _goToPageImpl(
-      context: context,
-      route: NavigationRoute.favorites,
-    );
+    _goToPageImpl(context: context, route: NavigationRoute.favorites);
   }
 
   void goToHomePage() {
@@ -66,15 +65,19 @@ class NavigationService {
     );
   }
 
-  void goToProgramDetailsPage() {
-    _goToPageImpl(context: context, route: NavigationRoute.programDetails);
+  void goToProgramDetailsPage({required Program program}) {
+    _goToPageImpl(
+      context: context,
+      route: NavigationRoute.programDetails,
+      extra: {'program': program},
+    );
   }
 
-  void goToMapPage() {
+  void goToMapPage({bool withoutStacking = true}) {
     _goToPageImpl(
       context: context,
       route: NavigationRoute.map,
-      withoutStacking: true,
+      withoutStacking: withoutStacking,
     );
   }
 

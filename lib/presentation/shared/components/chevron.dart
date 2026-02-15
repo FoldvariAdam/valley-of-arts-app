@@ -17,36 +17,33 @@ class ChevronRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
-    return Padding(
-      padding: EdgeInsets.all(appTheme.s2),
-      child: Row(
-        children: [
-          if (leadingIcon != null) ...[
-            leadingIcon!,
-            SizedBox(width: appTheme.s2),
-          ],
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: appTheme.bodyText),
-                if (subtitle != null) ...[
-                  SizedBox(height: appTheme.s0),
-                  Text(
-                    subtitle!,
-                    style: appTheme.descriptionText,
-                  ),
-                ],
-              ],
-            ),
-          ),
-          Icon(
-            Icons.chevron_right,
-            size: 22,
-            color: appTheme.foregroundColor,
-          ),
+    return Row(
+      children: [
+        if (leadingIcon != null) ...[
+          leadingIcon!,
+          SizedBox(width: appTheme.s2),
         ],
-      ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: appTheme.bodyText),
+              if (subtitle != null) ...[
+                SizedBox(height: appTheme.s0),
+                Text(
+                  subtitle!,
+                  style: appTheme.descriptionText,
+                ),
+              ],
+            ],
+          ),
+        ),
+        Icon(
+          Icons.chevron_right,
+          size: 22,
+          color: appTheme.foregroundColor,
+        ),
+      ],
     );
   }
 }

@@ -80,6 +80,7 @@ class AppThemeFactory {
           subTitle: AppTokens.subTitle,
           bodyText: AppTokens.bodyText,
           descriptionText: AppTokens.descriptionText,
+          metaText: AppTokens.metaText,
         ),
         AppCardTheme(
           backgroundColor: AppTokens.componentBackgroundColor,
@@ -95,6 +96,8 @@ class AppThemeFactory {
           animationDuration: const Duration(milliseconds: 150),
           pressedScale: 0.96,
           curve: Curves.easeOut,
+          margin: AppTokens.s0,
+          padding: AppTokens.s2,
         ),
         AppFilterChipTheme(
           backgroundColor: AppTokens.componentBackgroundColor,

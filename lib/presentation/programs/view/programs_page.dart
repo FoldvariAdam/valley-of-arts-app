@@ -227,7 +227,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                           children: [
                             Text(
                               '${programs.length} program',
-                              style: appTheme.bodyText,
+                              style: appTheme.smallHeadLine,
                             ),
 
                             if (hasActiveFilters)
@@ -260,10 +260,9 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                               return ProgramCard(
                                 program: program,
                                 onToggleFavorite: (_) {},
-                                onTap: NavigationService.of(
+                                onTap: () => NavigationService.of(
                                   context,
-                                ).goToProgramDetailsPage,
-                                compact: true,
+                                ).goToProgramDetailsPage(program: program),
                               );
                             },
                           ),
