@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/domain/domain.dart';
 import 'package:valley_of_arts/presentation/presentation.dart';
+import 'package:valley_of_arts/presentation/shared/decor/floating_deco.dart';
 
 class ProgramsPage extends StatelessWidget {
   const ProgramsPage({super.key});
@@ -50,227 +51,233 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(appTheme.s2),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const PageHeader(
-            title: 'Programok',
-            subtitle: 'Szűrj hely, időpont és kategória alapján',
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return Stack(
+      children: [
+        const ProgramsDeco(),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(appTheme.s2),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppButton.secondary(
-                icon: Icon(
-                  _filtersExpanded ? Icons.expand_less : Icons.expand_more,
-                ),
-                iconPosition: AppButtonIconPosition.trailing,
-                text: _filtersExpanded
-                    ? 'Szűrők bezárása'
-                    : 'Szűrők megnyitása',
-                onPressed: () {
-                  setState(() {
-                    _filtersExpanded = !_filtersExpanded;
-                  });
+              const PageHeader(
+                title: 'Programok',
+                subtitle: 'Szűrj hely, időpont és kategória alapján',
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  AppButton.secondary(
+                    icon: Icon(
+                      _filtersExpanded ? Icons.expand_less : Icons.expand_more,
+                    ),
+                    iconPosition: AppButtonIconPosition.trailing,
+                    text: _filtersExpanded
+                        ? 'Szűrők bezárása'
+                        : 'Szűrők megnyitása',
+                    onPressed: () {
+                      setState(() {
+                        _filtersExpanded = !_filtersExpanded;
+                      });
+                    },
+                  ),
+                ],
+              ),
+
+              SizedBox(height: appTheme.s2),
+
+              BlocBuilder<ProgramsBloc, ProgramsState>(
+                buildWhen: (prev, curr) => curr is ProgramsFiltersLoaded,
+                builder: (context, state) {
+                  if (state is! ProgramsFiltersLoaded) {
+                    return const AppCircularProgressIndicator();
+                  }
+
+                  final schedule = state.schedule;
+                  final categories = state.categories;
+                  final locations = state.locations;
+
+                  final currentSelectedCategories =
+                      (_selectedCategories == null ||
+                          _selectedCategories!.isEmpty)
+                      ? <String?>[null]
+                      : _selectedCategories!
+                            .map((category) => category.toString())
+                            .toList();
+
+                  return AnimatedSize(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    child: _filtersExpanded
+                        ? Column(
+                            children: [
+                              const SectionTitle(
+                                icon: Icons.calendar_today,
+                                title: 'Dátum',
+                              ),
+
+                              SizedBox(height: appTheme.s1),
+
+                              AppFilterChipGroup<DateTime>(
+                                appFilterChipGroupController:
+                                    _datesChipController,
+                                selectedIds: [_selectedDate],
+                                items: schedule.dates,
+                                idOf: (s) => s.toBackendDateQuery(),
+                                labelOf: (s) => s.toShortMonthString(),
+                                onChanged: (ids) {
+                                  _selectedDate = ids.first;
+                                  _filterPrograms(context: context);
+                                },
+                              ),
+
+                              SizedBox(height: appTheme.s2),
+
+                              const SectionTitle(
+                                icon: Icons.filter_alt,
+                                title: 'Kategória',
+                              ),
+
+                              SizedBox(height: appTheme.s1),
+
+                              AppFilterChipGroup<Category>(
+                                appFilterChipGroupController:
+                                    _categoriesChipController,
+                                selectedIds: currentSelectedCategories,
+                                items: categories,
+                                multi: true,
+                                idOf: (c) => c.id.toString(),
+                                labelOf: (c) => c.name,
+                                onChanged: (ids) {
+                                  _selectedCategories = ids.first == null
+                                      ? []
+                                      : ids.map((e) => int.parse(e!)).toList();
+
+                                  _filterPrograms(context: context);
+                                },
+                              ),
+                              SizedBox(height: appTheme.s2),
+
+                              const SectionTitle(
+                                icon: Icons.location_city,
+                                title: 'Helyszín',
+                              ),
+
+                              SizedBox(height: appTheme.s1),
+
+                              Row(
+                                children: [
+                                  SizedBox(width: appTheme.s1),
+                                  Expanded(
+                                    child: Text(
+                                      'A város szűrő csak a helyszínlistát szűkíti – a programok a kiválasztott helyszín alapján frissülnek.',
+                                      style: appTheme.descriptionText,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              SizedBox(height: appTheme.s2),
+
+                              CityLocationFilter(
+                                citiesAppFilterChipGroupController:
+                                    _citiesChipController,
+                                locationsAppFilterChipGroupController:
+                                    _locationsChipController,
+                                selectedLocation: _selectedLocation,
+                                isLocationsExpanded: _isLocationsExpanded,
+                                cities: locations,
+                                onLocationChanged: (location) {
+                                  _selectedLocation = location;
+                                  _filterPrograms(context: context);
+                                },
+                                onExpandedLocationsChanged: (value) {
+                                  _isLocationsExpanded = value;
+                                },
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  );
+                },
+              ),
+
+              SizedBox(height: appTheme.s3),
+
+              BlocBuilder<ProgramsBloc, ProgramsState>(
+                builder: (context, state) {
+                  if (state is ProgramsLoading) {
+                    return const AppCircularProgressIndicator();
+                  }
+
+                  if (state is ProgramsWithDataState) {
+                    final programs = state.programs;
+
+                    final bool hasActiveFilters =
+                        _selectedDate != null ||
+                        (_selectedCategories != null &&
+                            _selectedCategories!.isNotEmpty) ||
+                        _selectedLocation != null;
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${programs.length} program',
+                              style: appTheme.bodyText,
+                            ),
+
+                            if (hasActiveFilters)
+                              AppButton.secondary(
+                                text: 'Szűrők törlése',
+                                onPressed: () {
+                                  setState(() {});
+                                  _selectedDate = null;
+                                  _selectedCategories = [];
+                                  _selectedLocation = null;
+
+                                  _datesChipController.scrollToAll();
+                                  _categoriesChipController.scrollToAll();
+                                  _citiesChipController.scrollToAll();
+                                  _locationsChipController.scrollToAll();
+
+                                  _filterPrograms(context: context);
+                                },
+                              ),
+                          ],
+                        ),
+                        SizedBox(height: appTheme.s3),
+                        if (programs.isEmpty)
+                          _EmptyState()
+                        else
+                          AnimatedListView<Program>(
+                            items: programs,
+                            spacing: appTheme.s1,
+                            itemBuilder: (context, program, index) {
+                              return ProgramCard(
+                                program: program,
+                                onToggleFavorite: (_) {},
+                                onTap: NavigationService.of(
+                                  context,
+                                ).goToProgramDetailsPage,
+                                compact: true,
+                              );
+                            },
+                          ),
+                      ],
+                    );
+                  }
+
+                  return const SizedBox.shrink();
                 },
               ),
             ],
           ),
-
-          SizedBox(height: appTheme.s2),
-
-          BlocBuilder<ProgramsBloc, ProgramsState>(
-            buildWhen: (prev, curr) => curr is ProgramsFiltersLoaded,
-            builder: (context, state) {
-              if (state is! ProgramsFiltersLoaded) {
-                return const AppCircularProgressIndicator();
-              }
-
-              final schedule = state.schedule;
-              final categories = state.categories;
-              final locations = state.locations;
-
-              final currentSelectedCategories =
-                  (_selectedCategories == null || _selectedCategories!.isEmpty)
-                  ? <String?>[null]
-                  : _selectedCategories!
-                        .map((category) => category.toString())
-                        .toList();
-
-              return AnimatedSize(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                child: _filtersExpanded
-                    ? Column(
-                        children: [
-                          const SectionTitle(
-                            icon: Icons.calendar_today,
-                            title: 'Dátum',
-                          ),
-
-                          SizedBox(height: appTheme.s1),
-
-                          AppFilterChipGroup<DateTime>(
-                            appFilterChipGroupController: _datesChipController,
-                            selectedIds: [_selectedDate],
-                            items: schedule.dates,
-                            idOf: (s) => s.toBackendDateQuery(),
-                            labelOf: (s) => s.toShortMonthString(),
-                            onChanged: (ids) {
-                              _selectedDate = ids.first;
-                              _filterPrograms(context: context);
-                            },
-                          ),
-
-                          SizedBox(height: appTheme.s2),
-
-                          const SectionTitle(
-                            icon: Icons.filter_alt,
-                            title: 'Kategória',
-                          ),
-
-                          SizedBox(height: appTheme.s1),
-
-                          AppFilterChipGroup<Category>(
-                            appFilterChipGroupController: _categoriesChipController,
-                            selectedIds: currentSelectedCategories,
-                            items: categories,
-                            multi: true,
-                            idOf: (c) => c.id.toString(),
-                            labelOf: (c) => c.name,
-                            onChanged: (ids) {
-                              _selectedCategories = ids.first == null
-                                  ? []
-                                  : ids.map((e) => int.parse(e!)).toList();
-
-                              _filterPrograms(context: context);
-                            },
-                          ),
-                          SizedBox(height: appTheme.s2),
-
-                          const SectionTitle(
-                            icon: Icons.location_city,
-                            title: 'Helyszín',
-                          ),
-
-                          SizedBox(height: appTheme.s1),
-
-                          Row(
-                            children: [
-                              SizedBox(width: appTheme.s1),
-                              Expanded(
-                                child: Text(
-                                  'A város szűrő csak a helyszínlistát szűkíti – a programok a kiválasztott helyszín alapján frissülnek.',
-                                  style: appTheme.descriptionText,
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: appTheme.s2),
-
-                          CityLocationFilter(
-                            citiesAppFilterChipGroupController:
-                                _citiesChipController,
-                            locationsAppFilterChipGroupController:
-                                _locationsChipController,
-                            selectedLocation: _selectedLocation,
-                            isLocationsExpanded: _isLocationsExpanded,
-                            cities: locations,
-                            onLocationChanged: (location) {
-                              _selectedLocation = location;
-                              _filterPrograms(context: context);
-                            },
-                            onExpandedLocationsChanged: (value) {
-                              _isLocationsExpanded = value;
-                            },
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
-              );
-            },
-          ),
-
-          SizedBox(height: appTheme.s3),
-
-          BlocBuilder<ProgramsBloc, ProgramsState>(
-            builder: (context, state) {
-              if (state is ProgramsLoading) {
-                return const AppCircularProgressIndicator();
-              }
-
-              if (state is ProgramsWithDataState) {
-                final programs = state.programs;
-
-                final bool hasActiveFilters =
-                    _selectedDate != null ||
-                    (_selectedCategories != null &&
-                        _selectedCategories!.isNotEmpty) ||
-                    _selectedLocation != null;
-
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '${programs.length} program',
-                          style: appTheme.bodyText,
-                        ),
-
-                        if (hasActiveFilters)
-                          AppButton.secondary(
-                            text: 'Szűrők törlése',
-                            onPressed: () {
-                              setState(() {
-
-                              });
-                              _selectedDate = null;
-                              _selectedCategories = [];
-                              _selectedLocation = null;
-
-                              _datesChipController.scrollToAll();
-                              _categoriesChipController.scrollToAll();
-                              _citiesChipController.scrollToAll();
-                              _locationsChipController.scrollToAll();
-
-                              _filterPrograms(context: context);
-                            },
-                          ),
-                      ],
-                    ),
-                    SizedBox(height: appTheme.s3),
-                    if (programs.isEmpty)
-                      _EmptyState()
-                    else
-                      AnimatedListView<Program>(
-                        items: programs,
-                        spacing: appTheme.s1,
-                        itemBuilder: (context, program, index) {
-                          return ProgramCard(
-                            program: program,
-                            onToggleFavorite: (_) {},
-                            onTap: NavigationService.of(
-                              context,
-                            ).goToProgramDetailsPage,
-                            compact: true,
-                          );
-                        },
-                      ),
-                  ],
-                );
-              }
-
-              return const SizedBox.shrink();
-            },
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
