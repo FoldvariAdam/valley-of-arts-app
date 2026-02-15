@@ -126,6 +126,8 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
+    final highlightColor = appTheme.highlightColor;
+
     return GestureDetector(
       onTapDown: (_) => setState(() => _pressed = true),
       onTapCancel: () => setState(() => _pressed = false),
@@ -146,7 +148,7 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                   width: 72,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: appTheme.primaryColor,
+                    color: highlightColor,
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
@@ -159,7 +161,7 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                     widget.item.icon,
                     size: 20,
                     color: widget.isActive
-                        ? appTheme.primaryColor
+                        ? highlightColor
                         : appTheme.mutedForegroundColor,
                   ),
                   SizedBox(height: appTheme.s0),
@@ -167,7 +169,7 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
                     widget.item.label,
                     style: appTheme.descriptionText.copyWith(
                       color: widget.isActive
-                          ? appTheme.primaryColor
+                          ? highlightColor
                           : appTheme.mutedForegroundColor,
                     ),
                   ),

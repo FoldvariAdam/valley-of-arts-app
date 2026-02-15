@@ -135,7 +135,7 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            AppButton.ghost(
+            AppButton.secondary(
               text: _isLocationsExpanded ? 'Egysoros nézet' : 'Rács nézet',
               icon: Icon(
                 _isLocationsExpanded ? Icons.view_stream : Icons.grid_view,

@@ -63,7 +63,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              AppButton.ghost(
+              AppButton.secondary(
                 icon: Icon(
                   _filtersExpanded ? Icons.expand_less : Icons.expand_more,
                 ),
@@ -224,7 +224,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                         ),
 
                         if (hasActiveFilters)
-                          AppButton.ghost(
+                          AppButton.secondary(
                             text: 'Szűrők törlése',
                             onPressed: () {
                               setState(() {

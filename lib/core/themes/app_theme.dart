@@ -15,13 +15,17 @@ class AppTheme extends ThemeExtension<AppTheme> {
   // --- Semantic colors ---
   final Color primaryColor;
   final Color secondaryColor;
+
+  // --- Content colors ---
   final Color mutedForegroundColor;
+  final Color borderColor;
 
   // --- Surface colors ---
   final Color componentBackgroundColor;
-  final Color borderColor;
 
+  // --- Interaction colors ---
   final Color selectedColor;
+  final Color highlightColor;
 
   // --- Text styles ---
   final TextStyle bigHeadLine;
@@ -48,6 +52,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.borderColor,
     required this.mutedForegroundColor,
     required this.selectedColor,
+    required this.highlightColor,
     required this.bigHeadLine,
     required this.mediumHeadLine,
     required this.smallHeadLine,

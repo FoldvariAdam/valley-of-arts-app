@@ -5,16 +5,16 @@ class AppTokens {
   static const Color foregroundColor = Color(0xFFFFFFFF);
   static const Color backgroundColor = Color(0xFF317E79);
 
-  static const Color componentBackgroundColor = Color(0xFF2A6E6A);
-
   static const Color primaryColor = Color(0xFFE24A6B);
   static const Color secondaryColor = Color(0xFFB52F63);
 
+  static const Color mutedForegroundColor = Color(0xFF9EC6C3);
   static const Color borderColor = Color(0xFF5C8F8A);
 
-  static const Color mutedForegroundColor = Color(0xFF9EC6C3);
+  static const Color componentBackgroundColor = Color(0xFF2A6E6A);
 
   static const Color selectedColor = Color(0xFFF5A3B2);
+  static const Color highlightColor = Color(0xFF6EDBE0);
 
   // --- Spacing ---
   static const double s0 = 5;

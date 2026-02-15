@@ -13,7 +13,7 @@ class SectionTitle extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(icon, size: 20, color: appTheme.primaryColor),
+        Icon(icon, size: 20, color: appTheme.highlightColor),
         SizedBox(width: appTheme.s1),
         Text(title, style: appTheme.smallHeadLine),
       ],
