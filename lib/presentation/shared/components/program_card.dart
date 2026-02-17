@@ -34,13 +34,7 @@ class ProgramCard extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(appTheme.s3),
                   ),
-                  child: Image.network(
-                    program.displayUrl,
-                    height: 180,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
-                  ),
+                  child: CachedProgramImage(imageUrl: program.displayUrl),
                 ),
                 /*Positioned(
                       right: 10,
@@ -58,7 +52,7 @@ class ProgramCard extends StatelessWidget {
                   program.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: appTheme.smallHeadLine
+                  style: appTheme.smallHeadLine,
                 ),
 
                 if (!compact && program.description.isNotEmpty) ...[

@@ -94,7 +94,7 @@ class _HomePageInnerState extends State<_HomePageInner> {
 
                 if (popularPrograms != null && popularPrograms.isNotEmpty) {
                   return SliverToBoxAdapter(
-                    child: PopularEventsCarousel(programs: popularPrograms),
+                    child: PopularProgramsCarousel(programs: popularPrograms),
                   );
                 }
 

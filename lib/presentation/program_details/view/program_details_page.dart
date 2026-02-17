@@ -52,7 +52,11 @@ class _ProgramDetailsPageState extends State<ProgramDetailsPage>
         CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
-              child: _hero(e: program, appTheme: appTheme),
+              child: _HeroImage(
+                program: program,
+                appTheme: appTheme,
+                heroScale: _heroScale,
+              ),
             ),
             SliverToBoxAdapter(
               child: Padding(
@@ -129,44 +133,33 @@ class _ProgramDetailsPageState extends State<ProgramDetailsPage>
       ],
     );
   }
+}
 
-  Widget _hero({required Program e, required AppTheme appTheme}) {
+class _HeroImage extends StatelessWidget {
+  final Program program;
+  final AppTheme appTheme;
+  final Animation<double> heroScale;
+
+  const _HeroImage({
+    required this.program,
+    required this.appTheme,
+    required this.heroScale,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: 288,
       child: Stack(
         fit: StackFit.expand,
         children: [
           AnimatedBuilder(
-            animation: _heroScale,
-            builder: (_, _) {
-              return Transform.scale(
-                scale: _heroScale.value,
-                child: e.displayUrl.isNotEmpty
-                    ? Image.network(
-                        e.displayUrl,
-                        height: 180,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                      )
-                /// TODO: Add this everywhere in the background
-                    : DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Colors.black.withValues(alpha: 0.80),
-                              Colors.black.withValues(alpha: 0.30),
-                              Colors.transparent,
-                            ],
-                          ),
-                        ),
-                      ),
-              );
-            },
+            animation: heroScale,
+            builder: (_, _) => Transform.scale(
+              scale: heroScale.value,
+              child: CachedProgramImage(imageUrl: program.displayUrl),
+            ),
           ),
-
           DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -180,17 +173,6 @@ class _ProgramDetailsPageState extends State<ProgramDetailsPage>
               ),
             ),
           ),
-
-          /*Positioned(
-            left: 16,
-            bottom: 16,
-            child: Entrance(
-              delayMs: 80,
-              child: _CategoryBadge(
-                label: 'e.categoryLabel',
-              ),
-            ),
-          ),*/
         ],
       ),
     );
