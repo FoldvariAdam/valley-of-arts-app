@@ -7,9 +7,7 @@ part 'paginated_programs_response.g.dart';
 class PaginatedProgramsResponse {
   final List<ProgramResponse>? data;
 
-  PaginatedProgramsResponse({
-    this.data,
-  });
+  PaginatedProgramsResponse({this.data});
 
   factory PaginatedProgramsResponse.fromJson(Map<String, dynamic> json) =>
       _$PaginatedProgramsResponseFromJson(json);

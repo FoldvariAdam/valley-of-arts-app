@@ -48,7 +48,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 border: Border(top: BorderSide(color: appTheme.borderColor)),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: .spaceAround,
                 children: _buildItems(navigationService, appTheme),
               ),
             ),
@@ -71,7 +71,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       AppBottomBarItem(
         route: NavigationRoute.programs,
         icon: Icons.event,
-        label: LocaleKeys.AppBottomBar_Events.tr(),
+        label: LocaleKeys.AppBottomBar_Programs.tr(),
       ),
       AppBottomBarItem(
         route: NavigationRoute.map,
@@ -155,7 +155,7 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
               ),
 
               Column(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: .min,
                 children: [
                   Icon(
                     widget.item.icon,

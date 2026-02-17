@@ -23,9 +23,6 @@ extension ScrollControllerExtensions on ScrollController {
     );
   }
 
-  void scrollToAll() => animateTo(
-      0.0,
-      duration: animationDuration,
-      curve: Curves.easeInOut,
-    );
+  void scrollToAll() =>
+      animateTo(0.0, duration: animationDuration, curve: Curves.easeInOut);
 }

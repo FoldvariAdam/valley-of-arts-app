@@ -47,13 +47,8 @@ class SelectableRow extends StatelessWidget {
           if (leading != null) ...[leading!, SizedBox(width: appTheme.s1)],
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: appTheme.bodyText,
-                ),
-              ],
+              crossAxisAlignment: .start,
+              children: [Text(title, style: appTheme.bodyText)],
             ),
           ),
           AnimatedScale(

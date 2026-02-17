@@ -1,4 +1,3 @@
-
 import 'package:isar_community/isar.dart';
 import 'package:valley_of_arts/domain/programs/models/models.dart';
 
@@ -8,6 +7,8 @@ part 'program_model.g.dart';
 class ProgramModel {
   Id id = Isar.autoIncrement;
 
+  @Index()
+  late int programId;
   late String name;
   late String description;
   late DateTime startTime;
@@ -15,19 +16,25 @@ class ProgramModel {
   late String locationName;
   late String displayUrl;
   late String category;
+  late bool isFavorite;
 
   ProgramModel();
 
+  /// TODO ezeknek biztos itt a helye?
+
   ProgramModel.fromDomain(Program program)
-      : name = program.name,
-        description = program.description,
-        startTime = program.startTime,
-        endTime = program.endTime,
-        locationName = program.locationName,
-        displayUrl = program.displayUrl,
-        category = program.category;
+    : programId = program.id,
+      name = program.name,
+      description = program.description,
+      startTime = program.startTime,
+      endTime = program.endTime,
+      locationName = program.locationName,
+      displayUrl = program.displayUrl,
+      category = program.category,
+      isFavorite = program.isFavorite;
 
   Program toDomain() => Program(
+    id: programId,
     name: name,
     description: description,
     startTime: startTime,
@@ -35,5 +42,6 @@ class ProgramModel {
     locationName: locationName,
     displayUrl: displayUrl,
     category: category,
+    isFavorite: isFavorite,
   );
 }

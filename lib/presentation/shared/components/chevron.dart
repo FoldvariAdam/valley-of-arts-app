@@ -25,24 +25,17 @@ class ChevronRow extends StatelessWidget {
         ],
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Text(title, style: appTheme.bodyText),
               if (subtitle != null) ...[
                 SizedBox(height: appTheme.s0),
-                Text(
-                  subtitle!,
-                  style: appTheme.descriptionText,
-                ),
+                Text(subtitle!, style: appTheme.descriptionText),
               ],
             ],
           ),
         ),
-        Icon(
-          Icons.chevron_right,
-          size: 22,
-          color: appTheme.foregroundColor,
-        ),
+        Icon(Icons.chevron_right, size: 22, color: appTheme.foregroundColor),
       ],
     );
   }

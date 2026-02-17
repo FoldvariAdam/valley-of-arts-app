@@ -1,5 +1,6 @@
-//GENERATED BARREL FILE 
-export 'animated_list_view.dart';
+//GENERATED BARREL FILE
+export 'app_animated_list_view.dart';
+export 'app_back_button.dart';
 export 'app_bottom_bar.dart';
 export 'app_button.dart';
 export 'app_card.dart';

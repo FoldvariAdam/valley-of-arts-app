@@ -82,7 +82,7 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
     final appTheme = context.appTheme;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Row(
           children: [
@@ -94,7 +94,8 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
         SizedBox(height: appTheme.s1),
 
         AppFilterChipGroup<CityWithLocations>(
-          appFilterChipGroupController: widget.citiesAppFilterChipGroupController,
+          appFilterChipGroupController:
+              widget.citiesAppFilterChipGroupController,
           selectedIds: [
             _selectedCityId.toString() == 'null'
                 ? null
@@ -133,7 +134,7 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
         SizedBox(height: appTheme.s1),
 
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: .end,
           children: [
             AppButton.secondary(
               text: _isLocationsExpanded ? 'Egysoros nézet' : 'Rács nézet',
@@ -170,7 +171,8 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
 
     if (!_isLocationsExpanded) {
       return AppFilterChipGroup<Location>(
-        appFilterChipGroupController: widget.locationsAppFilterChipGroupController,
+        appFilterChipGroupController:
+            widget.locationsAppFilterChipGroupController,
         items: _filteredLocations,
         idOf: (l) => l.id.toString(),
         labelOf: (l) => l.name,
@@ -205,6 +207,7 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
             controller: _verticalController,
             thumbVisibility: true,
             child: SingleChildScrollView(
+              key: NoDisappearBottomNavbarKey(),
               controller: _verticalController,
               padding: EdgeInsets.all(appTheme.s1),
               child: Wrap(

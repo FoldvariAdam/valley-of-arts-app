@@ -7,14 +7,14 @@ class ProgramCard extends StatelessWidget {
   final Program program;
   final bool compact;
   final VoidCallback? onTap;
-  final Function(String id) onToggleFavorite;
+  final bool showIsFavorite;
 
   const ProgramCard({
     super.key,
     required this.program,
-    required this.onToggleFavorite,
     this.compact = false,
     this.onTap,
+    this.showIsFavorite = true,
   });
 
   @override
@@ -24,102 +24,94 @@ class ProgramCard extends StatelessWidget {
     return AppCard(
       onTap: onTap,
       style: const AppCardTheme(padding: 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          if (program.displayUrl.isNotEmpty)
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(appTheme.s3),
+          Column(
+            children: [
+              if (program.displayUrl.isNotEmpty) ...[
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(appTheme.s3),
+                    ),
+                    child: CachedProgramImage(imageUrl: program.displayUrl),
                   ),
-                  child: CachedProgramImage(imageUrl: program.displayUrl),
                 ),
-                /*Positioned(
-                      right: 10,
-                      top: 10,
-                      child: _favoriteButton(),
-                    )*/
               ],
-            ),
-          Padding(
-            padding: EdgeInsets.all(appTheme.s3),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  program.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: appTheme.smallHeadLine,
-                ),
 
-                if (!compact && program.description.isNotEmpty) ...[
-                  SizedBox(height: appTheme.s0),
-                  Text(
-                    program.description,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: appTheme.descriptionText,
-                  ),
-                ],
-
-                SizedBox(height: appTheme.s1),
-
-                Row(
+              Padding(
+                padding: EdgeInsets.all(appTheme.s3),
+                child: Column(
+                  crossAxisAlignment: .start,
                   children: [
-                    Icon(Icons.access_time, size: appTheme.s2),
-
-                    SizedBox(width: appTheme.s0),
-
                     Text(
-                      program.startTime.toFullDateTimeString(),
-                      style: appTheme.metaText,
+                      program.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: appTheme.smallHeadLine,
                     ),
 
-                    SizedBox(width: appTheme.s1),
-
-                    Icon(Icons.place, size: appTheme.s2),
-
-                    SizedBox(width: appTheme.s0),
-
-                    Expanded(
-                      child: Text(
-                        program.locationName,
-                        style: appTheme.metaText,
+                    if (!compact && program.description.isNotEmpty) ...[
+                      SizedBox(height: appTheme.s0),
+                      Text(
+                        program.description,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: appTheme.descriptionText,
                       ),
+                    ],
+
+                    SizedBox(height: appTheme.s1),
+
+                    Row(
+                      children: [
+                        Icon(Icons.access_time, size: appTheme.s2),
+                        SizedBox(width: appTheme.s0),
+                        Expanded(
+                          child: Text(
+                            program.startTime.toFullDateTimeString(),
+                            style: appTheme.metaText,
+                          ),
+                        ),
+                        Icon(Icons.place, size: appTheme.s2),
+                        SizedBox(width: appTheme.s0),
+                        Expanded(
+                          child: Text(
+                            program.locationName,
+                            style: appTheme.metaText,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+
+          if (program.isFavorite && showIsFavorite)
+            Positioned(
+              right: 10,
+              top: 10,
+              child: Container(
+                padding: EdgeInsets.all(appTheme.s1),
+                decoration: BoxDecoration(
+                  color: program.isFavorite
+                      ? appTheme.secondaryColor.withValues(alpha: 0.8)
+                      : Colors.white.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.favorite,
+                  color: Colors.white,
+                  size: 15,
+                ),
+              ),
+            ),
         ],
       ),
     );
   }
-
-  /*  Widget _favoriteButton() {
-    return GestureDetector(
-      onTap: () {
-        setState(() => widget.program.isFavorite = !widget.program.isFavorite);
-        widget.onToggleFavorite(widget.program.id);
-      },
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: widget.program.isFavorite
-              ? Colors.red.withOpacity(.8)
-              : Colors.black.withOpacity(.3),
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          widget.program.isFavorite ? Icons.favorite : Icons.favorite_border,
-          color: Colors.white,
-          size: 18,
-        ),
-      ),
-    );
-  }*/
 }

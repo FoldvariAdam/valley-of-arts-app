@@ -58,5 +58,4 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
       elevation: override.elevation ?? base.elevation,
     );
   }
-
 }

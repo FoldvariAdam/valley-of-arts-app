@@ -18,8 +18,7 @@ class HomeHeader extends StatefulWidget {
   State<HomeHeader> createState() => _HomeHeaderState();
 }
 
-class _HomeHeaderState extends State<HomeHeader>
-    with TickerProviderStateMixin {
+class _HomeHeaderState extends State<HomeHeader> with TickerProviderStateMixin {
   late final AnimationController _c;
 
   @override
@@ -116,7 +115,7 @@ class _HomeHeaderState extends State<HomeHeader>
                         minHeight: constraints.maxHeight,
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: .start,
                         children: [
                           FadeSlideIn(
                             anim: badgeIn,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
 
 enum AppButtonVariant { primary, secondary, ghost }
+
 enum AppButtonIconPosition { leading, trailing }
 
 class AppButton extends StatelessWidget {
@@ -67,7 +68,7 @@ class AppButton extends StatelessWidget {
       childContent = FittedBox(
         fit: BoxFit.scaleDown,
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: iconPosition == AppButtonIconPosition.leading
               ? [icon!, const SizedBox(width: 8), Text(text)]
               : [Text(text), const SizedBox(width: 8), icon!],

@@ -1,2 +1,2 @@
-//GENERATED BARREL FILE 
-export 'map_page.dart'; 
+//GENERATED BARREL FILE
+export 'map_page.dart';

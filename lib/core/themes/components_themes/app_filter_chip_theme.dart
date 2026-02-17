@@ -130,9 +130,11 @@ class AppFilterChipTheme extends ThemeExtension<AppFilterChipTheme> {
 
     return AppFilterChipTheme(
       backgroundColor: other.backgroundColor ?? backgroundColor,
-      activeBackgroundColor: other.activeBackgroundColor??activeBackgroundColor,
+      activeBackgroundColor:
+          other.activeBackgroundColor ?? activeBackgroundColor,
       foregroundColor: other.foregroundColor ?? foregroundColor,
-      activeForegroundColor: other.activeForegroundColor ?? activeForegroundColor,
+      activeForegroundColor:
+          other.activeForegroundColor ?? activeForegroundColor,
       borderColor: other.borderColor ?? borderColor,
       activeBorderColor: other.activeBorderColor ?? activeBorderColor,
       paddingHorizontal: other.paddingHorizontal ?? paddingHorizontal,

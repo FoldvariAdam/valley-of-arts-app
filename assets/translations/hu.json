@@ -1,10 +1,14 @@
 {
   "AppBottomBar": {
-    "Events": "Események",
+    "Programs": "Programok",
     "Home": "Kezdőlap",
     "Map": "Térkép",
     "Schedule": "Menetrend",
     "Settings": "Beállítások"
+  },
+  "Favorites": {
+    "Title": "Kedvencek",
+    "SubTitle": "A kedvenceid egy helyen"
   },
   "Home": {
     "Title": "Művészetek\nVölgye",

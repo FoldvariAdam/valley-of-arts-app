@@ -12,7 +12,7 @@ class ProgramsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          GetIt.instance.get<ProgramsBloc>()..add(const ProgramsStarted()),
+          GetIt.instance.get<ProgramsBloc>()..add(const ProgramsStartedEvent()),
       child: const _ProgramsPageInner(),
     );
   }
@@ -39,7 +39,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
 
   void _filterPrograms({required BuildContext context}) =>
       context.read<ProgramsBloc>().add(
-        ProgramsFilterChanged(
+        ProgramsFilterChangedEvent(
           date: _selectedDate,
           categories: _selectedCategories,
           location: _selectedLocation,
@@ -56,7 +56,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
         SingleChildScrollView(
           padding: EdgeInsets.all(appTheme.s2),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               const PageHeader(
                 title: 'Programok',
@@ -64,7 +64,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
               ),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: .end,
                 children: [
                   AppButton.secondary(
                     icon: Icon(
@@ -86,9 +86,9 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
               SizedBox(height: appTheme.s2),
 
               BlocBuilder<ProgramsBloc, ProgramsState>(
-                buildWhen: (prev, curr) => curr is ProgramsFiltersLoaded,
+                buildWhen: (prev, curr) => curr is ProgramsFiltersLoadedState,
                 builder: (context, state) {
-                  if (state is! ProgramsFiltersLoaded) {
+                  if (state is! ProgramsFiltersLoadedState) {
                     return const AppCircularProgressIndicator();
                   }
 
@@ -205,7 +205,7 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
 
               BlocBuilder<ProgramsBloc, ProgramsState>(
                 builder: (context, state) {
-                  if (state is ProgramsLoading) {
+                  if (state is ProgramsLoadingState) {
                     return const AppCircularProgressIndicator();
                   }
 
@@ -219,10 +219,10 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                         _selectedLocation != null;
 
                     return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: [
                             Text(
                               '${programs.length} program',
@@ -252,13 +252,12 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                         if (programs.isEmpty)
                           _EmptyState()
                         else
-                          AnimatedListView<Program>(
+                          AppAnimatedListView<Program>(
                             items: programs,
                             spacing: appTheme.s1,
                             itemBuilder: (context, program, index) {
                               return ProgramCard(
                                 program: program,
-                                onToggleFavorite: (_) {},
                                 onTap: () => NavigationService.of(
                                   context,
                                 ).goToProgramDetailsPage(program: program),

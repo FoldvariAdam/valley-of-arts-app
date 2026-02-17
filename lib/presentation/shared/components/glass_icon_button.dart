@@ -33,7 +33,7 @@ class _GlassIconButtonState extends State<GlassIconButton> {
         ? appTheme.primaryColor.withValues(alpha: 0.6)
         : widget.active
         ? appTheme.primaryColor
-        : appTheme.backgroundColor.withValues(alpha: 0.8);
+        : appTheme.componentBackgroundColor.withValues(alpha: 0.8);
 
     final fg = widget.active ? Colors.white : appTheme.foregroundColor;
 

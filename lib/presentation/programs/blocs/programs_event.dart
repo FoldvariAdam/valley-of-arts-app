@@ -8,16 +8,16 @@ sealed class ProgramsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class ProgramsStarted extends ProgramsEvent {
-  const ProgramsStarted();
+final class ProgramsStartedEvent extends ProgramsEvent {
+  const ProgramsStartedEvent();
 }
 
-final class ProgramsFilterChanged extends ProgramsEvent {
+final class ProgramsFilterChangedEvent extends ProgramsEvent {
   final String? date;
   final List<int>? categories;
   final int? location;
 
-  const ProgramsFilterChanged({this.date, this.categories, this.location});
+  const ProgramsFilterChangedEvent({this.date, this.categories, this.location});
 
   @override
   List<Object?> get props => [date, categories, location];

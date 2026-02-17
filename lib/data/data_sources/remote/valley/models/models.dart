@@ -1,4 +1,4 @@
-//GENERATED BARREL FILE 
+//GENERATED BARREL FILE
 export 'artist_response.dart';
 export 'attachments_response.dart';
 export 'city_response.dart';

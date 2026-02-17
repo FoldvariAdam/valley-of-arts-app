@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          GetIt.instance.get<HomeBloc>()..add(const HomeStarted()),
+          GetIt.instance.get<HomeBloc>()..add(const HomeStartedEvent()),
       child: const _HomePageInner(),
     );
   }
@@ -31,7 +31,6 @@ class _HomePageInnerState extends State<_HomePageInner> {
   bool _showScrollToTop = false;
 
   @override
-  @override
   void initState() {
     super.initState();
 
@@ -47,7 +46,7 @@ class _HomePageInnerState extends State<_HomePageInner> {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 50) {
         context.read<HomeBloc>().add(
-          const HomeLoadMoreCurrentProgramsRequested(),
+          const HomeLoadMoreCurrentProgramsRequestedEvent(),
         );
       }
     });
@@ -74,9 +73,7 @@ class _HomePageInnerState extends State<_HomePageInner> {
                 onTicketTap: () {},
               ),
             ),
-
             SliverToBoxAdapter(child: SizedBox(height: appTheme.s2)),
-
             BlocBuilder<HomeBloc, HomeState>(
               buildWhen: (prev, curr) =>
                   prev.popularPrograms != curr.popularPrograms ||
@@ -101,9 +98,7 @@ class _HomePageInnerState extends State<_HomePageInner> {
                 return SliverToBoxAdapter(child: Container());
               },
             ),
-
             SliverToBoxAdapter(child: SizedBox(height: appTheme.s5)),
-
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: appTheme.s2),
@@ -111,18 +106,16 @@ class _HomePageInnerState extends State<_HomePageInner> {
                   children: [
                     BlocBuilder<HomeBloc, HomeState>(
                       buildWhen: (prev, curr) =>
-                      prev.favoritesLength != curr.favoritesLength ||
+                          prev.favoritesLength != curr.favoritesLength ||
                           prev.loadingFavorites != curr.loadingFavorites,
                       builder: (context, state) {
                         return const FavoritesCard();
                       },
                     ),
-
                     SizedBox(height: appTheme.s5),
-
                     BlocBuilder<HomeBloc, HomeState>(
                       buildWhen: (prev, curr) =>
-                      prev.currentPrograms != curr.currentPrograms ||
+                          prev.currentPrograms != curr.currentPrograms ||
                           prev.loadingCurrent != curr.loadingCurrent,
                       builder: (context, state) {
                         return UpcomingPrograms(
@@ -133,10 +126,9 @@ class _HomePageInnerState extends State<_HomePageInner> {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
-
         Positioned(
           top: MediaQuery.of(context).padding.top + 12,
           left: 0,

@@ -33,5 +33,3 @@ extension BackendDateQueryX on DateTime {
     return '$y-$m-$d';
   }
 }
-
-

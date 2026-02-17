@@ -70,7 +70,7 @@ class _AppFilterChipState extends State<AppFilterChip> {
             ),
           ),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: [
               if (widget.icon != null) ...[
                 Text(widget.icon!, style: textStyle.copyWith(color: fg)),

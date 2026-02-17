@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Padding(
           padding: EdgeInsets.all(appTheme.s2),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               PageHeader(
                 title: LocaleKeys.Settings_Title.tr(),
@@ -175,8 +175,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: .start,
                                     children: [
                                       Text(
                                         LocaleKeys
@@ -222,7 +221,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
 
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: .spaceBetween,
                               children: [
                                 Text(
                                   '1 ${LocaleKeys.Settings_SnailBus_Minute.tr()}',
@@ -262,9 +261,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   data: Theme.of(context).copyWith(
                     extensions: [
                       ...Theme.of(context).extensions.values,
-                      AppCardTheme.of(context).copyWith(
-                        theme: AppCardTheme(padding: appTheme.s2),
-                      ),
+                      AppCardTheme.of(
+                        context,
+                      ).copyWith(theme: AppCardTheme(padding: appTheme.s2)),
                     ],
                   ),
                   child: Column(

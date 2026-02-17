@@ -48,17 +48,11 @@ class _TitleSubtitle extends StatelessWidget {
     final appTheme = context.appTheme;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
-        Text(
-          title,
-          style: appTheme.bodyText
-        ),
+        Text(title, style: appTheme.bodyText),
         const SizedBox(height: 2),
-        Text(
-          subtitle,
-          style: appTheme.descriptionText
-        ),
+        Text(subtitle, style: appTheme.descriptionText),
       ],
     );
   }

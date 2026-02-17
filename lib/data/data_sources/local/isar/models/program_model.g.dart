@@ -37,28 +37,50 @@ const ProgramModelSchema = CollectionSchema(
       name: r'endTime',
       type: IsarType.dateTime,
     ),
-    r'locationName': PropertySchema(
+    r'isFavorite': PropertySchema(
       id: 4,
+      name: r'isFavorite',
+      type: IsarType.bool,
+    ),
+    r'locationName': PropertySchema(
+      id: 5,
       name: r'locationName',
       type: IsarType.string,
     ),
-    r'name': PropertySchema(id: 5, name: r'name', type: IsarType.string),
+    r'name': PropertySchema(id: 6, name: r'name', type: IsarType.string),
+    r'programId': PropertySchema(
+      id: 7,
+      name: r'programId',
+      type: IsarType.long,
+    ),
     r'startTime': PropertySchema(
-      id: 6,
+      id: 8,
       name: r'startTime',
       type: IsarType.dateTime,
     ),
   },
-
   estimateSize: _programModelEstimateSize,
   serialize: _programModelSerialize,
   deserialize: _programModelDeserialize,
   deserializeProp: _programModelDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'programId': IndexSchema(
+      id: 8658639611369428834,
+      name: r'programId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'programId',
+          type: IndexType.value,
+          caseSensitive: false,
+        ),
+      ],
+    ),
+  },
   links: {},
   embeddedSchemas: {},
-
   getId: _programModelGetId,
   getLinks: _programModelGetLinks,
   attach: _programModelAttach,
@@ -89,9 +111,11 @@ void _programModelSerialize(
   writer.writeString(offsets[1], object.description);
   writer.writeString(offsets[2], object.displayUrl);
   writer.writeDateTime(offsets[3], object.endTime);
-  writer.writeString(offsets[4], object.locationName);
-  writer.writeString(offsets[5], object.name);
-  writer.writeDateTime(offsets[6], object.startTime);
+  writer.writeBool(offsets[4], object.isFavorite);
+  writer.writeString(offsets[5], object.locationName);
+  writer.writeString(offsets[6], object.name);
+  writer.writeLong(offsets[7], object.programId);
+  writer.writeDateTime(offsets[8], object.startTime);
 }
 
 ProgramModel _programModelDeserialize(
@@ -106,9 +130,11 @@ ProgramModel _programModelDeserialize(
   object.displayUrl = reader.readString(offsets[2]);
   object.endTime = reader.readDateTime(offsets[3]);
   object.id = id;
-  object.locationName = reader.readString(offsets[4]);
-  object.name = reader.readString(offsets[5]);
-  object.startTime = reader.readDateTime(offsets[6]);
+  object.isFavorite = reader.readBool(offsets[4]);
+  object.locationName = reader.readString(offsets[5]);
+  object.name = reader.readString(offsets[6]);
+  object.programId = reader.readLong(offsets[7]);
+  object.startTime = reader.readDateTime(offsets[8]);
   return object;
 }
 
@@ -128,10 +154,14 @@ P _programModelDeserializeProp<P>(
     case 3:
       return (reader.readDateTime(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
+      return (reader.readString(offset)) as P;
+    case 7:
+      return (reader.readLong(offset)) as P;
+    case 8:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -159,6 +189,14 @@ extension ProgramModelQueryWhereSort
   QueryBuilder<ProgramModel, ProgramModel, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterWhere> anyProgramId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'programId'),
+      );
     });
   }
 }
@@ -229,6 +267,108 @@ extension ProgramModelQueryWhere
           lower: lowerId,
           includeLower: includeLower,
           upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterWhereClause> programIdEqualTo(
+    int programId,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'programId', value: [programId]),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterWhereClause>
+  programIdNotEqualTo(int programId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'programId',
+                lower: [],
+                upper: [programId],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'programId',
+                lower: [programId],
+                includeLower: false,
+                upper: [],
+              ),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'programId',
+                lower: [programId],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'programId',
+                lower: [],
+                upper: [programId],
+                includeUpper: false,
+              ),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterWhereClause>
+  programIdGreaterThan(int programId, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'programId',
+          lower: [programId],
+          includeLower: include,
+          upper: [],
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterWhereClause> programIdLessThan(
+    int programId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'programId',
+          lower: [],
+          upper: [programId],
+          includeUpper: include,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterWhereClause> programIdBetween(
+    int lowerProgramId,
+    int upperProgramId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'programId',
+          lower: [lowerProgramId],
+          includeLower: includeLower,
+          upper: [upperProgramId],
           includeUpper: includeUpper,
         ),
       );
@@ -776,6 +916,15 @@ extension ProgramModelQueryFilter
   }
 
   QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
+  isFavoriteEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isFavorite', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
   locationNameEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1064,6 +1213,61 @@ extension ProgramModelQueryFilter
   }
 
   QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
+  programIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'programId', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
+  programIdGreaterThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'programId',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
+  programIdLessThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'programId',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
+  programIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'programId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
   startTimeEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1177,6 +1381,19 @@ extension ProgramModelQuerySortBy
     });
   }
 
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> sortByIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy>
+  sortByIsFavoriteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.desc);
+    });
+  }
+
   QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> sortByLocationName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'locationName', Sort.asc);
@@ -1199,6 +1416,18 @@ extension ProgramModelQuerySortBy
   QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> sortByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> sortByProgramId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'programId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> sortByProgramIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'programId', Sort.desc);
     });
   }
 
@@ -1279,6 +1508,19 @@ extension ProgramModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> thenByIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy>
+  thenByIsFavoriteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.desc);
+    });
+  }
+
   QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> thenByLocationName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'locationName', Sort.asc);
@@ -1301,6 +1543,18 @@ extension ProgramModelQuerySortThenBy
   QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> thenByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> thenByProgramId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'programId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> thenByProgramIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'programId', Sort.desc);
     });
   }
 
@@ -1349,6 +1603,12 @@ extension ProgramModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ProgramModel, ProgramModel, QDistinct> distinctByIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isFavorite');
+    });
+  }
+
   QueryBuilder<ProgramModel, ProgramModel, QDistinct> distinctByLocationName({
     bool caseSensitive = true,
   }) {
@@ -1362,6 +1622,12 @@ extension ProgramModelQueryWhereDistinct
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QDistinct> distinctByProgramId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'programId');
     });
   }
 
@@ -1404,6 +1670,12 @@ extension ProgramModelQueryProperty
     });
   }
 
+  QueryBuilder<ProgramModel, bool, QQueryOperations> isFavoriteProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isFavorite');
+    });
+  }
+
   QueryBuilder<ProgramModel, String, QQueryOperations> locationNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'locationName');
@@ -1413,6 +1685,12 @@ extension ProgramModelQueryProperty
   QueryBuilder<ProgramModel, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<ProgramModel, int, QQueryOperations> programIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'programId');
     });
   }
 

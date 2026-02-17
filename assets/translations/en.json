@@ -1,10 +1,14 @@
 {
   "AppBottomBar": {
-    "Events": "Events",
+    "Programs": "Programs",
     "Home": "Home",
     "Map": "Map",
     "Schedule": "Schedule",
     "Settings": "Settings"
+  },
+  "Favorites": {
+    "Title": "Favorites",
+    "SubTitle": "All your favorites in one place"
   },
   "Home": {
     "Title": "Arts of\nValley",

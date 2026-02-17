@@ -91,9 +91,7 @@ class _AppCardState extends State<AppCard> with TickerProviderStateMixin {
     }
 
     return Padding(
-      padding: EdgeInsets.all(
-         appCardTheme.margin!,
-      ),
+      padding: EdgeInsets.all(appCardTheme.margin!),
       child: cardContent,
     );
   }

@@ -6,11 +6,7 @@ class PageHeader extends StatelessWidget {
   final String title;
   final String? subtitle;
 
-  const PageHeader({
-    super.key,
-    required this.title,
-    this.subtitle,
-  });
+  const PageHeader({super.key, required this.title, this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +18,13 @@ class PageHeader extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
-            Text(
-              title,
-              style: appTheme.mediumHeadLine,
-            ),
+            Text(title, style: appTheme.mediumHeadLine),
             if (subtitle != null) ...[
               SizedBox(height: appTheme.s0),
-              Text(
-                subtitle!,
-                style: appTheme.subTitle,
-              ),
-            ]
+              Text(subtitle!, style: appTheme.subTitle),
+            ],
           ],
         ),
       ),

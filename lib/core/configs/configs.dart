@@ -1,2 +1,2 @@
-//GENERATED BARREL FILE 
-export 'app_config.dart'; 
+//GENERATED BARREL FILE
+export 'app_config.dart';

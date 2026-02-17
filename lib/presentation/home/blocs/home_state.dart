@@ -26,7 +26,7 @@ class HomeState {
     this.errorPopular,
     this.errorCurrent,
     this.errorFavorites,
-    this.currentProgramsPage = 0,
+    this.currentProgramsPage = 1,
   });
 
   HomeState copyWith({
@@ -55,4 +55,3 @@ class HomeState {
     );
   }
 }
-

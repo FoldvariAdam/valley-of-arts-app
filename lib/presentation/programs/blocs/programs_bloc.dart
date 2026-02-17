@@ -15,15 +15,12 @@ class ProgramsBloc extends Bloc<ProgramsEvent, ProgramsState> {
   final ProgramsFiltersRepository _programsFiltersRepository;
   final GetLocationsGroupedByCityUseCase _getLocationsGroupedByCityUseCase;
 
-  ProgramsBloc({
-    required ProgramsRepository programRepository,
-    required ProgramsFiltersRepository programsFiltersRepository,
-    required GetLocationsGroupedByCityUseCase getLocationsGroupedByCityUseCase,
-  }) : _programRepository = programRepository,
-       _programsFiltersRepository = programsFiltersRepository,
-       _getLocationsGroupedByCityUseCase = getLocationsGroupedByCityUseCase,
-       super(const ProgramsInitial()) {
-    on<ProgramsStarted>((event, emit) async {
+  ProgramsBloc(
+    this._programRepository,
+    this._programsFiltersRepository,
+    this._getLocationsGroupedByCityUseCase,
+  ) : super(const ProgramsInitialState()) {
+    on<ProgramsStartedEvent>((event, emit) async {
       final filters = await Future.wait([
         _getLocationsGroupedByCityUseCase.execute(),
         _programsFiltersRepository.getAvailableDates(),
@@ -37,7 +34,7 @@ class ProgramsBloc extends Bloc<ProgramsEvent, ProgramsState> {
       final programs = filters[3] as List<Program>;
 
       emit(
-        ProgramsFiltersLoaded(
+        ProgramsFiltersLoadedState(
           locations: locationsGroupedByCity,
           schedule: schedule,
           categories: categories,
@@ -46,15 +43,15 @@ class ProgramsBloc extends Bloc<ProgramsEvent, ProgramsState> {
       );
     });
 
-    on<ProgramsFilterChanged>((event, emit) async {
-      emit(const ProgramsLoading());
+    on<ProgramsFilterChangedEvent>((event, emit) async {
+      emit(const ProgramsLoadingState());
       final filteredPrograms = await _programRepository.getPrograms(
         date: event.date,
         locationId: event.location,
         categoryIds: event.categories,
       );
 
-      emit(ProgramsLoaded(programs: filteredPrograms));
+      emit(ProgramsLoadedState(programs: filteredPrograms));
     });
   }
 }

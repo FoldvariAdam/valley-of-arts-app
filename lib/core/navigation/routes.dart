@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:valley_of_arts/core/controllers/controllers.dart';
 import 'package:valley_of_arts/core/navigation/navigation_service.dart';
 import 'package:valley_of_arts/core/navigation/shells/shells.dart';
 import 'package:valley_of_arts/domain/programs/models/program.dart';
+import 'package:valley_of_arts/domain/programs/use_cases/use_cases.dart';
 import 'package:valley_of_arts/presentation/presentation.dart';
 
 GoRouter? _router;
@@ -11,6 +14,8 @@ final _appShellNavigatorKey = GlobalKey<NavigatorState>(
 );
 
 GoRouter createRouterConfig({required String initialLocation}) {
+  final navBarController = GetIt.instance.get<NavBarController>();
+
   _router ??= GoRouter(
     initialLocation: initialLocation,
     routes: [
@@ -32,6 +37,8 @@ GoRouter createRouterConfig({required String initialLocation}) {
 
               return ProgramDetailsPage(
                 program: program,
+                toggleFavoriteUseCase: GetIt.instance
+                    .get<ToggleFavoriteUseCase>(),
               );
             },
           ),
@@ -69,6 +76,29 @@ GoRouter createRouterConfig({required String initialLocation}) {
       ),
     ],
   );
+
+  _router!.routerDelegate.addListener(() {
+    final navBarController = GetIt.instance<NavBarController>();
+
+    final routerDelegate = _router!.routerDelegate;
+
+    final RouteMatch lastMatch = routerDelegate.currentConfiguration.last;
+    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
+        ? lastMatch.matches
+        : routerDelegate.currentConfiguration;
+    final String location = matchList.uri.toString();
+
+    final matchedRoute = NavigationRoute.values.firstWhere(
+          (e) => e.fullPath == location,
+      orElse: () => NavigationRoute.home,
+    );
+
+    if (matchedRoute.shouldCloseBottomBar) {
+      navBarController.close();
+    } else {
+      navBarController.open();
+    }
+  });
 
   return _router!;
 }

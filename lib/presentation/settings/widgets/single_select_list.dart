@@ -45,23 +45,20 @@ class _SingleSelectListState<T> extends State<SingleSelectList<T>> {
       final item = widget.items[i];
       final isSelected = item == selectedItem;
 
-      children.add(GestureDetector(
-        onTap: () => _onTap(item),
-        child: widget.itemBuilder(item, isSelected, i, length),
-      ));
+      children.add(
+        GestureDetector(
+          onTap: () => _onTap(item),
+          child: widget.itemBuilder(item, isSelected, i, length),
+        ),
+      );
 
       if (i != length - 1) {
-        children.add(Divider(
-          height: 1,
-          thickness: 1,
-          color: appTheme.borderColor,
-        ));
+        children.add(
+          Divider(height: 1, thickness: 1, color: appTheme.borderColor),
+        );
       }
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: children,
-    );
+    return Column(mainAxisSize: .min, children: children);
   }
 }

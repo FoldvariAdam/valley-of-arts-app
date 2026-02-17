@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:valley_of_arts/core/controllers/controllers.dart';
 import 'package:valley_of_arts/domain/programs/models/models.dart';
 
 enum NavigationRoute {
-  favorites(),
+  favorites(shouldCloseBottomBar: true),
   home(),
-  locationDetails(),
+  locationDetails(shouldCloseBottomBar: true),
   map(),
   programs(),
-  programDetails(),
+  programDetails(shouldCloseBottomBar: true),
   schedule(),
   settings();
 
+  final bool shouldCloseBottomBar;
+
   final String? _customPath;
 
-  const NavigationRoute({String? customPath}) : _customPath = customPath;
+  const NavigationRoute({String? customPath, this.shouldCloseBottomBar = false})
+    : _customPath = customPath;
 
   String get path => _customPath ?? name;
 }

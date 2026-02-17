@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:valley_of_arts/core/core.dart';
+import 'package:valley_of_arts/data/repositories/favorites/favorites_repository.dart';
 import 'package:valley_of_arts/domain/programs/models/models.dart';
 import 'package:valley_of_arts/generated/locale_keys.g.dart';
 import 'package:valley_of_arts/presentation/shared/components/components.dart';
@@ -23,20 +26,28 @@ class UpcomingPrograms extends StatelessWidget {
             Text(LocaleKeys.Home_Upcoming.tr(), style: appTheme.smallHeadLine),
           ],
         ),
-
         SizedBox(height: appTheme.s2),
+        StreamBuilder<List<int>>(
+          stream: GetIt.instance.get<FavoritesRepository>().watchFavoriteIds(),
+          builder: (context, snapshot) {
+            final favoriteIds = snapshot.data ?? [];
 
-        AnimatedListView<Program>(
-          items: programs,
-          spacing: appTheme.s1,
-          itemBuilder: (context, program, index) {
-            return ProgramCard(
-              program: program,
-              onToggleFavorite: (_) {},
-              onTap: () => NavigationService.of(
-                context,
-              ).goToProgramDetailsPage(program: program),
-              compact: true,
+            return AppAnimatedListView<Program>(
+              items: programs,
+              spacing: appTheme.s1,
+              itemBuilder: (context, program, index) {
+                final updatedProgram = program.copyWith(
+                  isFavorite: favoriteIds.contains(program.id),
+                );
+
+                return ProgramCard(
+                  program: updatedProgram,
+                  onTap: () => NavigationService.of(
+                    context,
+                  ).goToProgramDetailsPage(program: updatedProgram),
+                  compact: true,
+                );
+              },
             );
           },
         ),

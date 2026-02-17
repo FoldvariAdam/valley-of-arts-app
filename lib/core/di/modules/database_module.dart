@@ -9,9 +9,6 @@ abstract class RegisterDatabase {
   @lazySingleton
   Future<Isar> provideIsar() async {
     final dir = await getApplicationDocumentsDirectory();
-    return Isar.open(
-      [ProgramModelSchema],
-      directory: dir.path,
-    );
+    return Isar.open([ProgramModelSchema], directory: dir.path);
   }
 }

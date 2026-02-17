@@ -21,10 +21,7 @@ class MapData {
   final List<TypesResponse> types;
   final List<LocationResponse> locations;
 
-  MapData({
-    required this.types,
-    required this.locations,
-  });
+  MapData({required this.types, required this.locations});
 
   factory MapData.fromJson(Map<String, dynamic> json) =>
       _$MapDataFromJson(json);

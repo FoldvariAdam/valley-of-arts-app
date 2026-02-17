@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/core/core.dart';
-import 'package:valley_of_arts/domain/programs/models/models.dart';
+import 'package:valley_of_arts/domain/domain.dart';
 import 'package:valley_of_arts/presentation/program_details/program_details.dart';
 import 'package:valley_of_arts/presentation/shared/shared.dart';
 
 class ProgramDetailsPage extends StatefulWidget {
   final Program program;
+  final ToggleFavoriteUseCase toggleFavoriteUseCase;
 
-  const ProgramDetailsPage({super.key, required this.program});
+  const ProgramDetailsPage({
+    super.key,
+    required this.program,
+    required this.toggleFavoriteUseCase,
+  });
 
   @override
   State<ProgramDetailsPage> createState() => _ProgramDetailsPageState();
@@ -15,7 +20,8 @@ class ProgramDetailsPage extends StatefulWidget {
 
 class _ProgramDetailsPageState extends State<ProgramDetailsPage>
     with TickerProviderStateMixin {
-  bool notificationEnabled = false;
+  bool _notificationEnabled = false;
+  late bool _isFavorite;
 
   late final AnimationController _heroC = AnimationController(
     vsync: this,
@@ -28,13 +34,19 @@ class _ProgramDetailsPageState extends State<ProgramDetailsPage>
   ).animate(CurvedAnimation(parent: _heroC, curve: Curves.easeOut));
 
   @override
+  void initState() {
+    _isFavorite = widget.program.isFavorite;
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _heroC.dispose();
     super.dispose();
   }
 
   void _toggleNotification() {
-    setState(() => notificationEnabled = !notificationEnabled);
+    setState(() => _notificationEnabled = !_notificationEnabled);
     /*FestivalToast.show(
       context,
       title: notificationEnabled ? "Értesítés beállítva!" : "Értesítés kikapcsolva",
@@ -62,7 +74,7 @@ class _ProgramDetailsPageState extends State<ProgramDetailsPage>
               child: Padding(
                 padding: EdgeInsets.all(appTheme.s2),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     SizedBox(height: appTheme.s1),
 
@@ -90,19 +102,15 @@ class _ProgramDetailsPageState extends State<ProgramDetailsPage>
           top: MediaQuery.of(context).padding.top + 10,
           child: Row(
             children: [
-              GlassIconButton(
-                icon: Icons.arrow_back,
-                onTap: NavigationService.of(context).goBack,
-                entranceFromX: -20,
-              ),
+              const AppBackButton(),
 
               const Spacer(),
 
               GlassIconButton(
-                icon: notificationEnabled
+                icon: _notificationEnabled
                     ? Icons.notifications_active
                     : Icons.notifications_none,
-                active: notificationEnabled,
+                active: _notificationEnabled,
                 onTap: _toggleNotification,
                 entranceFromX: 20,
                 delayMs: 0,
@@ -111,9 +119,17 @@ class _ProgramDetailsPageState extends State<ProgramDetailsPage>
               SizedBox(width: appTheme.s1),
 
               GlassIconButton(
-                icon: true ? Icons.favorite : Icons.favorite_border,
+                icon: _isFavorite ? Icons.favorite : Icons.favorite_border,
                 active: true,
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    _isFavorite = !_isFavorite;
+                    widget.toggleFavoriteUseCase.execute(
+                      program: program.copyWith(isFavorite: _isFavorite),
+                      isFavorite: _isFavorite,
+                    );
+                  });
+                },
                 entranceFromX: 20,
                 delayMs: 50,
               ),
@@ -149,7 +165,7 @@ class _HeroImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 288,
+      height: 300,
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -191,7 +207,7 @@ class _CategoryBadge extends StatelessWidget {
 
     return AppCard(
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           Text(
             label.toUpperCase(),
@@ -216,26 +232,15 @@ class _DescriptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
-    final paragraphs = description.split('\n\n');
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text('Leírás', style: appTheme.smallHeadLine),
 
         SizedBox(height: appTheme.s1),
 
-        AppCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (final p in paragraphs) ...[
-                Text(p, style: appTheme.bodyText),
-                SizedBox(height: appTheme.s1),
-              ],
-            ],
-          ),
-        ),
+        AppCard(child: Text(description, style: appTheme.bodyText)),
       ],
     );
   }

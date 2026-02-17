@@ -7,8 +7,7 @@ import 'package:valley_of_arts/domain/programs_filter/programs_filter.dart';
 class ProgramsFilterRepositoryImpl implements ProgramsFiltersRepository {
   final ValleyApiClient _valleyApiClient;
 
-  ProgramsFilterRepositoryImpl({required ValleyApiClient valleyApiClient})
-    : _valleyApiClient = valleyApiClient;
+  ProgramsFilterRepositoryImpl(this._valleyApiClient);
 
   @override
   Future<Schedule> getAvailableDates() async {

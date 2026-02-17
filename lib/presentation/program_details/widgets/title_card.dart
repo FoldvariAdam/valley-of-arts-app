@@ -34,7 +34,7 @@ class TitleCard extends StatelessWidget {
             ],
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Text(program.name, style: appTheme.mediumHeadLine),
 
@@ -117,7 +117,7 @@ class _InfoRow extends StatelessWidget {
           SizedBox(width: appTheme.s1),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 Text(label.toUpperCase(), style: appTheme.metaText),
 

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:valley_of_arts/presentation/shared/animations/entrance.dart';
 
-class AnimatedListView<T> extends StatelessWidget {
+class AppAnimatedListView<T> extends StatelessWidget {
   final List<T> items;
   final Widget Function(BuildContext context, T item, int index) itemBuilder;
   final double spacing;
   final int delayStepMs;
+  final ScrollPhysics? physics;
 
-  const AnimatedListView({
+  const AppAnimatedListView({
     super.key,
     required this.items,
     required this.itemBuilder,
     this.spacing = 8,
     this.delayStepMs = 10,
+    this.physics = const NeverScrollableScrollPhysics(),
   });
 
   @override
@@ -20,7 +22,7 @@ class AnimatedListView<T> extends StatelessWidget {
     return ListView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: physics,
       itemCount: items.length,
       itemBuilder: (context, index) {
         final item = items[index];

@@ -1,5 +1,3 @@
-
-
 import 'package:isar_community/isar.dart';
 
 abstract class IsarHelper<T> {
@@ -29,19 +27,28 @@ abstract class IsarHelper<T> {
 
   // Helper (own transaction)
   void saveSync(T item) => runSyncTxn(() => collection.putSync(item));
-  void saveManySync(List<T> items) => runSyncTxn(() => collection.putAllSync(items));
+
+  void saveManySync(List<T> items) =>
+      runSyncTxn(() => collection.putAllSync(items));
+
   bool deleteSync(Id id) => runSyncTxn(() => collection.deleteSync(id));
+
   void deleteAllSync() => runSyncTxn(() => collection.clearSync());
 
   // Base (no txn)
   void saveSyncNoTxn(T item) => collection.putSync(item);
+
   void saveManySyncNoTxn(List<T> items) => collection.putAllSync(items);
+
   bool deleteSyncNoTxn(Id id) => collection.deleteSync(id);
+
   void deleteAllSyncNoTxn() => collection.clearSync();
 
   // Reads (no txn needed)
   List<T> getAllSync() => collection.where().findAllSync();
+
   T? getByIdSync(Id id) => collection.getSync(id);
+
   int countSync() => collection.countSync();
 
   // ---------------------------
@@ -49,22 +56,30 @@ abstract class IsarHelper<T> {
   // ---------------------------
 
   // Helper (own transaction)
-  Future<void> save(T item) => runAsyncTxn(()  => collection.put(item));
-  Future<void> saveMany(List<T> items) => runAsyncTxn(()  => collection.putAll(items));
-  Future<bool> delete(Id id)  => runAsyncTxn(()  => collection.delete(id));
-  Future<void> deleteAll()  => runAsyncTxn(()  => collection.clear());
+  Future<void> save(T item) => runAsyncTxn(() => collection.put(item));
+
+  Future<void> saveMany(List<T> items) =>
+      runAsyncTxn(() => collection.putAll(items));
+
+  Future<bool> delete(Id id) => runAsyncTxn(() => collection.delete(id));
+
+  Future<void> deleteAll() => runAsyncTxn(() => collection.clear());
 
   // Base (no transaction)
-  Future<void> saveNoTxn(T item)  => collection.put(item);
-  Future<void> saveManyNoTxn(List<T> items)  => collection.putAll(items);
-  Future<bool> deleteNoTxn(Id id)  => collection.delete(id);
-  Future<void> deleteAllNoTxn()  => collection.clear();
+  Future<void> saveNoTxn(T item) => collection.put(item);
+
+  Future<void> saveManyNoTxn(List<T> items) => collection.putAll(items);
+
+  Future<bool> deleteNoTxn(Id id) => collection.delete(id);
+
+  Future<void> deleteAllNoTxn() => collection.clear();
 
   // Reads (async)
-  Future<List<T>> getAll()  => collection.where().findAll();
-  Future<T?> getById(Id id)  => collection.get(id);
-  Future<int> count()  => collection.count();
+  Future<List<T>> getAll() => collection.where().findAll();
 
+  Future<T?> getById(Id id) => collection.get(id);
+
+  Future<int> count() => collection.count();
 
   // ---------------------------
   // WATCH / STREAMS
@@ -76,4 +91,3 @@ abstract class IsarHelper<T> {
   Stream<T?> watchById(Id id, {bool fireImmediately = false}) =>
       collection.watchObject(id, fireImmediately: fireImmediately);
 }
-

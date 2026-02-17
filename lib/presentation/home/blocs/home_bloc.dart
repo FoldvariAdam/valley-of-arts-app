@@ -15,10 +15,8 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ProgramsRepository _programRepository;
 
-  HomeBloc({required ProgramsRepository programRepository})
-    : _programRepository = programRepository,
-      super(const HomeState()) {
-    on<HomeStarted>((event, emit) async {
+  HomeBloc(this._programRepository) : super(const HomeState()) {
+    on<HomeStartedEvent>((event, emit) async {
       emit(
         state.copyWith(
           loadingPopular: true,
@@ -34,7 +32,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ]);
     });
 
-    on<HomeLoadMoreCurrentProgramsRequested>((event, emit) async {
+    on<HomeLoadMoreCurrentProgramsRequestedEvent>((event, emit) async {
       emit(state.copyWith(loadingCurrent: true));
       await _loadCurrent(emit);
     }, transformer: droppable());
