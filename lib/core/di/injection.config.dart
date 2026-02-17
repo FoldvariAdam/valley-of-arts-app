@@ -12,9 +12,14 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:isar_community/isar.dart' as _i214;
 import 'package:valley_of_arts/core/controllers/nav_bar_controller.dart'
     as _i407;
+import 'package:valley_of_arts/core/di/modules/database_module.dart' as _i281;
 import 'package:valley_of_arts/core/di/network_module.dart' as _i54;
+import 'package:valley_of_arts/data/data_sources/local/isar/favorites_local_data_source.dart'
+    as _i331;
+import 'package:valley_of_arts/data/data_sources/local/local.dart' as _i553;
 import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley_api_client.dart'
     as _i900;
 import 'package:valley_of_arts/data/repositories/programs/programs_repository.dart'
@@ -35,24 +40,33 @@ import 'package:valley_of_arts/presentation/programs/blocs/programs_bloc.dart'
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    final registerDatabase = _$RegisterDatabase();
     final networkModule = _$NetworkModule();
     gh.lazySingleton<_i407.NavBarController>(() => _i407.NavBarController());
+    await gh.lazySingletonAsync<_i214.Isar>(
+      () => registerDatabase.provideIsar(),
+      preResolve: true,
+    );
     gh.lazySingleton<_i361.Dio>(() => networkModule.dio());
     gh.lazySingleton<_i900.ValleyApiClient>(
       () => networkModule.valleyApiClient(gh<_i361.Dio>()),
     );
-    gh.lazySingleton<_i476.ProgramsFiltersRepository>(
-      () => _i576.ProgramsFilterRepositoryImpl(
-        valleyApiClient: gh<_i900.ValleyApiClient>(),
-      ),
+    gh.lazySingleton<_i331.FavoritesLocalDataSource>(
+      () => _i331.FavoritesLocalDataSource(gh<_i214.Isar>()),
     );
     gh.lazySingleton<_i930.ProgramsRepository>(
       () => _i629.ProgramsRepositoryImpl(
+        valleyApiClient: gh<_i900.ValleyApiClient>(),
+        favoritesLocalDataSource: gh<_i553.FavoritesLocalDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i476.ProgramsFiltersRepository>(
+      () => _i576.ProgramsFilterRepositoryImpl(
         valleyApiClient: gh<_i900.ValleyApiClient>(),
       ),
     );
@@ -75,5 +89,7 @@ extension GetItInjectableX on _i174.GetIt {
     return this;
   }
 }
+
+class _$RegisterDatabase extends _i281.RegisterDatabase {}
 
 class _$NetworkModule extends _i54.NetworkModule {}

@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/domain/domain.dart';
 import 'package:valley_of_arts/presentation/presentation.dart';
-import 'package:valley_of_arts/presentation/shared/decor/floating_deco.dart';
 
 class ProgramsPage extends StatelessWidget {
   const ProgramsPage({super.key});

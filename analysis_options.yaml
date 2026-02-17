@@ -5,3 +5,5 @@ linter:
     prefer_const_constructors: true
     always_use_package_imports: true
     directives_ordering: true
+    unnecessary_async: true
+    unnecessary_await_in_return: true

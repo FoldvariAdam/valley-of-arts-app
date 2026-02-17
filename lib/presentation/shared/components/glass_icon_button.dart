@@ -30,7 +30,7 @@ class _GlassIconButtonState extends State<GlassIconButton> {
     final appTheme = context.appTheme;
 
     final bg = _isPressed
-        ? appTheme.primaryColor.withOpacity(0.6) // NYOMOTT szín! ↓
+        ? appTheme.primaryColor.withValues(alpha: 0.6)
         : widget.active
         ? appTheme.primaryColor
         : appTheme.backgroundColor.withValues(alpha: 0.8);
@@ -54,13 +54,13 @@ class _GlassIconButtonState extends State<GlassIconButton> {
             borderRadius: BorderRadius.circular(25),
             border: Border.all(
               color: _isPressed
-                  ? appTheme.primaryColor.withOpacity(1.0)
+                  ? appTheme.primaryColor.withValues(alpha: 1.0)
                   : appTheme.borderColor.withValues(alpha: 0.5),
             ),
             boxShadow: _isPressed
                 ? [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.black.withValues(alpha: 0.2),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),

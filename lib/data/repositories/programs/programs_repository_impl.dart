@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:valley_of_arts/core/exceptions/exceptions.dart';
+import 'package:valley_of_arts/data/data_sources/local/local.dart';
 import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley_api_client.dart';
 import 'package:valley_of_arts/data/repositories/programs/programs_repository.dart';
 import 'package:valley_of_arts/domain/programs/programs.dart';
@@ -8,9 +9,13 @@ import 'package:valley_of_arts/domain/programs/programs.dart';
 @LazySingleton(as: ProgramsRepository)
 class ProgramsRepositoryImpl implements ProgramsRepository {
   final ValleyApiClient _valleyApiClient;
+  final FavoritesLocalDataSource _favoritesDataSource;
 
-  ProgramsRepositoryImpl({required ValleyApiClient valleyApiClient})
-    : _valleyApiClient = valleyApiClient;
+  ProgramsRepositoryImpl({
+    required ValleyApiClient valleyApiClient,
+    required FavoritesLocalDataSource favoritesLocalDataSource,
+  }) : _valleyApiClient = valleyApiClient,
+       _favoritesDataSource = favoritesLocalDataSource;
 
   @override
   Future<List<Program>> getPrograms({
@@ -47,9 +52,5 @@ class ProgramsRepositoryImpl implements ProgramsRepository {
   }
 
   @override
-  Future<int> getFavoritesLength() async {
-    await Future.delayed(const Duration(seconds: 3));
-
-    return 4;
-  }
+  Future<int> getFavoritesLength() => _favoritesDataSource.count();
 }

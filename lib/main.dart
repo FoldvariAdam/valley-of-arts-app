@@ -7,7 +7,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  configureDependencies();
+  await configureDependencies();
 
   runApp(
     EasyLocalization(
