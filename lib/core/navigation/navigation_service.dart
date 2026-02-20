@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:valley_of_arts/core/controllers/controllers.dart';
 import 'package:valley_of_arts/domain/programs/models/models.dart';
+import 'package:valley_of_arts/domain/programs_filter/models/models.dart';
 
 enum NavigationRoute {
   favorites(shouldCloseBottomBar: true),
@@ -62,6 +61,22 @@ class NavigationService {
     );
   }
 
+  void goToLocationDetailsPage({required Location location}) {
+    _goToPageImpl(
+      context: context,
+      route: NavigationRoute.programDetails,
+      extra: {'location': location},
+    );
+  }
+
+  void goToMapPage({bool withoutStacking = true}) {
+    _goToPageImpl(
+      context: context,
+      route: NavigationRoute.map,
+      withoutStacking: withoutStacking,
+    );
+  }
+
   void goToProgramsPage() {
     _goToPageImpl(
       context: context,
@@ -75,14 +90,6 @@ class NavigationService {
       context: context,
       route: NavigationRoute.programDetails,
       extra: {'program': program},
-    );
-  }
-
-  void goToMapPage({bool withoutStacking = true}) {
-    _goToPageImpl(
-      context: context,
-      route: NavigationRoute.map,
-      withoutStacking: withoutStacking,
     );
   }
 

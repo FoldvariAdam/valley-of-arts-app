@@ -42,23 +42,29 @@ const ProgramModelSchema = CollectionSchema(
       name: r'isFavorite',
       type: IsarType.bool,
     ),
-    r'locationName': PropertySchema(
+    r'locationId': PropertySchema(
       id: 5,
+      name: r'locationId',
+      type: IsarType.long,
+    ),
+    r'locationName': PropertySchema(
+      id: 6,
       name: r'locationName',
       type: IsarType.string,
     ),
-    r'name': PropertySchema(id: 6, name: r'name', type: IsarType.string),
+    r'name': PropertySchema(id: 7, name: r'name', type: IsarType.string),
     r'programId': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'programId',
       type: IsarType.long,
     ),
     r'startTime': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'startTime',
       type: IsarType.dateTime,
     ),
   },
+
   estimateSize: _programModelEstimateSize,
   serialize: _programModelSerialize,
   deserialize: _programModelDeserialize,
@@ -81,6 +87,7 @@ const ProgramModelSchema = CollectionSchema(
   },
   links: {},
   embeddedSchemas: {},
+
   getId: _programModelGetId,
   getLinks: _programModelGetLinks,
   attach: _programModelAttach,
@@ -112,10 +119,11 @@ void _programModelSerialize(
   writer.writeString(offsets[2], object.displayUrl);
   writer.writeDateTime(offsets[3], object.endTime);
   writer.writeBool(offsets[4], object.isFavorite);
-  writer.writeString(offsets[5], object.locationName);
-  writer.writeString(offsets[6], object.name);
-  writer.writeLong(offsets[7], object.programId);
-  writer.writeDateTime(offsets[8], object.startTime);
+  writer.writeLong(offsets[5], object.locationId);
+  writer.writeString(offsets[6], object.locationName);
+  writer.writeString(offsets[7], object.name);
+  writer.writeLong(offsets[8], object.programId);
+  writer.writeDateTime(offsets[9], object.startTime);
 }
 
 ProgramModel _programModelDeserialize(
@@ -131,10 +139,11 @@ ProgramModel _programModelDeserialize(
   object.endTime = reader.readDateTime(offsets[3]);
   object.id = id;
   object.isFavorite = reader.readBool(offsets[4]);
-  object.locationName = reader.readString(offsets[5]);
-  object.name = reader.readString(offsets[6]);
-  object.programId = reader.readLong(offsets[7]);
-  object.startTime = reader.readDateTime(offsets[8]);
+  object.locationId = reader.readLong(offsets[5]);
+  object.locationName = reader.readString(offsets[6]);
+  object.name = reader.readString(offsets[7]);
+  object.programId = reader.readLong(offsets[8]);
+  object.startTime = reader.readDateTime(offsets[9]);
   return object;
 }
 
@@ -156,12 +165,14 @@ P _programModelDeserializeProp<P>(
     case 4:
       return (reader.readBool(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 6:
       return (reader.readString(offset)) as P;
     case 7:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 8:
+      return (reader.readLong(offset)) as P;
+    case 9:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -925,6 +936,61 @@ extension ProgramModelQueryFilter
   }
 
   QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
+  locationIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'locationId', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
+  locationIdGreaterThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'locationId',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
+  locationIdLessThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'locationId',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
+  locationIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'locationId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterFilterCondition>
   locationNameEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1394,6 +1460,19 @@ extension ProgramModelQuerySortBy
     });
   }
 
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> sortByLocationId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'locationId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy>
+  sortByLocationIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'locationId', Sort.desc);
+    });
+  }
+
   QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> sortByLocationName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'locationName', Sort.asc);
@@ -1521,6 +1600,19 @@ extension ProgramModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> thenByLocationId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'locationId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy>
+  thenByLocationIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'locationId', Sort.desc);
+    });
+  }
+
   QueryBuilder<ProgramModel, ProgramModel, QAfterSortBy> thenByLocationName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'locationName', Sort.asc);
@@ -1609,6 +1701,12 @@ extension ProgramModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ProgramModel, ProgramModel, QDistinct> distinctByLocationId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'locationId');
+    });
+  }
+
   QueryBuilder<ProgramModel, ProgramModel, QDistinct> distinctByLocationName({
     bool caseSensitive = true,
   }) {
@@ -1673,6 +1771,12 @@ extension ProgramModelQueryProperty
   QueryBuilder<ProgramModel, bool, QQueryOperations> isFavoriteProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isFavorite');
+    });
+  }
+
+  QueryBuilder<ProgramModel, int, QQueryOperations> locationIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'locationId');
     });
   }
 

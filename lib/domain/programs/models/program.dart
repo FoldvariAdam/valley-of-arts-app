@@ -8,6 +8,7 @@ class Program {
   final String displayUrl;
   final String category;
   final bool isFavorite;
+  final int locationId;
 
   Program({
     required this.id,
@@ -19,6 +20,7 @@ class Program {
     required this.displayUrl,
     required this.category,
     required this.isFavorite,
+    required this.locationId,
   });
 
   Program copyWith({
@@ -31,6 +33,7 @@ class Program {
     String? displayUrl,
     String? category,
     bool? isFavorite,
+    int? locationId,
   }) {
     return Program(
       id: id ?? this.id,
@@ -42,6 +45,7 @@ class Program {
       displayUrl: displayUrl ?? this.displayUrl,
       category: category ?? this.category,
       isFavorite: isFavorite ?? this.isFavorite,
+      locationId: locationId ?? this.locationId,
     );
   }
 }

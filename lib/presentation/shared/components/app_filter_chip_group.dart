@@ -25,6 +25,7 @@ class AppFilterChipGroup<T> extends StatefulWidget {
   final String Function(T item) labelOf;
   final ValueChanged<List<String?>> onChanged;
   final AppFilterChipGroupController? appFilterChipGroupController;
+  final bool showAllChip;
 
   const AppFilterChipGroup({
     super.key,
@@ -35,6 +36,7 @@ class AppFilterChipGroup<T> extends StatefulWidget {
     this.multi = false,
     this.selectedIds,
     this.appFilterChipGroupController,
+    this.showAllChip = true,
   });
 
   @override
@@ -49,9 +51,17 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
 
   final Map<String, GlobalKey> _chipKeys = {};
 
+  late int _itemCount;
+  late bool _showAllChip;
+
   @override
   void initState() {
     super.initState();
+    _showAllChip = widget.showAllChip;
+
+    final itemsLength = widget.items.length;
+    _itemCount = _showAllChip ? itemsLength + 1 : itemsLength;
+
     _selectedIds = widget.selectedIds ?? <String?>[null];
     _scrollController = ScrollController();
 
@@ -60,6 +70,13 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToSelected();
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    widget.appFilterChipGroupController?.removeListener(_handleController);
+    super.dispose();
   }
 
   @override
@@ -74,13 +91,13 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
         cacheExtent: widget.items.length * 160,
-        itemCount: widget.items.length + 1,
+        itemCount: _itemCount,
         separatorBuilder: (_, _) => SizedBox(width: appTheme.s1),
         itemBuilder: (context, index) {
           String id;
           Widget chip;
 
-          if (index == 0) {
+          if (index == 0 && _showAllChip) {
             id = all;
             _chipKeys.putIfAbsent(id, () => GlobalKey());
             chip = AppFilterChip(
@@ -90,7 +107,8 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
               onTap: _scrollToAll,
             );
           } else {
-            final item = widget.items[index - 1];
+            final itemIndex = _showAllChip ? index - 1 : index;
+            final item = widget.items[itemIndex];
             id = widget.idOf(item);
             _chipKeys.putIfAbsent(id, () => GlobalKey());
             chip = AppFilterChip(
@@ -105,13 +123,6 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    widget.appFilterChipGroupController?.removeListener(_handleController);
-    super.dispose();
   }
 
   void _handleController() {

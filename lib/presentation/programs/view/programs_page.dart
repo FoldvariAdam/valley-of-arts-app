@@ -37,14 +37,12 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
   final _citiesChipController = AppFilterChipGroupController();
   final _locationsChipController = AppFilterChipGroupController();
 
-  void _filterPrograms({required BuildContext context}) =>
-      context.read<ProgramsBloc>().add(
-        ProgramsFilterChangedEvent(
-          date: _selectedDate,
-          categories: _selectedCategories,
-          location: _selectedLocation,
-        ),
-      );
+
+  @override
+  void dispose() {
+    _datesChipController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,14 +176,14 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
 
                               SizedBox(height: appTheme.s2),
 
-                              CityLocationFilter(
-                                citiesAppFilterChipGroupController:
+                              VillageLocationFilter(
+                                villagesAppFilterChipGroupController:
                                     _citiesChipController,
                                 locationsAppFilterChipGroupController:
                                     _locationsChipController,
                                 selectedLocation: _selectedLocation,
                                 isLocationsExpanded: _isLocationsExpanded,
-                                cities: locations,
+                                villages: locations,
                                 onLocationChanged: (location) {
                                   _selectedLocation = location;
                                   _filterPrograms(context: context);
@@ -278,11 +276,14 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
     );
   }
 
-  @override
-  void dispose() {
-    _datesChipController.dispose();
-    super.dispose();
-  }
+  void _filterPrograms({required BuildContext context}) =>
+      context.read<ProgramsBloc>().add(
+        ProgramsFilterChangedEvent(
+          date: _selectedDate,
+          categories: _selectedCategories,
+          location: _selectedLocation,
+        ),
+      );
 }
 
 class _EmptyState extends StatelessWidget {

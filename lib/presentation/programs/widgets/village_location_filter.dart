@@ -3,31 +3,31 @@ import 'package:valley_of_arts/core/core.dart';
 import 'package:valley_of_arts/domain/programs_filter/models/models.dart';
 import 'package:valley_of_arts/presentation/shared/components/components.dart';
 
-class CityLocationFilter extends StatefulWidget {
+class VillageLocationFilter extends StatefulWidget {
   final int? selectedLocation;
   final bool isLocationsExpanded;
-  final List<CityWithLocations> cities;
+  final List<VillageWithLocations> villages;
   final ValueChanged<int?> onLocationChanged;
   final ValueChanged<bool> onExpandedLocationsChanged;
-  final AppFilterChipGroupController? citiesAppFilterChipGroupController;
+  final AppFilterChipGroupController? villagesAppFilterChipGroupController;
   final AppFilterChipGroupController? locationsAppFilterChipGroupController;
 
-  const CityLocationFilter({
+  const VillageLocationFilter({
     super.key,
-    required this.cities,
+    required this.villages,
     required this.onLocationChanged,
     required this.onExpandedLocationsChanged,
     this.selectedLocation,
     this.isLocationsExpanded = false,
-    this.citiesAppFilterChipGroupController,
+    this.villagesAppFilterChipGroupController,
     this.locationsAppFilterChipGroupController,
   });
 
   @override
-  State<CityLocationFilter> createState() => _CityLocationFilterState();
+  State<VillageLocationFilter> createState() => _VillageLocationFilterState();
 }
 
-class _CityLocationFilterState extends State<CityLocationFilter> {
+class _VillageLocationFilterState extends State<VillageLocationFilter> {
   final ScrollController _verticalController = ScrollController();
   final Map<String, GlobalKey> _locationKeys = {};
   final GlobalKey _allKey = GlobalKey();
@@ -38,10 +38,10 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
 
   List<Location> get _filteredLocations {
     if (_selectedCityId == null) {
-      return widget.cities.expand((c) => c.locations).toList();
+      return widget.villages.expand((c) => c.locations).toList();
     } else {
-      return widget.cities
-          .where((c) => _selectedCityId == c.cityId)
+      return widget.villages
+          .where((c) => _selectedCityId == c.id)
           .expand((c) => c.locations)
           .toList();
     }
@@ -62,7 +62,7 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
   }
 
   @override
-  void didUpdateWidget(covariant CityLocationFilter oldWidget) {
+  void didUpdateWidget(covariant VillageLocationFilter oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _selectedCityId = _getCityByLocationId();
@@ -75,6 +75,12 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
         }
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _verticalController.dispose();
+    super.dispose();
   }
 
   @override
@@ -93,17 +99,17 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
 
         SizedBox(height: appTheme.s1),
 
-        AppFilterChipGroup<CityWithLocations>(
+        AppFilterChipGroup<VillageWithLocations>(
           appFilterChipGroupController:
-              widget.citiesAppFilterChipGroupController,
+              widget.villagesAppFilterChipGroupController,
           selectedIds: [
             _selectedCityId.toString() == 'null'
                 ? null
                 : _selectedCityId.toString(),
           ],
-          items: widget.cities,
-          idOf: (c) => c.cityId.toString(),
-          labelOf: (c) => c.cityName,
+          items: widget.villages,
+          idOf: (c) => c.id.toString(),
+          labelOf: (c) => c.villageName,
           onChanged: (ids) {
             setState(() {
               final cityId = ids.first;
@@ -158,12 +164,6 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
         ),
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    _verticalController.dispose();
-    super.dispose();
   }
 
   Widget _buildLocationChips() {
@@ -273,11 +273,11 @@ class _CityLocationFilterState extends State<CityLocationFilter> {
     if (widget.selectedLocation == null) return null;
 
     try {
-      final city = widget.cities.firstWhere(
+      final city = widget.villages.firstWhere(
         (city) => city.locations.any((l) => l.id == widget.selectedLocation),
       );
 
-      return city.cityId;
+      return city.id;
     } catch (_) {
       return null;
     }

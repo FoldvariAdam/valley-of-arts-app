@@ -40,6 +40,12 @@ class _AppCardState extends State<AppCard> with TickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final baseTheme = context.appCardTheme;
     final appCardTheme = baseTheme.merge(widget.style);
@@ -94,12 +100,6 @@ class _AppCardState extends State<AppCard> with TickerProviderStateMixin {
       padding: EdgeInsets.all(appCardTheme.margin!),
       child: cardContent,
     );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   void _onTapDown(_) {

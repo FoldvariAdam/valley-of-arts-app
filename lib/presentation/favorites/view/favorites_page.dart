@@ -134,7 +134,7 @@ class FavoritesPage extends StatelessWidget {
             style: TextButton.styleFrom(
               backgroundColor: appTheme.secondaryColor,
             ),
-            child: Text("Törlés", style: TextStyle(color: Colors.white)),
+            child: const Text("Törlés", style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

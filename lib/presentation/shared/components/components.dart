@@ -8,6 +8,7 @@ export 'app_circular_progress_indicator.dart';
 export 'app_divider.dart';
 export 'app_filter_chip.dart';
 export 'app_filter_chip_group.dart';
+export 'app_search_bar.dart';
 export 'cached_program_image.dart';
 export 'chevron.dart';
 export 'glass_icon_button.dart';

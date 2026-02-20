@@ -36,17 +36,6 @@ class _HomeHeaderState extends State<HomeHeader> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  Animation<double> _interval(
-    double a,
-    double b, {
-    Curve curve = Curves.easeOut,
-  }) {
-    return CurvedAnimation(
-      parent: _c,
-      curve: Interval(a, b, curve: curve),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
@@ -193,6 +182,17 @@ class _HomeHeaderState extends State<HomeHeader> with TickerProviderStateMixin {
           ),
         ],
       ),
+    );
+  }
+
+  Animation<double> _interval(
+      double a,
+      double b, {
+        Curve curve = Curves.easeOut,
+      }) {
+    return CurvedAnimation(
+      parent: _c,
+      curve: Interval(a, b, curve: curve),
     );
   }
 }

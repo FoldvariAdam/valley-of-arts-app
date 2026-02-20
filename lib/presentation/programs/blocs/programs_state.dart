@@ -24,7 +24,7 @@ final class ProgramsInitialState extends ProgramsState {
 final class ProgramsFiltersLoadedState extends ProgramsWithDataState {
   final Schedule schedule;
   final List<Category> categories;
-  final List<CityWithLocations> locations;
+  final List<VillageWithLocations> locations;
 
   const ProgramsFiltersLoadedState({
     required this.schedule,

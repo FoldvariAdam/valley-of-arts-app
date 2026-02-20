@@ -17,6 +17,7 @@ class ProgramModel {
   late String displayUrl;
   late String category;
   late bool isFavorite;
+  late int locationId;
 
   ProgramModel();
 
@@ -31,7 +32,8 @@ class ProgramModel {
       locationName = program.locationName,
       displayUrl = program.displayUrl,
       category = program.category,
-      isFavorite = program.isFavorite;
+      isFavorite = program.isFavorite,
+      locationId = program.locationId;
 
   Program toDomain() => Program(
     id: programId,
@@ -43,5 +45,6 @@ class ProgramModel {
     displayUrl: displayUrl,
     category: category,
     isFavorite: isFavorite,
+    locationId: locationId,
   );
 }

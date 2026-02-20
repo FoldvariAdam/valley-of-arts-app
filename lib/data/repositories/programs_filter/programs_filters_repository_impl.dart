@@ -20,8 +20,12 @@ class ProgramsFilterRepositoryImpl implements ProgramsFiltersRepository {
 
   @override
   Future<List<Location>> getLocations() async {
-    final locations = await _valleyApiClient.getLocations();
+    try {
+      final locations = await _valleyApiClient.getLocations();
 
-    return locations.map((location) => location.toDomainModel()).toList();
+      return locations.map((location) => location.toDomainModel()).toList();
+    } catch (e) {
+      return [];
+    }
   }
 }

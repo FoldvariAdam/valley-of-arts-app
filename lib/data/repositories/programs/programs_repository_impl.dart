@@ -43,6 +43,8 @@ class ProgramsRepositoryImpl implements ProgramsRepository {
       if (e is DioException) {
         if (e.type == DioExceptionType.connectionError) {
           throw NetworkException();
+        } else if (e.type == DioExceptionType.connectionTimeout) {
+
         }
         throw ServerException(e.message ?? '');
       }

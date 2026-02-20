@@ -1,5 +1,4 @@
 import 'package:injectable/injectable.dart';
-import 'package:isar_community/isar.dart';
 import 'package:valley_of_arts/data/data_sources/local/isar/isar.dart';
 import 'package:valley_of_arts/data/repositories/favorites/favorites_repository.dart';
 import 'package:valley_of_arts/domain/programs/models/models.dart';

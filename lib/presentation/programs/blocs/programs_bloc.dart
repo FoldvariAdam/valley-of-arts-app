@@ -13,7 +13,7 @@ part 'programs_state.dart';
 class ProgramsBloc extends Bloc<ProgramsEvent, ProgramsState> {
   final ProgramsRepository _programRepository;
   final ProgramsFiltersRepository _programsFiltersRepository;
-  final GetLocationsGroupedByCityUseCase _getLocationsGroupedByCityUseCase;
+  final GetLocationsGroupedByVillageUseCase _getLocationsGroupedByCityUseCase;
 
   ProgramsBloc(
     this._programRepository,
@@ -28,7 +28,7 @@ class ProgramsBloc extends Bloc<ProgramsEvent, ProgramsState> {
         _programRepository.getPrograms(),
       ]);
 
-      final locationsGroupedByCity = filters[0] as List<CityWithLocations>;
+      final locationsGroupedByCity = filters[0] as List<VillageWithLocations>;
       final schedule = filters[1] as Schedule;
       final categories = filters[2] as List<Category>;
       final programs = filters[3] as List<Program>;

@@ -7,7 +7,7 @@ extension ProgramsMapper on PaginatedProgramsResponse {
 }
 
 extension ProgramMapper on ProgramResponse {
-  /// TODO HANDLE ALL THE PROPERTIES
+  /// TODO HANDLE ALL THE PROPERTIES (Ha pl nics id akkor ne hozza létre, menjen a kövire)
   Program toDomainModel(List<int> favoriteIds) {
     final artistUrl =
         artists?.firstOrNull?.attachments?.firstOrNull?.displayUrl;
@@ -23,6 +23,7 @@ extension ProgramMapper on ProgramResponse {
       displayUrl: artistUrl ?? locationUrl ?? '',
       category: programCategories?.firstOrNull?.name ?? '',
       isFavorite: favoriteIds.contains(id!),
+      locationId: locationId!
     );
   }
 }
