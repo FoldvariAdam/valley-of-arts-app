@@ -10,6 +10,7 @@ class AppButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final AppButtonVariant variant;
   final double? width;
+  final double? height;
   final AppButtonTheme? style;
   final Widget? icon;
   final AppButtonIconPosition iconPosition;
@@ -19,6 +20,7 @@ class AppButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.width,
+    this.height,
     this.style,
     this.icon,
     this.iconPosition = AppButtonIconPosition.leading,
@@ -29,6 +31,7 @@ class AppButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.width,
+    this.height,
     this.style,
     this.icon,
     this.iconPosition = AppButtonIconPosition.leading,
@@ -39,6 +42,7 @@ class AppButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.width,
+    this.height,
     this.style,
     this.icon,
     this.iconPosition = AppButtonIconPosition.leading,
@@ -77,6 +81,7 @@ class AppButton extends StatelessWidget {
     }
     return SizedBox(
       width: width,
+      height: height,
       child: ElevatedButton(
         style: themeStyle,
         onPressed: onPressed,

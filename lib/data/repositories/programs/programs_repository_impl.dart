@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:valley_of_arts/core/exceptions/exceptions.dart';
-import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley_api_client.dart';
+import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley/valley_api_client.dart';
 import 'package:valley_of_arts/data/repositories/favorites/favorites_repository.dart';
 import 'package:valley_of_arts/data/repositories/programs/programs_repository.dart';
 import 'package:valley_of_arts/domain/programs/programs.dart';

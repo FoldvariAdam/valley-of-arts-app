@@ -1,3 +1,3 @@
 //GENERATED BARREL FILE
-export './apis/valley_api_client.dart';
+export './apis/apis.dart';
 export './models/models.dart';

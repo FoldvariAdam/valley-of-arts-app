@@ -8,3 +8,4 @@ export './programs/programs.dart';
 export './schedule/schedule.dart';
 export './settings/settings.dart';
 export './shared/shared.dart';
+export './tickets/tickets.dart';

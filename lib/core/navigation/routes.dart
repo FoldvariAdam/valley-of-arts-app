@@ -76,6 +76,11 @@ GoRouter createRouterConfig({required String initialLocation}) {
             path: NavigationRoute.settings.fullPath,
             builder: (context, state) => const SettingsPage(),
           ),
+          GoRoute(
+            name: NavigationRoute.tickets.path,
+            path: NavigationRoute.tickets.fullPath,
+            builder: (context, state) => const TicketsPage(),
+          ),
         ],
       ),
     ],

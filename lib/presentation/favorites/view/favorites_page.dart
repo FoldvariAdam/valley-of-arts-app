@@ -20,16 +20,12 @@ class FavoritesPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: .start,
         children: [
-          Row(
-            children: [
-              const AppBackButton(),
-              SizedBox(width: appTheme.s2),
-              PageHeader(
-                title: LocaleKeys.Favorites_Title.tr(),
-                subtitle: LocaleKeys.Favorites_SubTitle.tr(),
-              ),
-            ],
+          PageHeader(
+            title: LocaleKeys.Favorites_Title.tr(),
+            subtitle: LocaleKeys.Favorites_SubTitle.tr(),
+            showBackButton: true,
           ),
+
           Expanded(
             child: BlocProvider(
               create: (context) =>

@@ -5,14 +5,7 @@ import 'package:valley_of_arts/generated/locale_keys.g.dart';
 import 'package:valley_of_arts/presentation/shared/shared.dart';
 
 class HomeHeader extends StatefulWidget {
-  final Color background;
-  final VoidCallback onTicketTap;
-
-  const HomeHeader({
-    super.key,
-    required this.background,
-    required this.onTicketTap,
-  });
+  const HomeHeader({super.key});
 
   @override
   State<HomeHeader> createState() => _HomeHeaderState();
@@ -154,7 +147,9 @@ class _HomeHeaderState extends State<HomeHeader> with TickerProviderStateMixin {
                             fromY: 18,
                             child: AppButton(
                               text: LocaleKeys.Home_Purchase.tr(),
-                              onPressed: widget.onTicketTap,
+                              onPressed: () => NavigationService.of(
+                                context,
+                              ).goToTicketsPage(),
                             ),
                           ),
                         ],
@@ -186,10 +181,10 @@ class _HomeHeaderState extends State<HomeHeader> with TickerProviderStateMixin {
   }
 
   Animation<double> _interval(
-      double a,
-      double b, {
-        Curve curve = Curves.easeOut,
-      }) {
+    double a,
+    double b, {
+    Curve curve = Curves.easeOut,
+  }) {
     return CurvedAnimation(
       parent: _c,
       curve: Interval(a, b, curve: curve),

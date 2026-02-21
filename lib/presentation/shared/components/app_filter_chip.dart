@@ -33,10 +33,6 @@ class _AppFilterChipState extends State<AppFilterChip> {
         ? appFilterChip.activeBackgroundColor!
         : appFilterChip.backgroundColor!;
 
-    final fg = widget.isActive
-        ? appFilterChip.activeForegroundColor!
-        : appFilterChip.foregroundColor!;
-
     final border = widget.isActive
         ? appFilterChip.activeBorderColor!
         : appFilterChip.borderColor!;
@@ -73,10 +69,10 @@ class _AppFilterChipState extends State<AppFilterChip> {
             mainAxisSize: .min,
             children: [
               if (widget.icon != null) ...[
-                Text(widget.icon!, style: textStyle.copyWith(color: fg)),
+                Text(widget.icon!, style: textStyle),
                 SizedBox(width: appFilterChip.iconSpacing),
               ],
-              Text(widget.label, style: textStyle.copyWith(color: fg)),
+              Text(widget.label, style: textStyle),
             ],
           ),
         ),

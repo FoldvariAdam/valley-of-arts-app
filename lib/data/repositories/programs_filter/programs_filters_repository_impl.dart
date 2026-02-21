@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley_api_client.dart';
+import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley/valley_api_client.dart';
 import 'package:valley_of_arts/data/repositories/programs_filter/programs_filters_repository.dart';
 import 'package:valley_of_arts/domain/programs_filter/programs_filter.dart';
 

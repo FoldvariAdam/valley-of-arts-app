@@ -23,8 +23,8 @@ import 'package:valley_of_arts/data/data.dart' as _i477;
 import 'package:valley_of_arts/data/data_sources/local/isar/favorites_local_data_source.dart'
     as _i331;
 import 'package:valley_of_arts/data/data_sources/local/isar/isar.dart' as _i534;
-import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley_api_client.dart'
-    as _i900;
+import 'package:valley_of_arts/data/data_sources/remote/valley/apis/valley/valley_api_client.dart'
+    as _i909;
 import 'package:valley_of_arts/data/repositories/favorites/favorites_repository.dart'
     as _i1047;
 import 'package:valley_of_arts/data/repositories/favorites/favorites_repository_impl.dart'
@@ -38,6 +38,8 @@ import 'package:valley_of_arts/data/repositories/programs_filter/programs_filter
 import 'package:valley_of_arts/data/repositories/programs_filter/programs_filters_repository_impl.dart'
     as _i576;
 import 'package:valley_of_arts/data/repositories/repositories.dart' as _i809;
+import 'package:valley_of_arts/data/repositories/tickets/tickets_repository_impl.dart'
+    as _i533;
 import 'package:valley_of_arts/domain/domain.dart' as _i439;
 import 'package:valley_of_arts/domain/programs/use_cases/toggle_favorite_use_case.dart'
     as _i103;
@@ -51,6 +53,8 @@ import 'package:valley_of_arts/presentation/home/blocs/home_bloc.dart' as _i59;
 import 'package:valley_of_arts/presentation/map/blocs/map_bloc.dart' as _i825;
 import 'package:valley_of_arts/presentation/programs/blocs/programs_bloc.dart'
     as _i791;
+import 'package:valley_of_arts/presentation/tickets/blocs/tickets_bloc.dart'
+    as _i169;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -69,14 +73,20 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.lazySingleton<_i361.Dio>(() => networkModule.dio());
-    gh.lazySingleton<_i900.ValleyApiClient>(
+    gh.lazySingleton<_i477.ValleyApiClient>(
       () => networkModule.valleyApiClient(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i477.TicketsApiClient>(
+      () => networkModule.ticketsApiClient(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i476.ProgramsFiltersRepository>(
-      () => _i576.ProgramsFilterRepositoryImpl(gh<_i900.ValleyApiClient>()),
+      () => _i576.ProgramsFilterRepositoryImpl(gh<_i909.ValleyApiClient>()),
     );
     gh.lazySingleton<_i331.FavoritesLocalDataSource>(
       () => _i331.FavoritesLocalDataSource(gh<_i214.Isar>()),
+    );
+    gh.lazySingleton<_i477.TicketsRepository>(
+      () => _i533.TicketsRepositoryImpl(gh<_i477.TicketsApiClient>()),
     );
     gh.factory<_i51.GetLocationsGroupedByVillageUseCase>(
       () => _i51.GetLocationsGroupedByVillageUseCase(
@@ -86,17 +96,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1047.FavoritesRepository>(
       () => _i404.FavoritesRepositoryImpl(gh<_i534.FavoritesLocalDataSource>()),
     );
-    gh.factory<_i250.FavoritesBloc>(
-      () => _i250.FavoritesBloc(gh<_i1047.FavoritesRepository>()),
-    );
-    gh.lazySingleton<_i103.ToggleFavoriteUseCase>(
-      () => _i103.ToggleFavoriteUseCase(gh<_i1047.FavoritesRepository>()),
-    );
     gh.lazySingleton<_i930.ProgramsRepository>(
       () => _i629.ProgramsRepositoryImpl(
-        gh<_i900.ValleyApiClient>(),
+        gh<_i909.ValleyApiClient>(),
         gh<_i1047.FavoritesRepository>(),
       ),
+    );
+    gh.factory<_i250.FavoritesBloc>(
+      () => _i250.FavoritesBloc(gh<_i1047.FavoritesRepository>()),
     );
     gh.factory<_i791.ProgramsBloc>(
       () => _i791.ProgramsBloc(
@@ -104,6 +111,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i809.ProgramsFiltersRepository>(),
         gh<_i439.GetLocationsGroupedByVillageUseCase>(),
       ),
+    );
+    gh.lazySingleton<_i103.ToggleFavoriteUseCase>(
+      () => _i103.ToggleFavoriteUseCase(gh<_i1047.FavoritesRepository>()),
     );
     gh.factory<_i59.HomeBloc>(
       () => _i59.HomeBloc(gh<_i930.ProgramsRepository>()),
@@ -113,6 +123,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i477.ProgramsRepository>(),
         gh<_i727.GetLocationsGroupedByVillageUseCase>(),
       ),
+    );
+    gh.factory<_i169.TicketsBloc>(
+      () => _i169.TicketsBloc(gh<_i477.TicketsRepository>()),
     );
     return this;
   }

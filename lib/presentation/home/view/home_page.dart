@@ -67,13 +67,10 @@ class _HomePageInnerState extends State<_HomePageInner> {
         CustomScrollView(
           controller: _scrollController,
           slivers: [
-            SliverToBoxAdapter(
-              child: HomeHeader(
-                background: appTheme.backgroundColor,
-                onTicketTap: () {},
-              ),
-            ),
+            const SliverToBoxAdapter(child: HomeHeader()),
+
             SliverToBoxAdapter(child: SizedBox(height: appTheme.s2)),
+
             BlocBuilder<HomeBloc, HomeState>(
               buildWhen: (prev, curr) =>
                   prev.popularPrograms != curr.popularPrograms ||
@@ -98,7 +95,9 @@ class _HomePageInnerState extends State<_HomePageInner> {
                 return SliverToBoxAdapter(child: Container());
               },
             ),
+
             SliverToBoxAdapter(child: SizedBox(height: appTheme.s5)),
+
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: appTheme.s2),
@@ -129,6 +128,7 @@ class _HomePageInnerState extends State<_HomePageInner> {
             ),
           ],
         ),
+
         Positioned(
           top: MediaQuery.of(context).padding.top + 12,
           left: 0,

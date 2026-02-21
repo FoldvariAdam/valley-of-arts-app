@@ -11,7 +11,8 @@ enum NavigationRoute {
   programs(),
   programDetails(shouldCloseBottomBar: true),
   schedule(),
-  settings();
+  settings(),
+  tickets(shouldCloseBottomBar: true);
 
   final bool shouldCloseBottomBar;
 
@@ -106,6 +107,13 @@ class NavigationService {
       context: context,
       route: NavigationRoute.settings,
       withoutStacking: true,
+    );
+  }
+
+  void goToTicketsPage() {
+    _goToPageImpl(
+      context: context,
+      route: NavigationRoute.tickets,
     );
   }
 
