@@ -1,4 +1,4 @@
 //GENERATED BARREL FILE
-export './blocs/map_bloc.dart';
+export './blocs/blocs.dart';
 export './view/view.dart';
 export './wigets/wigets.dart';

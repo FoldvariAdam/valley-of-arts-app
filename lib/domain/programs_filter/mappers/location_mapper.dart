@@ -9,6 +9,9 @@ extension LocationResponseMapper on LocationResponse {
     villageId: city?.id ?? 0,
     villageName: city?.name ?? '',
     position: position,
+    displayUrl: attachments?.isNotEmpty == true
+        ? attachments!.first.displayUrl ?? ''
+        : '',
   );
 
   Position? get position => location != null && location!.length >= 2

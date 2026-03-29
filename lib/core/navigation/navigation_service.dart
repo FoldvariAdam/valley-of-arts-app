@@ -65,7 +65,7 @@ class NavigationService {
   void goToLocationDetailsPage({required Location location}) {
     _goToPageImpl(
       context: context,
-      route: NavigationRoute.programDetails,
+      route: NavigationRoute.locationDetails,
       extra: {'location': location},
     );
   }

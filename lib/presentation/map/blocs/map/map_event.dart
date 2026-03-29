@@ -12,8 +12,4 @@ final class MapGetLocationsEvent extends MapEvent {
   const MapGetLocationsEvent();
 }
 
-final class MapGetProgramEvent extends MapEvent {
-  const MapGetProgramEvent();
-}
-
 

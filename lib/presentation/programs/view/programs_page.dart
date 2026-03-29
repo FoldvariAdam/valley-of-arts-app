@@ -37,7 +37,6 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
   final _citiesChipController = AppFilterChipGroupController();
   final _locationsChipController = AppFilterChipGroupController();
 
-
   @override
   void dispose() {
     _datesChipController.dispose();
@@ -248,7 +247,10 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                         ),
                         SizedBox(height: appTheme.s3),
                         if (programs.isEmpty)
-                          _EmptyState()
+                          const AppEmptyState(
+                            title: 'Nincs találat',
+                            subtitle: 'Próbálj más szűrőbeállításokat',
+                          )
                         else
                           AppAnimatedListView<Program>(
                             items: programs,
@@ -284,56 +286,4 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
           location: _selectedLocation,
         ),
       );
-}
-
-class _EmptyState extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final appTheme = context.appTheme;
-
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 32),
-        child: Column(
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: appTheme.componentBackgroundColor,
-                shape: BoxShape.circle,
-                border: Border.all(color: appTheme.borderColor),
-              ),
-              child: Icon(
-                Icons.filter_alt,
-                size: 36,
-                color: appTheme.mutedForegroundColor,
-              ),
-            ),
-
-            SizedBox(height: appTheme.s2),
-
-            Text(
-              'Nincs találat',
-              style: TextStyle(
-                color: appTheme.foregroundColor,
-                fontSize: 18,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-
-            SizedBox(height: appTheme.s1),
-
-            Text(
-              'Próbálj más szűrőbeállításokat',
-              style: TextStyle(
-                color: appTheme.mutedForegroundColor,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

@@ -78,7 +78,7 @@ class _TicketsPageState extends State<TicketsPage> {
                     );
                   }
 
-                  return const Center(child: CircularProgressIndicator());
+                  return const AppCircularProgressIndicator();
                 },
               ),
             ),

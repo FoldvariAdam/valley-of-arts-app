@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:valley_of_arts/core/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:valley_of_arts/domain/programs_filter/models/models.dart';
+import 'package:valley_of_arts/presentation/map/blocs/blocs.dart';
 import 'package:valley_of_arts/presentation/map/wigets/wigets.dart';
 
 class LocationPanelCarouselController extends ChangeNotifier {
@@ -42,13 +44,15 @@ class LocationPanelCarousel extends StatefulWidget {
 
 class _LocationCarouselState extends State<LocationPanelCarousel> {
   late PageController _controller;
+  late Location _currentLocation;
   double _currentPage = 0.0;
 
   @override
   void initState() {
     super.initState();
+    _currentLocation = widget.locations.elementAt(widget.initialIndex);
     _controller = PageController(
-      viewportFraction: 0.6,
+      viewportFraction: 0.85,
       initialPage: widget.initialIndex,
     );
     _currentPage = widget.initialIndex.toDouble();
@@ -71,36 +75,42 @@ class _LocationCarouselState extends State<LocationPanelCarousel> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
-      child: PageView.builder(
-        controller: _controller,
-        itemCount: widget.locations.length,
-        onPageChanged: (index) {
-          if (widget.controller.targetIndex != null) return;
-          widget.onLocationChanged(widget.locations[index]);
-        },
-        itemBuilder: (context, index) {
-          final location = widget.locations[index];
-          return Center(
-            child: Transform.scale(
-              scale: lerpDouble(
-                0.7,
-                1.0,
-                1 - (_currentPage - index).abs().clamp(0.0, 1.0),
-              ),
-              child: GestureDetector(
-                onTap: () => NavigationService.of(
-                  context,
-                ).goToLocationDetailsPage(location: location),
-                child: LocationPanel(
-                  location: location,
-                  nextProgram: null,
-                  onClose: widget.onClose,
-                ),
-              ),
-            ),
-          );
-        },
+      height: 220,
+      child: Builder(
+          builder: (context) {
+            return PageView.builder(
+              controller: _controller,
+              itemCount: widget.locations.length,
+              onPageChanged: (index) {
+                if (widget.controller.targetIndex != null) return;
+                _currentLocation = widget.locations[index];
+                widget.onLocationChanged(_currentLocation);
+              },
+              itemBuilder: (context, index) {
+                final location = widget.locations[index];
+                final scaleValue = lerpDouble(
+                  0.9,
+                  1.0,
+                  1 - (_currentPage - index).abs().clamp(0.0, 1.0),
+                )!;
+
+                return BlocProvider(
+                  create: (context) =>
+                  GetIt.instance.get<LocationCarouselBloc>()
+                    ..add(LocationGetProgramEvent(location.id)),
+                  child: Center(
+                    child: Transform.scale(
+                      scale: scaleValue,
+                      child: LocationPanel(
+                        location: location,
+                        onClose: widget.onClose,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
       ),
     );
   }

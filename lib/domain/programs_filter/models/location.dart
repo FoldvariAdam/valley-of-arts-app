@@ -7,6 +7,7 @@ class Location extends Equatable {
   final int villageId;
   final String villageName;
   final Position? position;
+  final String displayUrl;
 
   const Location({
     required this.id,
@@ -14,10 +15,18 @@ class Location extends Equatable {
     required this.villageId,
     required this.villageName,
     required this.position,
+    required this.displayUrl,
   });
 
   @override
-  List<Object?> get props => [id, name, villageId, villageName, position];
+  List<Object?> get props => [
+    id,
+    name,
+    villageId,
+    villageName,
+    position,
+    displayUrl,
+  ];
 }
 
 class VillageWithLocations extends Equatable {

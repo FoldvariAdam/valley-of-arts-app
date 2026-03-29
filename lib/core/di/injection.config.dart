@@ -29,6 +29,8 @@ import 'package:valley_of_arts/data/repositories/favorites/favorites_repository.
     as _i1047;
 import 'package:valley_of_arts/data/repositories/favorites/favorites_repository_impl.dart'
     as _i404;
+import 'package:valley_of_arts/data/repositories/programs/programs.dart'
+    as _i721;
 import 'package:valley_of_arts/data/repositories/programs/programs_repository.dart'
     as _i930;
 import 'package:valley_of_arts/data/repositories/programs/programs_repository_impl.dart'
@@ -50,7 +52,12 @@ import 'package:valley_of_arts/domain/programs_filter/use_cases/get_locations_gr
 import 'package:valley_of_arts/presentation/favorites/blocs/favorites_bloc.dart'
     as _i250;
 import 'package:valley_of_arts/presentation/home/blocs/home_bloc.dart' as _i59;
-import 'package:valley_of_arts/presentation/map/blocs/map_bloc.dart' as _i825;
+import 'package:valley_of_arts/presentation/location_details/blocs/location_details_bloc.dart'
+    as _i420;
+import 'package:valley_of_arts/presentation/map/blocs/location_carousel/location_carousel_bloc.dart'
+    as _i836;
+import 'package:valley_of_arts/presentation/map/blocs/map/map_bloc.dart'
+    as _i635;
 import 'package:valley_of_arts/presentation/programs/blocs/programs_bloc.dart'
     as _i791;
 import 'package:valley_of_arts/presentation/tickets/blocs/tickets_bloc.dart'
@@ -112,20 +119,26 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i439.GetLocationsGroupedByVillageUseCase>(),
       ),
     );
+    gh.factory<_i635.MapBloc>(
+      () => _i635.MapBloc(gh<_i727.GetLocationsGroupedByVillageUseCase>()),
+    );
     gh.lazySingleton<_i103.ToggleFavoriteUseCase>(
       () => _i103.ToggleFavoriteUseCase(gh<_i1047.FavoritesRepository>()),
     );
     gh.factory<_i59.HomeBloc>(
       () => _i59.HomeBloc(gh<_i930.ProgramsRepository>()),
     );
-    gh.factory<_i825.MapBloc>(
-      () => _i825.MapBloc(
-        gh<_i477.ProgramsRepository>(),
-        gh<_i727.GetLocationsGroupedByVillageUseCase>(),
-      ),
-    );
     gh.factory<_i169.TicketsBloc>(
       () => _i169.TicketsBloc(gh<_i477.TicketsRepository>()),
+    );
+    gh.factory<_i420.LocationDetailsBloc>(
+      () => _i420.LocationDetailsBloc(
+        gh<_i477.ProgramsRepository>(),
+        gh<_i477.ProgramsFiltersRepository>(),
+      ),
+    );
+    gh.factory<_i836.LocationCarouselBloc>(
+      () => _i836.LocationCarouselBloc(gh<_i721.ProgramsRepository>()),
     );
     return this;
   }

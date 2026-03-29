@@ -41,7 +41,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _loadPinned(Emitter<HomeState> emit) async {
     try {
       final result = await _programRepository.getPrograms(onlyPinned: true);
-      emit(state.copyWith(popularPrograms: result, loadingPopular: false));
+      emit(state.copyWith(popularPrograms: result.take(6).toList(), loadingPopular: false));
     } catch (e) {
       emit(state.copyWith(errorPopular: e.toString(), loadingPopular: false));
     }
