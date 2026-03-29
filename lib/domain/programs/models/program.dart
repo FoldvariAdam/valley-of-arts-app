@@ -1,4 +1,6 @@
-class Program {
+import 'package:equatable/equatable.dart';
+
+class Program extends Equatable {
   final int id;
   final String name;
   final String description;
@@ -10,7 +12,7 @@ class Program {
   final bool isFavorite;
   final int locationId;
 
-  Program({
+  const Program({
     required this.id,
     required this.name,
     required this.description,
@@ -48,4 +50,18 @@ class Program {
       locationId: locationId ?? this.locationId,
     );
   }
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    description,
+    startTime,
+    endTime,
+    locationName,
+    displayUrl,
+    category,
+    isFavorite,
+    locationId,
+  ];
 }
