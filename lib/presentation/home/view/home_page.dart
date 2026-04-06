@@ -108,7 +108,14 @@ class _HomePageInnerState extends State<_HomePageInner> {
                           prev.favoritesLength != curr.favoritesLength ||
                           prev.loadingFavorites != curr.loadingFavorites,
                       builder: (context, state) {
-                        return const FavoritesCard();
+                        final favoritesLength = state.favoritesLength;
+                        if (favoritesLength != null) {
+                          return FavoritesCard(
+                            favoritesLength: favoritesLength,
+                          );
+                        }
+
+                        return const AppCircularProgressIndicator();
                       },
                     ),
                     SizedBox(height: appTheme.s5),

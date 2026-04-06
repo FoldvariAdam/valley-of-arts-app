@@ -5,7 +5,9 @@ import 'package:valley_of_arts/generated/locale_keys.g.dart';
 import 'package:valley_of_arts/presentation/presentation.dart';
 
 class FavoritesCard extends StatelessWidget {
-  const FavoritesCard({super.key});
+  final int favoritesLength;
+
+  const FavoritesCard({super.key, required this.favoritesLength});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class FavoritesCard extends StatelessWidget {
         child: ChevronRow(
           leadingIcon: Icon(Icons.favorite, color: appTheme.primaryColor),
           title: LocaleKeys.Home_Favorites.tr(),
-          subtitle: LocaleKeys.Home_FavoritesDescription.tr(args: ['4']),
+          subtitle: LocaleKeys.Home_FavoritesDescription.tr(args: [favoritesLength.toString()]),
         ),
       ),
     );

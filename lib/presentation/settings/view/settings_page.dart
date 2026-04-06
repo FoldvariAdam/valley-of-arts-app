@@ -46,6 +46,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 subtitle: LocaleKeys.Settings_SubTitle.tr(),
               ),
 
+              SizedBox(height: appTheme.s1),
+
               Entrance(
                 fromY: 20,
                 delayMs: 0,

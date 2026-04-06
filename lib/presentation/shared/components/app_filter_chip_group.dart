@@ -50,17 +50,12 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
   late final ScrollController _scrollController;
 
   final Map<String, GlobalKey> _chipKeys = {};
-
-  late int _itemCount;
   late bool _showAllChip;
 
   @override
   void initState() {
     super.initState();
     _showAllChip = widget.showAllChip;
-
-    final itemsLength = widget.items.length;
-    _itemCount = _showAllChip ? itemsLength + 1 : itemsLength;
 
     _selectedIds = widget.selectedIds ?? <String?>[null];
     _scrollController = ScrollController();
@@ -83,6 +78,10 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
+    final itemCount = widget.showAllChip
+        ? widget.items.length + 1
+        : widget.items.length;
+
     return SizedBox(
       height: 40,
       child: ListView.separated(
@@ -91,7 +90,7 @@ class _AppFilterChipGroupState<T> extends State<AppFilterChipGroup<T>> {
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
         cacheExtent: widget.items.length * 160,
-        itemCount: _itemCount,
+        itemCount: itemCount,
         separatorBuilder: (_, _) => SizedBox(width: appTheme.s1),
         itemBuilder: (context, index) {
           String id;

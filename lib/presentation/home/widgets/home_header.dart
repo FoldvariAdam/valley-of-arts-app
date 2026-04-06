@@ -85,6 +85,21 @@ class _HomeHeaderState extends State<HomeHeader> with TickerProviderStateMixin {
             opacity: 0.65,
           ),
 
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: 86,
+            child: CustomPaint(
+              painter: AnimatedBrushStroke(
+                repaint: _c,
+                t1: stroke1,
+                t2: stroke2,
+                t3: stroke3,
+              ),
+            ),
+          ),
+
           Positioned.fill(
             child: Padding(
               padding: EdgeInsets.all(appTheme.s2),
@@ -157,21 +172,6 @@ class _HomeHeaderState extends State<HomeHeader> with TickerProviderStateMixin {
                     ),
                   );
                 },
-              ),
-            ),
-          ),
-
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 86,
-            child: CustomPaint(
-              painter: AnimatedBrushStroke(
-                repaint: _c,
-                t1: stroke1,
-                t2: stroke2,
-                t3: stroke3,
               ),
             ),
           ),

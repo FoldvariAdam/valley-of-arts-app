@@ -5,18 +5,14 @@ class AppSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 8,
-      borderRadius: BorderRadius.circular(16),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: 'Helyszín keresése…',
-          prefixIcon: const Icon(Icons.search),
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide.none,
-          ),
+    return TextField(
+      decoration: InputDecoration(
+        hintText: 'Helyszín keresése…',
+        prefixIcon: const Icon(Icons.search),
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
         ),
       ),
     );

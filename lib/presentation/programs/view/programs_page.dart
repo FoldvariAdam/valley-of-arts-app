@@ -60,6 +60,12 @@ class _ProgramsPageInnerState extends State<_ProgramsPageInner> {
                 subtitle: 'Szűrj hely, időpont és kategória alapján',
               ),
 
+              SizedBox(height: appTheme.s1),
+
+              const AppSearchBar(),
+
+              SizedBox(height: appTheme.s1),
+
               Row(
                 mainAxisAlignment: .end,
                 children: [
